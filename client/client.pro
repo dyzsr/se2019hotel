@@ -33,7 +33,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     pipeclient.h \
-    client.h
+    client.h \
+    ../share/room.h
 
 FORMS += \
         mainwindow.ui

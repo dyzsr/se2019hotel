@@ -31,7 +31,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    pipeserver.h
+        pipeserver.h \
+    ../share/room.h
 
 FORMS += \
         mainwindow.ui
