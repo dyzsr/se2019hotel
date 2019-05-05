@@ -1,11 +1,23 @@
 #ifndef PIPECLIENT_H
 #define PIPECLIENT_H
 
+#include <QObject>
+#include <QSqlDatabase>
 
-class PipeClient
+class PipeClient: public QObject
 {
+  Q_OBJECT
+
 public:
-  PipeClient();
+  explicit PipeClient(QObject *parent = nullptr);
+
+  void start();
+
+private slots:
+  void getData();
+
+private:
+  QSqlDatabase db;
 };
 
 #endif // PIPECLIENT_H

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    pipeclient.cpp
+    pipeclient.cpp \
+    client.cpp
 
 HEADERS += \
         mainwindow.h \
-    pipeclient.h
+    pipeclient.h \
+    client.h
 
 FORMS += \
         mainwindow.ui
