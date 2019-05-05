@@ -34,7 +34,7 @@ HEADERS += \
         mainwindow.h \
     pipeclient.h \
     client.h \
-    ../share/room.h
+    ../share/objects.h
 
 FORMS += \
         mainwindow.ui

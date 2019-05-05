@@ -1,6 +1,13 @@
 #include "client.h"
 
-Client::Client()
+Client::Client(QObject *parent):
+  QObject(parent),
+  pipe(this)
 {
+  pipe.start();
+}
 
+Client::~Client()
+{
+  pipe.stop();
 }

@@ -4,10 +4,9 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  pipe(this)
+  client(this)
 {
   ui->setupUi(this);
-  pipe.start();
 }
 
 MainWindow::~MainWindow()

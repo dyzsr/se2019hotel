@@ -12,6 +12,7 @@ public:
   explicit PipeClient(QObject *parent = nullptr);
 
   void start();
+  void stop();
 
 private slots:
   void getData();

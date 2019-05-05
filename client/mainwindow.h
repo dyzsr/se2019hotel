@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "client.h"
 #include "pipeclient.h"
 
 #include <QMainWindow>
@@ -22,7 +23,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
-  PipeClient pipe;
+  Client client;
 };
 
 #endif // MAINWINDOW_H

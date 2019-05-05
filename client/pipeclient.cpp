@@ -17,6 +17,11 @@ void PipeClient::start()
   timer->start(2000);
 }
 
+void PipeClient::stop()
+{
+  db.close();
+}
+
 void PipeClient::getData()
 {
   qDebug() << "getData";
