@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    pipeserver.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    pipeserver.h
 
 FORMS += \
         mainwindow.ui
