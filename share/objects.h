@@ -3,17 +3,15 @@
 
 #include <string>
 
-class User
+struct User
 {
-public:
   int usrId;
   std::string name;
   std::string pswd;
 };
 
-class Room
+struct Room
 {
-public:
   int roomId;
   int usrId;
   bool usrIn;
@@ -27,14 +25,17 @@ public:
   double cost;
 };
 
-class Request
+struct Request
 {
-public:
   int reqId;
   int usrId;
   int _temp;
   int _wdspd;
   int _mode;
+};
+
+struct Billing
+{
 };
 
 #endif // OBJECTS_H

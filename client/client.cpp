@@ -4,3 +4,8 @@ Client::Client(QObject *parent):
   QObject(parent)
 {
 }
+
+void Client::getData()
+{
+  pipe.getRoom();
+}
