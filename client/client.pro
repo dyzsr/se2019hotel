@@ -27,14 +27,14 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    pipeclient.cpp \
-    client.cpp
+    client.cpp \
+    ../share/pipe.cpp
 
 HEADERS += \
         mainwindow.h \
-    pipeclient.h \
     client.h \
-    ../share/objects.h
+    ../share/objects.h \
+    ../share/pipe.h
 
 FORMS += \
         mainwindow.ui

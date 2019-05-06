@@ -1,8 +1,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "pipeclient.h"
+#include <QObject>
 
+#include "../share/objects.h"
+#include "../share/pipe.h"
 
 class Client: public QObject
 {
@@ -10,10 +12,14 @@ class Client: public QObject
 
 public:
   explicit Client(QObject *parent = nullptr);
-  ~Client();
+
+private slots:
+  void getData();
 
 private:
-  PipeClient pipe;
+  Pipe pipe;
+  Room rooms;
+  User user;
 };
 
 #endif // CLIENT_H
