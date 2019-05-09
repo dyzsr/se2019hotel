@@ -12,6 +12,7 @@ class Client: public QObject
 
 public:
   explicit Client(QObject *parent = nullptr);
+  ~Client();
 
 private slots:
   void getData();

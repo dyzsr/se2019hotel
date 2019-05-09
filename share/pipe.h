@@ -16,6 +16,8 @@ public:
   Room getRoom(int roomId);
 
   void addUser(const User &user);
+  void delUser(const User &user);
+
   void addRoom(const Room &room);
 
   int getBillings(Billing *billings);

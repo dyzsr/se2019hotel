@@ -1,12 +1,25 @@
 DROP TABLE IF EXISTS usr;
 CREATE TABLE usr (
-  name varchar(20) NOT NULL,
-  pswd varchar(20) NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  pswd VARCHAR(20) NOT NULL,
   PRIMARY KEY (name)
 );
 
 DROP TABLE IF EXISTS room;
 CREATE TABLE room (
+	roomId INT NOT NULL,
+	usrId VARCHAR(20) NOT NULL,
+	temp FLOAT NOT NULL,
+	settemp FLOAT NOT NULL,
+	wdspd FLOAT NOT NULL,
+	setwdspd FLOAT NOT NULL,
+	token VARCHAR(20) NOT NULL,
+	state INT NOT NULL,
+	_mode INT NOT NULL,
+	duration VARCHAR(20) NOT NULL,
+	pwr FLOAT NOT NULL,
+	cost FLOAT NOT NULL,
+	PRIMARY KEY (roomId)
 );
 
 DROP TABLE IF EXISTS request;

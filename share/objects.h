@@ -6,19 +6,19 @@
 
 struct User
 {
-  std::string id;
-  std::string pswd;
+  QString id;
+  QString pswd;
 };
 
 struct Room
 {
   int roomId;
-  std::string usrId;
-  int temp;
-  int s_temp;
-  int wdspd;
-  int s_wdspd;
-  std::string token;
+  QString usrId;
+  double temp;
+  double s_temp;
+  double wdspd;
+  double s_wdspd;
+  QString token;
   int state;
   int mode;
   QDateTime duration;
@@ -29,7 +29,7 @@ struct Room
 struct Request
 {
   int reqId;
-  std::string userId;
+  QString userId;
   int state;
   int s_temp;
   int s_wdspd;
@@ -39,7 +39,7 @@ struct Billing
 {
   int billingId;
   int roomId;
-  std::string userId;
+  QString userId;
   QDateTime start;
   QDateTime duration;
   double costs;
