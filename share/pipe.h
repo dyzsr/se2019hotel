@@ -10,7 +10,7 @@ public:
   Pipe();
   ~Pipe();
 
-#ifdef CLIENT_H
+//#ifdef CLIENT_H
 
   int getRooms(Room *rooms);
   Room getRoom(int roomId);
@@ -23,7 +23,7 @@ public:
 
   void sendRequest(const Request &request);
 
-#elif SERVER_H
+//#elif SERVER_H
 
   void setRooms(const Room *rooms, int n);
 
@@ -33,7 +33,7 @@ public:
   int getRequests(Request *requests);
   void delRequests(const Request *requests, int n);
 
-#endif
+//#endif
 
 private:
   QSqlDatabase db;

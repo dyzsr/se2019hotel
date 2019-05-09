@@ -2,25 +2,26 @@
 #define OBJECTS_H
 
 #include <string>
+#include <QDateTime>
 
 struct User
 {
-  int usrId;
-  std::string name;
+  std::string id;
   std::string pswd;
 };
 
 struct Room
 {
   int roomId;
-  int usrId;
-  bool usrIn;
-  bool acOn;
+  std::string usrId;
   int temp;
   int s_temp;
   int wdspd;
   int s_wdspd;
+  std::string token;
+  int state;
   int mode;
+  QDateTime duration;
   double pwr;
   double cost;
 };
@@ -28,14 +29,24 @@ struct Room
 struct Request
 {
   int reqId;
-  int usrId;
-  int _temp;
-  int _wdspd;
-  int _mode;
+  std::string userId;
+  int state;
+  int s_temp;
+  int s_wdspd;
 };
 
 struct Billing
 {
+  int billingId;
+  int roomId;
+  std::string userId;
+  QDateTime start;
+  QDateTime duration;
+  double costs;
+  int wdspd;
+  int startTemp;
+  int endTemp;
+  double rate;
 };
 
 #endif // OBJECTS_H

@@ -7,5 +7,4 @@ Client::Client(QObject *parent):
 
 void Client::getData()
 {
-  pipe.getRoom();
 }
