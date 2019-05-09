@@ -32,27 +32,12 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="page">
-     <widget class="QPushButton" name="checkInButton">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>140</y>
-        <width>171</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CHECK IN</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QWidget" name="page_2">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btTempDown">
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>190</y>
+        <y>230</y>
         <width>80</width>
         <height>20</height>
        </rect>
@@ -61,11 +46,11 @@
        <string>DOWN</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btTempUp">
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>190</y>
+        <y>230</y>
         <width>80</width>
         <height>20</height>
        </rect>
@@ -74,11 +59,11 @@
        <string>UP</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_Temp">
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>190</y>
+        <y>230</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -98,6 +83,19 @@
       </property>
       <property name="styleSheet">
        <string notr="true">background: rgb(85, 255, 0);</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btCheckIn">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>190</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CHECK IN</string>
       </property>
      </widget>
     </widget>
