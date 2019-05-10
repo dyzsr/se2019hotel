@@ -30,8 +30,22 @@ void Pipe::addUser(const User &user)
 void Pipe::delUser(const User &user)
 {
   QSqlQuery query(db);
-  query.prepare("DELETE FROM usr WHERE usr.name = :id;");
+  query.prepare("DELETE FROM usr WHERE usr.id = :id;");
   query.bindValue(":id", QVariant(user.id));
   query.exec();
   qDebug() << "delete user";
+}
+
+void Pipe::addRoom(const Room &room)
+{
+  // ************ TODO ***************
+  QSqlQuery query(db);
+  query.prepare("INSERT INTO room VALUES()");
+  query.exec();
+  qDebug() << "add Room";
+}
+
+void Pipe::delRoom(const Room &room)
+{
+
 }
