@@ -5,10 +5,12 @@ Title: 说明
 
 # 平台说明
 
-* OS: Windows 10
-* Framework: Qt 5.12
-* Compiler: MSVC 2017 64bit
+* 框架: Qt 5.12
+* 数据库：Mysql 8.0
 
+## 数据库配置
+
+使用ODBC连接，配置细节随后列出。。。
 
 # 项目目录
 
