@@ -3,8 +3,7 @@
 Client::Client(QObject *parent):
   QObject(parent)
 {
-  user.id = QString("310f");
-  user.pswd = QString("qweasdzxc");
+  user = User("310f", "qweasdzxc");
   pipe.addUser(user);
 }
 

@@ -19,7 +19,7 @@ private slots:
 
 private:
   Pipe pipe;
-  Room rooms;
+  Room room;
   User user;
 };
 

@@ -18,9 +18,6 @@ public:
   void addUser(const User &user);
   void delUser(const User &user);
 
-  void addRoom(const Room &room);
-  void delRoom(const Room &room);
-
   int getBillings(Billing *billings);
   Billing getBilling(int roomId);
 
@@ -29,6 +26,8 @@ public:
 //#elif SERVER_H
 
   void setRooms(const Room *rooms, int n);
+  void addRoom(const Room &room);
+  void delRoom(const Room &room);
 
   int getUsers(User *users);
   void setUsers(const User *users, int n);
