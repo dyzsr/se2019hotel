@@ -1,18 +1,15 @@
-Title: 说明
+# 说明
 
-
-[TITLE]
-
-# 平台说明
+## 平台说明
 
 * 框架: Qt 5.12
 * 数据库：Mysql 8.0
 
-## 数据库配置
+### 数据库配置
 
 使用ODBC连接，配置细节随后列出。。。
 
-# 项目目录
+## 项目目录
 
 ```
 se2019hotel
@@ -37,7 +34,6 @@ se2019hotel
 │   ├── pipe.cpp
 │   ├── pipe.h
 │   └── tables.sql
-├── project.html
 └── readme.md
 ```
 
@@ -47,15 +43,17 @@ se2019hotel
 
 `share`中存放共享文件。
 
-# share目录
+## share目录
 
-## 数据对象
+### 数据对象
 
+见`share/objects.h`
 
+### 共享接口
 
-## 共享接口
+`share/pipe.h`
 
-pipe.h
+用于提供数据通信功能，对数据库的访问做了一层封装。使用时无需考虑数据库的通信问题。
 
 ```  CPP
 #ifndef PIPE_H
@@ -105,7 +103,7 @@ private:
 ```
 
 
-# Client子项目
+## Client子项目
 
 
-# Server子项目
+## Server子项目
