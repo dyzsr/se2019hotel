@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
   client(this)
 {
   ui->setupUi(this);
-  connect(&client, SIGNAL(sgn_refresh(Room)), this, SLOT(refresh(Room)));
+  connect(&client, &Client::sgn_refresh, this, &MainWindow::refresh);
 }
 
 MainWindow::~MainWindow()

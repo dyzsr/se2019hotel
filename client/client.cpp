@@ -9,7 +9,7 @@ Client::Client(QObject *parent):
   pipe.addUser(user);
 
   QTimer *timer = new QTimer(this);
-  connect(timer, SIGNAL(timeout()), this, SLOT(getData()));
+  connect(timer, &QTimer::timeout, this, &Client::getData);
   timer->start(2000);
 }
 

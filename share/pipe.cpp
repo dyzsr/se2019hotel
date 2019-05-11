@@ -11,12 +11,14 @@ Pipe::Pipe():
 {
   db.setDatabaseName("SE");
   db.open();
+  qDebug() << "open db";
   qDebug() << db.isOpen();
 }
 
 Pipe::~Pipe()
 {
   db.close();
+  qDebug() << "close db";
 }
 
 void Pipe::addUser(const User &user)
