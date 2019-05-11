@@ -7,9 +7,18 @@ MainWindow::MainWindow(QWidget *parent) :
   client(this)
 {
   ui->setupUi(this);
+  connect(&client, SIGNAL(sgn_refresh(Room)), this, SLOT(refresh(Room)));
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+}
+
+void MainWindow::refresh(Room room)
+{
+  ui->DispTemp->setNum(room.temp);
+  ui->DispSettemp->setNum(room.settemp);
+  ui->DispWdspd->setNum(room.wdspd);
+  ui->DispSetwdspd->setNum(room.setwdspd);
 }

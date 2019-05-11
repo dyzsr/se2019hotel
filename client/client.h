@@ -14,6 +14,9 @@ public:
   explicit Client(QObject *parent = nullptr);
   ~Client();
 
+signals:
+  void sgn_refresh(Room room);
+
 private slots:
   void getData();
 

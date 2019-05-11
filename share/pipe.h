@@ -12,11 +12,10 @@ public:
 
 //#ifdef CLIENT_H
 
-  int getRooms(Room *rooms);
-  Room getRoom(int roomId);
-
   void addUser(const User &user);
   void delUser(const User &user);
+
+  Room getRoom(QString usrId);
 
   int getBillings(Billing *billings);
   Billing getBilling(int roomId);

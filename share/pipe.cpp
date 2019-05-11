@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QSqlError>
+#include <QSqlRecord>
 
 Pipe::Pipe():
   db(QSqlDatabase::addDatabase("QODBC3"))
@@ -36,9 +38,36 @@ void Pipe::delUser(const User &user)
   qDebug() << "delete user";
 }
 
+Room Pipe::getRoom(QString usrId)
+{
+  QSqlQuery query(db);
+  query.prepare("SELECT * FROM room"
+                "WHERE room.usrId = :usrId;");
+  query.bindValue(":usrId", usrId);
+  query.exec();
+  Room room;
+  if (query.isValid()) {
+    room.roomId = query.record().value("roomId").toInt();
+    room.usrId = query.record().value("usrId").toString();
+    room.temp = query.record().value("temp").toDouble();
+    room.settemp = query.record().value("settemp").toDouble();
+    room.wdspd = query.record().value("wdspd").toDouble();
+    room.setwdspd = query.record().value("setwpspd").toDouble();
+    room.token = query.record().value("token").toString();
+    room.state = query.record().value("state").toInt();
+    room.mode = query.record().value("mode").toInt();
+    room.duration = query.record().value("duration").toDateTime();
+    room.pwr = query.record().value("pwr").toDouble();
+    room.cost = query.record().value("cost").toDouble();
+  } else {
+    qDebug() << "error";
+//    qDebug() << query.lastError();
+  }
+  return room;
+}
+
 void Pipe::addRoom(const Room &room)
 {
-  // ************ TODO ***************
   QSqlQuery query(db);
   query.prepare("INSERT INTO room VALUES("
                 ":roomId, :usrId, :temp, :settemp,"

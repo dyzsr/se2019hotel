@@ -18,6 +18,7 @@ public:
   ~MainWindow();
 
 private slots:
+  void refresh(Room room);
 
 private:
   Ui::MainWindow *ui;

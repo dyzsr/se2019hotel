@@ -44,8 +44,8 @@ struct Request
   int reqId;
   QString usrId;
   int state;
-  int settemp;
-  int setwdspd;
+  double settemp;
+  double setwdspd;
 
   Request(int _reqId = 0, QString _usrId = "haha",
           int _state = 0, int _settemp = 0, int _setwdspd = 0):
@@ -62,9 +62,9 @@ struct Billing
   QDateTime start;
   QDateTime duration;
   double costs;
-  int wdspd;
-  int startTemp;
-  int endTemp;
+  double wdspd;
+  double startTemp;
+  double endTemp;
   double rate;
 };
 
