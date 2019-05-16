@@ -11,9 +11,9 @@
 
 ## 任务列表
 
-* 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义。
-* 完善`share/objects.h`定义的接口。
-* 建立server子项目的界面。
+- [] 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义。
+- [] 完善`share/objects.h`定义的接口。
+- [] 建立server子项目的界面。
 
 ## 项目目录
 
