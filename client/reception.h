@@ -17,7 +17,7 @@ signals:
   void sgn_showDetails(QVector<Billing> billings);
 
 public slots:
-  void getBillings();
+  void fetchBillings();
 
 private:
   QVector<Billing> billings;
