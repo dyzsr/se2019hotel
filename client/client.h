@@ -14,6 +14,10 @@ public:
   explicit Client(QObject *parent = nullptr);
   ~Client();
 
+  void setPipe(Pipe *_pipe);
+  void start();
+  void stop();
+
 signals:
   void sgn_refresh(Room room);
 
@@ -21,7 +25,8 @@ private slots:
   void getData();
 
 private:
-  Pipe pipe;
+  bool status = false;
+  Pipe *pipe;
   Room room;
   User user;
 };

@@ -28,13 +28,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     ../share/pipe.cpp \
-    server.cpp
+    server.cpp \
+    manager.cpp
 
 HEADERS += \
         mainwindow.h \
     ../share/objects.h \
     ../share/pipe.h \
-    server.h
+    server.h \
+    manager.h
 
 FORMS += \
         mainwindow.ui

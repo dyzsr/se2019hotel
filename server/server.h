@@ -14,13 +14,15 @@ public:
   explicit Server(QObject *parent = nullptr);
   ~Server();
 
+  void setPipe(Pipe *_pipe);
+
 signals:
 
 private slots:
   void getData();
 
 private:
-  Pipe pipe;
+  Pipe *pipe;
   QVector<User> users;
   QVector<Room> rooms;
 };

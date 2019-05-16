@@ -13,6 +13,11 @@ Server::Server(QObject *parent):
 
 Server::~Server() {}
 
+void Server::setPipe(Pipe * _pipe)
+{
+  pipe = _pipe;
+}
+
 void Server::getData()
 {
 

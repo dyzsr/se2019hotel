@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "server.h"
-
 #include <QMainWindow>
 
 namespace Ui {
@@ -19,7 +17,6 @@ public:
 
 private:
   Ui::MainWindow *ui;
-  Server server;
 };
 
 #endif // MAINWINDOW_H

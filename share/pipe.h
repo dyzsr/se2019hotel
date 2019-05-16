@@ -10,8 +10,6 @@ public:
   Pipe();
   ~Pipe();
 
-//#ifdef CLIENT_H
-
   void addUser(const User &user);
   void delUser(const User &user);
 
@@ -22,8 +20,6 @@ public:
 
   void sendRequest(const Request &request);
 
-//#elif SERVER_H
-
   void setRooms(const Room *rooms, int n);
   void addRoom(const Room &room);
   void delRoom(const Room &room);
@@ -33,8 +29,6 @@ public:
 
   int getRequests(Request *requests);
   void delRequests(const Request *requests, int n);
-
-//#endif
 
 private:
   QSqlDatabase db;

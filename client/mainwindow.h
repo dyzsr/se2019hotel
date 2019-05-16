@@ -1,8 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "client.h"
-
+#include "../share/objects.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,12 +16,11 @@ public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
-private slots:
+public slots:
   void refresh(Room room);
 
 private:
   Ui::MainWindow *ui;
-  Client client;
 };
 
 #endif // MAINWINDOW_H
