@@ -20,3 +20,13 @@ void MainWindow::refresh(Room room)
   ui->DispWdspd->setNum(room.wdspd);
   ui->DispSetwdspd->setNum(room.setwdspd);
 }
+
+void MainWindow::showBilling(QVector<Billing> billings)
+{
+
+}
+
+void MainWindow::showDetails(QVector<Billing> billings)
+{
+
+}

@@ -7,16 +7,16 @@ Client::Client(QObject *parent, Pipe *_pipe):
   pipe(_pipe), user("310f", "qweasdzxc")
 {
   Q_ASSERT(pipe != nullptr);
-  pipe->addUser(user);
+//  pipe->addUser(user);
 
   QTimer *timer = new QTimer(this);
-  connect(timer, &QTimer::timeout, this, &Client::getData);
+  connect(timer, &QTimer::timeout, this, &Client::fetchData);
   timer->start(2000);
 }
 
 Client::~Client()
 {
-  pipe->delUser(user);
+//  pipe->delUser(user);
 }
 
 void Client::fetchData()
