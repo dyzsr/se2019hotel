@@ -16,6 +16,10 @@ public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
+signals:
+  void sgn_incTemp();
+  void sgn_decTemp();
+
 public slots:
   void refresh(Room room);
   void showBilling(QVector<Billing> billings);
