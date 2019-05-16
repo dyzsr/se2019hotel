@@ -13,7 +13,8 @@ public:
   explicit Reception(QObject *parent = nullptr);
 
 signals:
-  void sgn_printBilling(QVector<Billing> billings);
+  void sgn_showBilling(QVector<Billing> billings);
+  void sgn_showDetails(QVector<Billing> billings);
 
 public slots:
   void getBillings();

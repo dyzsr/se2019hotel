@@ -28,7 +28,7 @@ Pipe::~Pipe()
 void Pipe::addUser(const User &user)
 {
   QSqlQuery query(db);
-  query.prepare("INSERT INTO tcs_app_usr VALUES(:id, :pswd);");
+  query.prepare("INSERT INTO tcs_app_user VALUES(:id, :pswd);");
   query.bindValue(":id", QVariant(user.id));
   query.bindValue(":pswd", QVariant(user.pswd));
   query.exec();
@@ -38,7 +38,7 @@ void Pipe::addUser(const User &user)
 void Pipe::delUser(const User &user)
 {
   QSqlQuery query(db);
-  query.prepare("DELETE FROM tcs_app_usr WHERE name = :id;");
+  query.prepare("DELETE FROM tcs_app_user WHERE name = :id;");
   query.bindValue(":id", QVariant(user.id));
   query.exec();
   qDebug() << "delete user";

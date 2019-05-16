@@ -5,7 +5,7 @@ Reception::Reception(QObject *parent) : QObject(parent)
 
 }
 
-void Reception::getBillings()
+void Reception::fetchBillings()
 {
 
 }

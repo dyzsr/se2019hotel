@@ -18,6 +18,8 @@ public:
 
 public slots:
   void refresh(Room room);
+  void showBilling(QVector<Billing> billings);
+  void showDetails(QVector<Billing> billings);
 
 private:
   Ui::MainWindow *ui;

@@ -19,8 +19,38 @@ Client::~Client()
   pipe->delUser(user);
 }
 
-void Client::getData()
+void Client::fetchData()
 {
   room = pipe->getRoom(room.usrId);
   emit sgn_refresh(room);
+}
+
+void Client::incTemp()
+{
+
+}
+
+void Client::decTemp()
+{
+
+}
+
+void Client::incWdspd()
+{
+
+}
+
+void Client::decWdspd()
+{
+
+}
+
+void Client::setState(int state)
+{
+
+}
+
+void Client::setMode(int mode)
+{
+
 }

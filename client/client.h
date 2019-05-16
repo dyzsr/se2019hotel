@@ -18,7 +18,16 @@ signals:
   void sgn_refresh(Room room);
 
 private slots:
-  void getData();
+  void fetchData();
+
+  void incTemp();
+  void decTemp();
+
+  void incWdspd();
+  void decWdspd();
+
+  void setState(int state);
+  void setMode(int mode);
 
 private:
   Pipe *pipe;
