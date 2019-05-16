@@ -9,7 +9,7 @@
 Pipe::Pipe():
   db(QSqlDatabase::addDatabase("QODBC3"))
 {
-  db.setDatabaseName("SE");
+  db.setDatabaseName("SE_GROUP");
   db.open();
   qDebug() << "open db";
   qDebug() << db.isOpen();
@@ -24,7 +24,7 @@ Pipe::~Pipe()
 void Pipe::addUser(const User &user)
 {
   QSqlQuery query(db);
-  query.prepare("INSERT INTO usr VALUES(:id, :pswd);");
+  query.prepare("INSERT INTO tcs_app_usr VALUES(:id, :pswd);");
   query.bindValue(":id", QVariant(user.id));
   query.bindValue(":pswd", QVariant(user.pswd));
   query.exec();
@@ -34,7 +34,7 @@ void Pipe::addUser(const User &user)
 void Pipe::delUser(const User &user)
 {
   QSqlQuery query(db);
-  query.prepare("DELETE FROM usr WHERE usr.id = :id;");
+  query.prepare("DELETE FROM tcs_app_usr WHERE name = :id;");
   query.bindValue(":id", QVariant(user.id));
   query.exec();
   qDebug() << "delete user";
@@ -44,13 +44,13 @@ Room Pipe::getRoom(QString usrId)
 {
   QSqlQuery query(db);
   query.prepare("SELECT * FROM room"
-                "WHERE room.usrId = :usrId;");
+                "WHERE user_id_id = :usrId;");
   query.bindValue(":usrId", usrId);
   query.exec();
   Room room;
   if (query.isValid()) {
-    room.roomId = query.record().value("roomId").toInt();
-    room.usrId = query.record().value("usrId").toString();
+    room.roomId = query.record().value("id").toInt();
+    room.usrId = query.record().value("user_id_id").toString();
     room.temp = query.record().value("temp").toDouble();
     room.settemp = query.record().value("settemp").toDouble();
     room.wdspd = query.record().value("wdspd").toDouble();
@@ -59,8 +59,9 @@ Room Pipe::getRoom(QString usrId)
     room.state = query.record().value("state").toInt();
     room.mode = query.record().value("mode").toInt();
     room.duration = query.record().value("duration").toDateTime();
-    room.pwr = query.record().value("pwr").toDouble();
-    room.cost = query.record().value("cost").toDouble();
+    room.start = query.record().value("start").toDateTime();
+    room.pwr = query.record().value("power").toDouble();
+    room.cost = query.record().value("costs").toDouble();
   } else {
     qDebug() << "error";
 //    qDebug() << query.lastError();
@@ -71,10 +72,10 @@ Room Pipe::getRoom(QString usrId)
 void Pipe::addRoom(const Room &room)
 {
   QSqlQuery query(db);
-  query.prepare("INSERT INTO room VALUES("
-                ":roomId, :usrId, :temp, :settemp,"
+  query.prepare("INSERT INTO tcs_app_room VALUES("
+                ":roomId, :settemp, :temp,"
                 ":wdspd, :setwdspd, :token, :state, :mode,"
-                ":duration, :pwr, :cost"
+                ":cost, :pwr, :duration, :usrId, :start"
                 ");");
   query.bindValue(":roomId", room.roomId);
   query.bindValue(":usrId", room.usrId);
@@ -88,6 +89,7 @@ void Pipe::addRoom(const Room &room)
   query.bindValue(":duration", room.duration);
   query.bindValue(":pwr", room.pwr);
   query.bindValue(":cost", room.cost);
+  query.bindValue(":start", room.start);
   query.exec();
   qDebug() << "add room";
 }
@@ -95,7 +97,7 @@ void Pipe::addRoom(const Room &room)
 void Pipe::delRoom(const Room &room)
 {
   QSqlQuery query(db);
-  query.prepare("DELETE FROM room WHERE room.roomId = :roomId");
+  query.prepare("DELETE FROM tcs_app_room WHERE id = :roomId");
   query.bindValue(":roomId", room.roomId);
   query.exec();
   qDebug() << "del room";

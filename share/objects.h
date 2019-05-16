@@ -24,6 +24,7 @@ struct Room
   int state;
   int mode;
   QDateTime duration;
+  QDateTime start;
   double pwr;
   double cost;
 
@@ -31,11 +32,12 @@ struct Room
        double _temp = 25, double _settemp = 25,
        double _wdspd = 1, double _setwdspd = 1,
        QString _token = "", int _state = 0, int _mode = 0,
-       QDateTime _duration = QDateTime(),
+       QDateTime _duration = QDateTime(), QDateTime _start = QDateTime(),
        double _pwr = 0, double _cost = 0):
     roomId(_roomId), usrId(_usrId), temp(_temp), settemp(_settemp),
     wdspd(_wdspd), setwdspd(_setwdspd), token(_token), state(_state),
-    mode(_mode), duration(_duration), pwr(_pwr), cost(_cost)
+    mode(_mode), duration(_duration), start(_start),
+    pwr(_pwr), cost(_cost)
   {}
 };
 
