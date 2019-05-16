@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
   QObject::connect(&client, &Client::sgn_refresh, &w, &MainWindow::refresh);
 
+
   w.show();
   return a.exec();
 }
