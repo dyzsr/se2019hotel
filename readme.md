@@ -7,7 +7,7 @@
 
 ### 数据库配置
 
-使用ODBC连接，配置细节随后列出。。。
+使用ODBC连接，配置细节见odbc.txt。
 
 ## 任务列表
 
@@ -56,9 +56,13 @@ project
 
 ## share目录
 
+### 数据库表格式
+
+见`share/db.sql`。
+
 ### 数据对象
 
-见`share/objects.h`
+见`share/objects.h`。
 
 ### 共享接口
 
@@ -105,6 +109,28 @@ public:
 ## Client子项目
 
 在Qt Creator中选择`client/client.pro`打开client项目。
+
+### Client类
+
+Client类代表客户。
+
+待实现的成员方法：
+
+- [x] `fetchData()`，通过pipe获得房间的数据
+- [ ] `incTemp()`，通过pipe发送升温请求
+- [ ] `decTemp()`，
+- [ ] `incWdspd()`，
+- [ ] `decWdspd()`，
+- [ ] `setState(int state)`，
+- [ ] `setMode(int mode)`，
+
+### Reception类
+
+Reception类代表前台。
+
+待实现的成员方法：
+
+- [ ] `fetchBillings()`，通过pipe获得房间的消费数据
 
 
 ## Server子项目
