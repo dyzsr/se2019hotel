@@ -11,12 +11,8 @@ class Client: public QObject
   Q_OBJECT
 
 public:
-  explicit Client(QObject *parent = nullptr);
+  explicit Client(QObject *parent = nullptr, Pipe *_pipe = nullptr);
   ~Client();
-
-  void setPipe(Pipe *_pipe);
-  void start();
-  void stop();
 
 signals:
   void sgn_refresh(Room room);
@@ -25,7 +21,6 @@ private slots:
   void getData();
 
 private:
-  bool status = false;
   Pipe *pipe;
   Room room;
   User user;

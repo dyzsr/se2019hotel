@@ -10,11 +10,8 @@ int main(int argc, char *argv[])
 
   Pipe pipe;
 
-  Client client(&w);
+  Client client(&w, &pipe);
   Reception reception(&w);
-
-  client.setPipe(&pipe);
-  client.start();
 
   QObject::connect(&client, &Client::sgn_refresh, &w, &MainWindow::refresh);
 

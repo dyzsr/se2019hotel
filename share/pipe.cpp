@@ -12,7 +12,11 @@ Pipe::Pipe():
   db.setDatabaseName("SE_GROUP");
   db.open();
   qDebug() << "open db";
-  qDebug() << db.isOpen();
+  if (db.isOpen()) {
+    qDebug() << "successfully";
+  } else {
+    qDebug() << "failed";
+  }
 }
 
 Pipe::~Pipe()

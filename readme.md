@@ -9,27 +9,38 @@
 
 使用ODBC连接，配置细节随后列出。。。
 
+## 任务列表
+
+* 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义。
+* 完善`share/objects.h`定义的接口。
+* 建立
+
 ## 项目目录
 
 ```
-se2019hotel
+project
 ├── client
 │   ├── client.cpp
 │   ├── client.h
 │   ├── client.pro
-│   ├── client.pro.user
 │   ├── main.cpp
 │   ├── mainwindow.cpp
 │   ├── mainwindow.h
-│   └── mainwindow.ui
+│   ├── mainwindow.ui
+│   ├── reception.cpp
+│   └── reception.h
 ├── server
 │   ├── main.cpp
 │   ├── mainwindow.cpp
 │   ├── mainwindow.h
 │   ├── mainwindow.ui
+│   ├── manager.cpp
+│   ├── manager.h
+│   ├── server.cpp
+│   ├── server.h
 │   ├── server.pro
-│   └── server.pro.user
 ├── share
+│   ├── db.sql
 │   ├── objects.h
 │   ├── pipe.cpp
 │   ├── pipe.h
@@ -65,11 +76,6 @@ se2019hotel
 class Pipe
 {
 public:
-  Pipe();
-  ~Pipe();
-
-#ifdef CLIENT_H
-
   int getRooms(Room *rooms);
   Room getRoom(int roomId);
 
@@ -81,8 +87,6 @@ public:
 
   void sendRequest(const Request &request);
 
-#elif SERVER_H
-
   void setRooms(const Room *rooms, int n);
   void addRoom(const Room &room);
   void delRoom(const Room &room);
@@ -91,12 +95,7 @@ public:
   void setUsers(const User *users, int n);
 
   int getRequests(Request *requests);
-  void delRequests(const Request *requests, int n);
-
-#endif
-
-private:
-  QSqlDatabase db;
+  void delRequests(const Request *requests, int n);  
 };
 
 #endif // PIPE_H  
@@ -105,5 +104,9 @@ private:
 
 ## Client子项目
 
+在Qt Creator中选择`client/client.pro`打开client项目。
+
 
 ## Server子项目
+
+在Qt Creator中选择`server/server.pro`打开server项目。

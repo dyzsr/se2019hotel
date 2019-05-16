@@ -2,33 +2,19 @@
 
 #include <QTimer>
 
-Client::Client(QObject *parent):
+Client::Client(QObject *parent, Pipe *_pipe):
   QObject(parent),
-  user("310f", "qweasdzxc")
-{}
-
-Client::~Client()
+  pipe(_pipe), user("310f", "qweasdzxc")
 {
-  if (status)
-    stop();
-}
-
-void Client::setPipe(Pipe *_pipe)
-{
-  pipe = _pipe;
-}
-
-void Client::start()
-{
+  Q_ASSERT(pipe != nullptr);
   pipe->addUser(user);
 
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &Client::getData);
   timer->start(2000);
-  status = true;
 }
 
-void Client::stop()
+Client::~Client()
 {
   pipe->delUser(user);
 }
