@@ -11,15 +11,13 @@ class Server : public QObject
 {
   Q_OBJECT
 public:
-  explicit Server(QObject *parent = nullptr);
+  explicit Server(QObject *parent = nullptr, Pipe *_pipe = nullptr);
   ~Server();
-
-  void setPipe(Pipe *_pipe);
 
 signals:
 
 private slots:
-  void getData();
+  void fetchRequest();
 
 private:
   Pipe *pipe;
