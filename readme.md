@@ -11,9 +11,10 @@
 
 ## 任务列表
 
-- [ ] 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义。
-- [ ] 完善`share/objects.h`定义的接口。
-- [ ] 建立server子项目的界面。
+- [x] 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义
+- [ ] 在`share/pipe.cpp`中完善`share/pipe.h`定义的接口
+- [ ] 为server添加接受请求功能
+- [ ] 建立server子项目的界面
 
 ## 项目目录
 
