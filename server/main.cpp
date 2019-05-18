@@ -8,7 +8,8 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
   MainWindow w;
 
-  Server server(&w);
+  Pipe pipe;
+  Server server(&w, &pipe);
   Manager manager(&w);
 
   w.show();

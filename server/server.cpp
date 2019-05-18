@@ -3,22 +3,25 @@
 #include <QTimer>
 #include <QDebug>
 
-Server::Server(QObject *parent):
-  QObject(parent)
+Server::Server(QObject *parent, Pipe *_pipe):
+  QObject(parent),
+  pipe(_pipe)
 {
   QTimer *timer = new QTimer(this);
-  connect(timer, &QTimer::timeout, this, &Server::getData);
+  connect(timer, &QTimer::timeout, this, &Server::fetchRequest);
   timer->start(1000);
 }
 
 Server::~Server() {}
 
-void Server::setPipe(Pipe * _pipe)
+void Server::fetchRequest()
 {
-  pipe = _pipe;
+  QVector<Request> _request = pipe->getRequests();
+  requests.append(_request);
+  pipe->delRequests(_request);
 }
 
-void Server::getData()
+void Server::handleRequest()
 {
 
 }

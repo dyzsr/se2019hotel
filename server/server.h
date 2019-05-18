@@ -11,20 +11,22 @@ class Server : public QObject
 {
   Q_OBJECT
 public:
-  explicit Server(QObject *parent = nullptr);
+  explicit Server(QObject *parent = nullptr, Pipe *_pipe = nullptr);
   ~Server();
-
-  void setPipe(Pipe *_pipe);
 
 signals:
 
 private slots:
-  void getData();
+  void fetchRequest();
+
+  void handleRequest();
 
 private:
   Pipe *pipe;
   QVector<User> users;
   QVector<Room> rooms;
+
+  QVector<Request> requests;
 };
 
 #endif // SERVER_H
