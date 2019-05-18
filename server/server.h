@@ -19,10 +19,14 @@ signals:
 private slots:
   void fetchRequest();
 
+  void handleRequest();
+
 private:
   Pipe *pipe;
   QVector<User> users;
   QVector<Room> rooms;
+
+  QVector<Request> requests;
 };
 
 #endif // SERVER_H

@@ -25,25 +25,6 @@ Pipe::~Pipe()
   qDebug() << "close db";
 }
 
-void Pipe::addUser(const User &user)
-{
-  QSqlQuery query(db);
-  query.prepare("INSERT INTO tcs_app_user VALUES(:id, :pswd);");
-  query.bindValue(":id", QVariant(user.id));
-  query.bindValue(":pswd", QVariant(user.pswd));
-  query.exec();
-  qDebug() << "add user";
-}
-
-void Pipe::delUser(const User &user)
-{
-  QSqlQuery query(db);
-  query.prepare("DELETE FROM tcs_app_user WHERE name = :id;");
-  query.bindValue(":id", QVariant(user.id));
-  query.exec();
-  qDebug() << "delete user";
-}
-
 Room Pipe::getRoom(QString usrId)
 {
   QSqlQuery query(db);
@@ -71,6 +52,31 @@ Room Pipe::getRoom(QString usrId)
 //    qDebug() << query.lastError();
   }
   return room;
+}
+
+User Pipe::getUser(QString usrId)
+{
+  // TODO: modify this !
+  return User();
+}
+
+void Pipe::addUser(const User &user)
+{
+  QSqlQuery query(db);
+  query.prepare("INSERT INTO tcs_app_user VALUES(:id, :pswd);");
+  query.bindValue(":id", QVariant(user.id));
+  query.bindValue(":pswd", QVariant(user.pswd));
+  query.exec();
+  qDebug() << "add user";
+}
+
+void Pipe::delUser(const User &user)
+{
+  QSqlQuery query(db);
+  query.prepare("DELETE FROM tcs_app_user WHERE name = :id;");
+  query.bindValue(":id", QVariant(user.id));
+  query.exec();
+  qDebug() << "delete user";
 }
 
 void Pipe::addRoom(const Room &room)
@@ -105,4 +111,15 @@ void Pipe::delRoom(const Room &room)
   query.bindValue(":roomId", room.roomId);
   query.exec();
   qDebug() << "del room";
+}
+
+QVector<Request> Pipe::getRequests()
+{
+  // TODO: modify this !
+  return QVector<Request>();
+}
+
+void Pipe::delRequests(const QVector<Request> &requests)
+{
+
 }

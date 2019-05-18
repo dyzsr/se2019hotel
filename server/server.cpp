@@ -16,5 +16,12 @@ Server::~Server() {}
 
 void Server::fetchRequest()
 {
+  QVector<Request> _request = pipe->getRequests();
+  requests.append(_request);
+  pipe->delRequests(_request);
+}
+
+void Server::handleRequest()
+{
 
 }
