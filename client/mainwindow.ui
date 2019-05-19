@@ -32,8 +32,105 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <widget class="QWidget" name="page">
+     <widget class="QLineEdit" name="edit_username">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ffffff;
+color: #000000;</string>
+      </property>
+      <property name="inputMask">
+       <string/>
+      </property>
+      <property name="text">
+       <string extracomment="username"/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="edit_password">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>160</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ffffff;
+color: #000000;</string>
+      </property>
+      <property name="text">
+       <string extracomment="password"/>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_username">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>120</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>USERNAME</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_password">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>160</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PASSWORD</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_ok">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>210</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OK</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_verdict">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>210</y>
+        <width>191</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #ff0000;</string>
+      </property>
+      <property name="text">
+       <string>Invalid username or password</string>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_1">
-     <widget class="QPushButton" name="btTempDown">
+     <widget class="QPushButton" name="bt_tempDown">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -46,7 +143,7 @@
        <string>DOWN</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btTempUp">
+     <widget class="QPushButton" name="bt_tempUp">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -59,7 +156,7 @@
        <string>UP</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_Temp">
+     <widget class="QLabel" name="lb_temp">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -72,7 +169,7 @@
        <string>Temperature</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btCheckIn">
+     <widget class="QPushButton" name="bt_checkIn">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -85,7 +182,7 @@
        <string>CHECK IN</string>
       </property>
      </widget>
-     <widget class="QLabel" name="DispTemp">
+     <widget class="QLabel" name="disp_temp">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -104,7 +201,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="DispSettemp">
+     <widget class="QLabel" name="disp_settemp">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -123,7 +220,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="DispWdspd">
+     <widget class="QLabel" name="disp_wdspd">
       <property name="geometry">
        <rect>
         <x>330</x>
@@ -142,7 +239,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="DispSetwdspd">
+     <widget class="QLabel" name="disp_setwdspd">
       <property name="geometry">
        <rect>
         <x>460</x>

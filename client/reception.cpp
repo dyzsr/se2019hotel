@@ -36,5 +36,5 @@ QVector<Billing> Reception::getBillings(QDateTime start, QDateTime end)
 
 void Reception::fetchBillings()
 {
-  pipe->getBillings(room.usrId, room.roomId);
+  //billings = pipe->getBillings(room.usrId, room.roomId);
 }

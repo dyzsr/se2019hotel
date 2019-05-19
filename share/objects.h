@@ -9,7 +9,7 @@ struct User
   QString id;
   QString pswd;
 
-  User(QString _id = "haha", QString _pswd = "hehe"): id(_id), pswd(_pswd) {}
+  User(QString _id = "", QString _pswd = ""): id(_id), pswd(_pswd) {}
 };
 
 struct Room
@@ -28,7 +28,7 @@ struct Room
   double pwr;
   double cost;
 
-  Room(int _roomId = 0, QString _usrId = "haha",
+  Room(int _roomId = 0, QString _usrId = "",
        double _temp = 25, double _settemp = 25,
        double _wdspd = 1, double _setwdspd = 1,
        QString _token = "", int _state = 0, int _mode = 0,
@@ -49,7 +49,7 @@ struct Request
   double settemp;
   double setwdspd;
 
-  Request(int _reqId = 0, QString _usrId = "haha",
+  Request(int _reqId = 0, QString _usrId = "",
           int _state = 0, int _settemp = 0, int _setwdspd = 0):
     reqId(_reqId), usrId(_usrId),
     state(_state), settemp(_settemp), setwdspd(_setwdspd)
@@ -70,7 +70,7 @@ struct Billing
   double rate;
   int action;
   
-  Billing(int _billingId=0, int _roomId=0, QString _userId="haha", QDateTime _start=QDateTime(),
+  Billing(int _billingId=0, int _roomId=0, QString _userId="", QDateTime _start=QDateTime(),
   		QDateTime _duration=QDateTime(), double _costs=0, double _wdspd=0, double _startTemp=0,
 		double _endTemp=0, double _rate=0, int _action=0):
   	billingId(_billingId), roomId(_roomId), userId(_userId), start(_start), duration(_duration),
@@ -83,7 +83,7 @@ struct Admin {
 	QString manpwsd;
 	int privilege;
 	
-  Admin (QString _manId="yy", QString _manpwsd="xx", int _privilege=0):
+  Admin (QString _manId="", QString _manpwsd="", int _privilege=0):
 		manId(_manId), manpwsd(_manpwsd), privilege(_privilege)
 	{} 
 };
