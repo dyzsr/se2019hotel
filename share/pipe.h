@@ -52,10 +52,10 @@ public:
   void delRoom(const Room &room);//
 
   // 获取数据库中的所有请求
-  QVector<Request> getRequests();
+  QVector<Request> getRequests();//
 
   // 删除数据库中给定的请求
-  void delRequests(const QVector<Request> &requests);
+  void delRequests(const QVector<Request> &requests);//
 
   // 添加一条账目记录
   void addBilling(const Billing &billing);

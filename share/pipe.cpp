@@ -32,7 +32,7 @@ Pipe::~Pipe()
 Room Pipe::getRoom(QString usrId)
 {
   QSqlQuery query(db);
-  query.prepare("SELECT * FROM tcs_app_room"
+  query.prepare("SELECT * FROM tcs_app_room "
                 "WHERE user_id_id = :usrId;");
   query.bindValue(":usrId", usrId);
   query.exec();
@@ -61,7 +61,7 @@ Room Pipe::getRoom(QString usrId)
 User Pipe::getUser(QString usrId)
 {
   QSqlQuery query(db);
-  query.prepare("SELECT * FROM tcs_app_user"
+  query.prepare("SELECT * FROM tcs_app_user "
               "WHERE name = :usrId;");
   query.bindValue(":usrId", usrId);
   query.exec();
