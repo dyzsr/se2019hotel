@@ -31,9 +31,8 @@ Room Pipe::getRoom(QString usrId)
   query.prepare("SELECT * FROM tcs_app_room "
                 "WHERE user_id_id = :usrId;");
   query.bindValue(":usrId", usrId);
-  query.exec();
   Room room;
-  if (query.isValid()) {
+  if (query.exec() && query.next()) {
     room.roomId = query.record().value("id").toInt();
     room.usrId = query.record().value("user_id_id").toString();
     room.temp = query.record().value("temp").toDouble();
@@ -47,9 +46,10 @@ Room Pipe::getRoom(QString usrId)
     room.start = query.record().value("start").toDateTime();
     room.pwr = query.record().value("power").toDouble();
     room.cost = query.record().value("costs").toDouble();
+    qDebug() << "get room";
   } else {
-    qDebug() << "getRoom error";
-//    qDebug() << query.lastError();
+//    qDebug() << "getRoom error";
+    qDebug() << query.lastError();
   }
   return room;
 }
@@ -58,15 +58,17 @@ User Pipe::getUser(QString usrId)
 {
   QSqlQuery query(db);
   query.prepare("SELECT * FROM tcs_app_user "
-              "WHERE name = :usrId;");
+                "WHERE name = :usrId;");
   query.bindValue(":usrId", usrId);
-  query.exec();
+
   User user;
-  if (query.isValid()) {
-    user.id = query.record().value("name").toString();
-    user.id = query.record().value("pswd").toString();
+  if (query.exec() && query.next()) {
+    user.id = query.record().value(0).toString();
+    user.pswd = query.record().value(1).toString();
+    qDebug() << "get user";
   } else {
-    qDebug() << "getUser error";
+//    qDebug() << "getUser error";
+    qDebug() << query.lastError();
   }
   return user;
 }
@@ -75,19 +77,23 @@ void Pipe::addUser(const User &user)
 {
   QSqlQuery query(db);
   query.prepare("INSERT INTO tcs_app_user VALUES(:id, :pswd);");
-  query.bindValue(":id", QVariant(user.id));
-  query.bindValue(":pswd", QVariant(user.pswd));
-  query.exec();
-  qDebug() << "add user";
+  query.bindValue(":id", user.id);
+  query.bindValue(":pswd", user.pswd);
+  if (query.exec())
+    qDebug() << "add user";
+  else
+    qDebug() << query.lastError();
 }
 
 void Pipe::delUser(const User &user)
 {
   QSqlQuery query(db);
   query.prepare("DELETE FROM tcs_app_user WHERE name = :id;");
-  query.bindValue(":id", QVariant(user.id));
-  query.exec();
-  qDebug() << "delete user";
+  query.bindValue(":id", user.id);
+  if (query.exec())
+    qDebug() << "del user";
+  else
+    qDebug() << query.lastError();
 }
 
 void Pipe::addRoom(const Room &room)
@@ -111,8 +117,10 @@ void Pipe::addRoom(const Room &room)
   query.bindValue(":pwr", room.pwr);
   query.bindValue(":cost", room.cost);
   query.bindValue(":start", room.start);
-  query.exec();
-  qDebug() << "add room";
+  if (query.exec())
+    qDebug() << "add room";
+  else
+    qDebug() << query.lastError();
 }
 
 void Pipe::delRoom(const Room &room)
@@ -120,8 +128,10 @@ void Pipe::delRoom(const Room &room)
   QSqlQuery query(db);
   query.prepare("DELETE FROM tcs_app_room WHERE id = :roomId");
   query.bindValue(":roomId", room.roomId);
-  query.exec();
-  qDebug() << "del room";
+  if (query.exec())
+    qDebug() << "del room";
+  else
+    qDebug() << query.lastError();
 }
 
 QVector<Request> Pipe::getRequests()
@@ -132,7 +142,7 @@ QVector<Request> Pipe::getRequests()
   QVector<Request> q;
   query.prepare("SELECT * FROM tcs_app_request");
   query.exec();
-  do {
+  while (query.next()) {
     rec = query.record();
     req.reqId = rec.value("id").toInt();
     req.state = rec.value("state").toInt();
@@ -140,7 +150,7 @@ QVector<Request> Pipe::getRequests()
     req.settemp = rec.value("settemp").toDouble();
     req.setwdspd = rec.value("setwdspd").toInt();
     q.append(req);
-  } while (query.next());
+  }
   qDebug() << "get requests";
   return q;
 }
@@ -155,8 +165,10 @@ void Pipe::sendRequest(const Request &request)
   query.bindValue(":setwdspd", request.setwdspd);
   query.bindValue(":state", request.state);
   query.bindValue(":user_id_id", request.usrId);
-  query.exec();
-  qDebug() << "send request";
+  if (query.exec())
+    qDebug() << "send request";
+  else
+    qDebug() << query.lastError();
 }
 
 void Pipe::delRequests(const QVector<Request> &requests)
@@ -182,7 +194,7 @@ QVector<Billing> Pipe::getBillings(QString usrId, int roomId)
                 "WHERE room_id_id = :roomId;");
   query.bindValue(":roomId", roomId);
   query.exec();
-  do {
+  while (query.next()) {
     rec = query.record();
     bil.rate = rec.value("rate").toDouble();
     bil.costs = rec.value("costs").toDouble();
@@ -195,7 +207,7 @@ QVector<Billing> Pipe::getBillings(QString usrId, int roomId)
     bil.billingId = rec.value("id").toInt();
     bil.startTemp = rec.value("start_temp").toDouble();
     q.append(bil);
-  } while (query.next());
+  }
   qDebug() << "get billings";
   return q;
 }
@@ -216,8 +228,10 @@ void Pipe::addBilling(const Billing &billing)
   query.bindValue(":rate", billing.rate);
   query.bindValue(":action", billing.action);
   query.bindValue(":room_id_id", billing.roomId);
-  query.exec();
-  qDebug() << "add billing";
+  if (query.exec())
+    qDebug() << "add billing";
+  else
+    qDebug() << query.lastError();
 }
 
 QVector<Admin> Pipe::getAdmins()
@@ -228,13 +242,13 @@ QVector<Admin> Pipe::getAdmins()
   QVector<Admin> q;
   query.prepare("SELECT * FROM tcs_app_manager");
   query.exec();
-  do {
+  while (query.next()) {
     rec = query.record();
     adm.manId = rec.value("name").toString();
     adm.manpwsd = rec.value("pswd").toString();
     adm.privilege = rec.value("privilege").toInt();
     q.append(adm);
-  } while (query.next());
+  }
   qDebug() << "get admins";
   return q;
 }
@@ -243,9 +257,8 @@ Host Pipe::getHost()
 {
   QSqlQuery query(db);
   query.prepare("SELECT * FROM tcs_app_host");
-  query.exec();
   Host host;
-  if (query.isValid()) {
+  if (query.exec()) {
     host.mode = query.record().value("mode").toInt();
     host.state = query.record().value("state").toInt();
     host.hostId = query.record().value("id").toInt();
