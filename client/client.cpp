@@ -34,37 +34,26 @@ bool Client::signIn(QString usrId, QString passwd)
   return false;
 }
 
-void Client::signOut()
+bool Client::signOut()
 {
   timer.stop();
+  return true;
 }
 
-void Client::incTemp()
+void Client::setTemp(int temp)
 {
-
+  Request request(0, user.id, room.state, temp, room.wdspd);
+  pipe->sendRequest(request);
 }
 
-void Client::decTemp()
+void Client::setWdspd(int wdspd)
 {
-
-}
-
-void Client::incWdspd()
-{
-
-}
-
-void Client::decWdspd()
-{
-
+  Request request(0, user.id, room.state, room.temp, wdspd);
+  pipe->sendRequest(request);
 }
 
 void Client::setState(int state)
 {
-
-}
-
-void Client::setMode(int mode)
-{
-
+  Request request(0, user.id, state, room.temp, room.wdspd);
+  pipe->sendRequest(request);
 }

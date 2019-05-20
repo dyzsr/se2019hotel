@@ -18,9 +18,11 @@ public:
 
 signals:
   bool sgn_signIn(QString usrId, QString passwd);
+  bool sgn_signOut();
 
-  void sgn_incTemp();
-  void sgn_decTemp();
+  void sgn_setTemp(int temp);
+  void sgn_setWdspd(int wdspd);
+  void sgn_setState(int state);
 
 public slots:
   void refresh(Room room);
@@ -29,31 +31,22 @@ public slots:
 
 private slots:
   void on_bt_signIn_clicked();
-
+  void on_bt_signOut_clicked();
   void on_bt_checkIn_clicked();
-
   void on_bt_checkOut_clicked();
-
   void on_bt_tempUp_clicked();
-
   void on_bt_tempDown_clicked();
-
   void on_sb_settemp_valueChanged(int arg1);
-
   void on_bt_wdspdUp_clicked();
-
   void on_bt_wdspdDown_clicked();
-
   void on_sb_setwdspd_valueChanged(int arg1);
-
   void on_bt_state0_clicked(bool checked);
-
   void on_bt_state1_clicked(bool checked);
-
   void on_bt_state2_clicked(bool checked);
 
-  void on_bt_signOut_clicked();
-
+  void on_bt_showBilling_clicked();
+  void on_bt_showDetails_clicked();
+  void on_bt_backToDashboard_clicked();
 
 private:
   Ui::MainWindow *ui;

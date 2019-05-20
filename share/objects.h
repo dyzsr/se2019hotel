@@ -50,7 +50,7 @@ struct Request
   double setwdspd;
 
   Request(int _reqId = 0, QString _usrId = "",
-          int _state = 0, int _settemp = 0, int _setwdspd = 0):
+          int _state = 0, double _settemp = 0, double _setwdspd = 0):
     reqId(_reqId), usrId(_usrId),
     state(_state), settemp(_settemp), setwdspd(_setwdspd)
   {}

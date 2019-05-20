@@ -30,9 +30,9 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="page_signIn">
      <widget class="QLineEdit" name="edit_username">
       <property name="geometry">
        <rect>
@@ -129,7 +129,7 @@ color: #000000;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_1">
+    <widget class="QWidget" name="page_dashboard">
      <widget class="QPushButton" name="bt_tempDown">
       <property name="geometry">
        <rect>
@@ -457,6 +457,21 @@ color: #ff3333;</string>
       </property>
       <property name="text">
        <string>设定风速</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_billings">
+     <widget class="QPushButton" name="bt_backToDashboard">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>返回</string>
       </property>
      </widget>
     </widget>
