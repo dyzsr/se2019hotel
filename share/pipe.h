@@ -21,10 +21,10 @@ public:
   Room getRoom(QString usrId);//
 
   // 获取账目列表（以roomId来筛选）
-  QVector<Billing> getBillings(QString usrId = nullptr, int roomId = -1);
+  QVector<Billing> getBillings(QString usrId = nullptr, int roomId = -1);//
 
   // 向数据库里写请求（添加在request表的末尾）
-  void sendRequest(const Request &request);
+  void sendRequest(const Request &request);//
 
   /*
    * Methods for the server end
@@ -37,7 +37,7 @@ public:
   void delUser(const User &user);//
 
   // 获取所有用户数据
-  QVector<User> getUsers();
+  QVector<User> getUsers();//
 
   // 统一设置所有用户数据
   void setUsers(const QVector<User> &users);
@@ -58,13 +58,13 @@ public:
   void delRequests(const QVector<Request> &requests);//
 
   // 添加一条账目记录
-  void addBilling(const Billing &billing);
+  void addBilling(const Billing &billing);//
 
   // 获取管理员信息列表
-  QVector<Admin> getAdmins();
+  QVector<Admin> getAdmins();//
 
   // 获取主机配置信息
-  Host getHost();
+  Host getHost();//
 
 private:
   QSqlDatabase db;
