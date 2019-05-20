@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <QObject>
+#include <QTimer>
 
 #include "../share/objects.h"
 #include "../share/pipe.h"
@@ -17,8 +18,9 @@ public:
 signals:
   void sgn_refresh(Room room);
 
-private slots:
-  void fetchData();
+public slots:
+  bool signIn(QString usrId, QString passwd);
+  void signOut();
 
   void incTemp();
   void decTemp();
@@ -29,8 +31,12 @@ private slots:
   void setState(int state);
   void setMode(int mode);
 
+private slots:
+  void fetchData();
+
 private:
   Pipe *pipe;
+  QTimer timer;
   Room room;
   User user;
 };
