@@ -15,10 +15,10 @@ public:
    * */
 
   // 获取用户数据
-  User getUser(QString usrId);
+  User getUser(QString usrId);//
 
   // 获取房间数据
-  Room getRoom(QString usrId);
+  Room getRoom(QString usrId);//
 
   // 获取账目列表（以roomId来筛选）
   QVector<Billing> getBillings(QString usrId = nullptr, int roomId = -1);
@@ -31,10 +31,10 @@ public:
    * */
 
   // 添加用户
-  void addUser(const User &user);
+  void addUser(const User &user);//
 
   // 删除用户
-  void delUser(const User &user);
+  void delUser(const User &user);//
 
   // 获取所有用户数据
   QVector<User> getUsers();
@@ -46,16 +46,16 @@ public:
   void setRooms(const QVector<Room> &rooms);
 
   // 增添一个房间
-  void addRoom(const Room &room);
+  void addRoom(const Room &room);//
 
   // 删除一个房间
-  void delRoom(const Room &room);
+  void delRoom(const Room &room);//
 
   // 获取数据库中的所有请求
-  QVector<Request> getRequests();
+  QVector<Request> getRequests();//
 
   // 删除数据库中给定的请求
-  void delRequests(const QVector<Request> &requests);
+  void delRequests(const QVector<Request> &requests);//
 
   // 添加一条账目记录
   void addBilling(const Billing &billing);
