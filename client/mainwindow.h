@@ -30,6 +30,10 @@ public slots:
 private slots:
   void on_bt_ok_clicked();
 
+  void on_bt_checkIn_clicked();
+
+  void on_bt_checkOut_clicked();
+
 private:
   Ui::MainWindow *ui;
 };

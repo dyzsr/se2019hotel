@@ -44,3 +44,13 @@ void MainWindow::on_bt_ok_clicked()
     ui->lb_verdict->show();
   }
 }
+
+void MainWindow::on_bt_checkIn_clicked()
+{
+
+}
+
+void MainWindow::on_bt_checkOut_clicked()
+{
+
+}

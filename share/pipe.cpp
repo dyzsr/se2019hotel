@@ -49,6 +49,7 @@ Room Pipe::getRoom(QString usrId)
     room.cost = query.record().value("costs").toDouble();
   } else {
     qDebug() << "error";
+    qDebug() << "given user id = " << usrId;
 //    qDebug() << query.lastError();
   }
   return room;

@@ -18,7 +18,7 @@ Client::~Client()
 
 void Client::fetchData()
 {
-  room = pipe->getRoom(room.usrId);
+  room = pipe->getRoom(user.id);
   emit sgn_refresh(room);
 }
 
