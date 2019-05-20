@@ -24,9 +24,6 @@ void Client::fetchData()
 bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
-  // TODO: remove following 2 lines
-  // user.id = "310f";
-  // user.pswd = "password";
   if (user.pswd == passwd) {
     connect(&timer, &QTimer::timeout, this, &Client::fetchData);
     timer.start(2000);

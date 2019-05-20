@@ -17,10 +17,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::refresh(Room room)
 {
-  ui->disp_temp->setNum(room.temp);
-  ui->disp_settemp->setNum(room.settemp);
-  ui->disp_wdspd->setNum(room.wdspd);
-  ui->disp_setwdspd->setNum(room.setwdspd);
+  ui->lcd_temp->display(room.temp);
+  ui->lcd_settemp->display(room.settemp);
+  ui->lcd_wdspd->display(room.wdspd);
+  ui->lcd_setwdspd->display(room.setwdspd);
 }
 
 void MainWindow::showBilling(QVector<Billing> billings)
@@ -33,7 +33,7 @@ void MainWindow::showDetails(QVector<Billing> billings)
 
 }
 
-void MainWindow::on_bt_ok_clicked()
+void MainWindow::on_bt_signIn_clicked()
 {
   bool success = emit sgn_signIn(ui->edit_username->text(),
                                  ui->edit_password->text());
@@ -51,6 +51,58 @@ void MainWindow::on_bt_checkIn_clicked()
 }
 
 void MainWindow::on_bt_checkOut_clicked()
+{
+
+}
+
+void MainWindow::on_bt_tempUp_clicked()
+{
+  int temp = ui->sb_settemp->value();
+  ui->sb_settemp->setValue(temp + 1);
+}
+
+void MainWindow::on_bt_tempDown_clicked()
+{
+  int temp = ui->sb_settemp->value();
+  ui->sb_settemp->setValue(temp - 1);
+}
+
+void MainWindow::on_sb_settemp_valueChanged(int temp)
+{
+
+}
+
+void MainWindow::on_bt_wdspdUp_clicked()
+{
+
+}
+
+void MainWindow::on_bt_wdspdDown_clicked()
+{
+
+}
+
+void MainWindow::on_sb_setwdspd_valueChanged(int wdspd)
+{
+
+}
+
+void MainWindow::on_bt_state0_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_bt_state1_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_bt_state2_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_bt_signOut_clicked()
 {
 
 }

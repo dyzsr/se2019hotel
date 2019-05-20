@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLineEdit" name="edit_username">
@@ -99,7 +99,7 @@ color: #000000;</string>
        <string>PASSWORD</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="bt_ok">
+     <widget class="QPushButton" name="bt_signIn">
       <property name="geometry">
        <rect>
         <x>340</x>
@@ -133,10 +133,10 @@ color: #000000;</string>
      <widget class="QPushButton" name="bt_tempDown">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>180</x>
         <y>230</y>
-        <width>80</width>
-        <height>20</height>
+        <width>51</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
@@ -148,8 +148,8 @@ color: #000000;</string>
        <rect>
         <x>120</x>
         <y>230</y>
-        <width>80</width>
-        <height>20</height>
+        <width>51</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
@@ -159,14 +159,14 @@ color: #000000;</string>
      <widget class="QLabel" name="lb_temp">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>70</x>
         <y>230</y>
-        <width>71</width>
+        <width>41</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Temperature</string>
+       <string>温度</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_checkIn">
@@ -179,83 +179,7 @@ color: #000000;</string>
        </rect>
       </property>
       <property name="text">
-       <string>CHECK IN</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="disp_temp">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>40</y>
-        <width>101</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #445566;</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="disp_settemp">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>40</y>
-        <width>101</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #665544;</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="disp_wdspd">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>40</y>
-        <width>101</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #556644;</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="disp_setwdspd">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>40</y>
-        <width>101</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: #446655;</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>入住</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_checkOut">
@@ -268,7 +192,271 @@ color: #000000;</string>
        </rect>
       </property>
       <property name="text">
-       <string>CHECK OUT</string>
+       <string>离开</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_wdspd">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>270</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>风速</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_wdspdDown">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>270</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DOWN</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_wdspdUp">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>270</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>UP</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_state">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>310</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>模式</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_state0">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>310</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_state1">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>310</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_state2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>310</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_signOut">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>190</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>登出账户</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_showBilling">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>230</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>查看账单</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_showDetails">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>270</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>查看详单</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_settemp">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>230</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>25</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_setwdspd">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>270</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>25</number>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcd_temp">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>50</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #050511;
+color: #3333ff;</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcd_settemp">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>50</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #110f05;
+color: #ffff33;</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcd_wdspd">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>50</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #051105;
+color: #33ff33;</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcd_setwdspd">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>50</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #110005;
+color: #ff3333;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_temp_2">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>120</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>温度</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_settemp_2">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>120</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设定温度</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_wdspd_4">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>120</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>风速</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_setwdspd_2">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>120</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设定风速</string>
       </property>
      </widget>
     </widget>
