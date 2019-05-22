@@ -11,7 +11,7 @@ Reception::Reception(QObject *parent, Pipe *_pipe):
 
 void Reception::fetchBillings()
 {
-  billings = pipe->getBillings(room.usrId, room.roomId);
+  billings = pipe->getBillings(room.roomId);
   qDebug() << "[Reception] fetch billing";
 }
 
