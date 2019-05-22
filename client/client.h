@@ -17,6 +17,7 @@ public:
 
 signals:
   void sgn_refresh(Room room);
+  void sgn_setRoom(Room room);
 
 public slots:
   bool signIn(QString usrId, QString passwd);

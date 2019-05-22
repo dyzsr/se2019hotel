@@ -131,11 +131,15 @@ void MainWindow::on_bt_state2_clicked(bool checked)
 void MainWindow::on_bt_showBilling_clicked()
 {
   ui->stackedWidget->setCurrentIndex(2);
+  QDateTime start, end;
+  QVector<Billing> billings = emit sgn_getBilling(start, end);
 }
 
 void MainWindow::on_bt_showDetails_clicked()
 {
   ui->stackedWidget->setCurrentIndex(2);
+  QDateTime start, end;
+  QVector<Billing> details = emit sgn_getBilling(start, end);
 }
 
 void MainWindow::on_bt_backToDashboard_clicked()

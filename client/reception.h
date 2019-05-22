@@ -13,22 +13,20 @@ class Reception : public QObject
 public:
   explicit Reception(QObject *parent = nullptr, Pipe *_pipe = nullptr);
 
-  void setRoom(const Room &room);
+signals:
+
+public slots:
+  void setRoom(Room room);
 
   QVector<Billing> getBillings(QDateTime start = QDateTime(),
                                QDateTime end = QDateTime());
-
-signals:
-  void sgn_showBilling(QVector<Billing> billings);
-  void sgn_showDetails(QVector<Billing> billings);
-
-public slots:
-  void fetchBillings();
 
 private:
   Pipe *pipe;
   Room room;
   QVector<Billing> billings;
+
+  void fetchBillings();
 };
 
 #endif // RECEPTION_H

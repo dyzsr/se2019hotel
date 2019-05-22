@@ -24,6 +24,8 @@ signals:
   void sgn_setWdspd(int wdspd);
   void sgn_setState(int state);
 
+  QVector<Billing> sgn_getBilling(QDateTime start, QDateTime end);
+
 public slots:
   void refresh(Room room);
   void showBilling(QVector<Billing> billings);
