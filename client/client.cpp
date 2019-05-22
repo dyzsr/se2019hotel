@@ -17,6 +17,7 @@ Client::~Client()
 
 void Client::fetchData()
 {
+  qDebug() << "[Client]";
   room = pipe->getRoom(user.id);
   emit sgn_refresh(room);
 }
@@ -24,50 +25,43 @@ void Client::fetchData()
 bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
-  // TODO: remove following 2 lines
-  // user.id = "310f";
-  // user.pswd = "password";
   if (user.pswd == passwd) {
+    fetchData();
+    emit sgn_setRoom(room);
     connect(&timer, &QTimer::timeout, this, &Client::fetchData);
     timer.start(2000);
+    qDebug() << "[Client] sign in";
     return true;
   }
-  qDebug() << usrId << " " << passwd;
-  qDebug() << user.id << " " << user.pswd;
+  qDebug() << "[Client] input: " << usrId << " " << passwd;
+  qDebug() << "[Client] database: " << user.id << " " << user.pswd;
   return false;
 }
 
-void Client::signOut()
+bool Client::signOut()
 {
   timer.stop();
+  qDebug() << "[Client] sign out";
+  return true;
 }
 
-void Client::incTemp()
+void Client::setTemp(int temp)
 {
-
+  Request request(0, user.id, room.state, temp, room.wdspd);
+  qDebug() << "[Client]";
+  pipe->sendRequest(request);
 }
 
-void Client::decTemp()
+void Client::setWdspd(int wdspd)
 {
-
-}
-
-void Client::incWdspd()
-{
-
-}
-
-void Client::decWdspd()
-{
-
+  Request request(0, user.id, room.state, room.temp, wdspd);
+  qDebug() << "[Client]";
+  pipe->sendRequest(request);
 }
 
 void Client::setState(int state)
 {
-
-}
-
-void Client::setMode(int mode)
-{
-
+  Request request(0, user.id, state, room.temp, room.wdspd);
+  qDebug() << "[Client]";
+  pipe->sendRequest(request);
 }

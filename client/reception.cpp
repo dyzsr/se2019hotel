@@ -1,5 +1,7 @@
 #include "reception.h"
 
+#include <QDebug>
+
 Reception::Reception(QObject *parent, Pipe *_pipe):
   QObject(parent),
   pipe(_pipe)
@@ -7,9 +9,16 @@ Reception::Reception(QObject *parent, Pipe *_pipe):
   Q_ASSERT(pipe != nullptr);
 }
 
-void Reception::setRoom(const Room &_room)
+void Reception::fetchBillings()
+{
+  billings = pipe->getBillings(room.usrId, room.roomId);
+  qDebug() << "[Reception] fetch billing";
+}
+
+void Reception::setRoom(Room _room)
 {
   room = _room;
+  qDebug() << "[Reception] set room";
 }
 
 QVector<Billing> Reception::getBillings(QDateTime start, QDateTime end)
@@ -31,10 +40,6 @@ QVector<Billing> Reception::getBillings(QDateTime start, QDateTime end)
       rear--;
     }
   }
+  qDebug() << "[Reception] get billing";
   return billings.mid(front, rear - front);
-}
-
-void Reception::fetchBillings()
-{
-  //billings = pipe->getBillings(room.usrId, room.roomId);
 }
