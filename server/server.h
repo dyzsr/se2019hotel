@@ -18,8 +18,8 @@ signals:
 
 private slots:
   void fetchRequest();
-
   void handleRequest();
+  QVector<Billing> getBillings(QDateTime start = QDateTime(), QDateTime end = QDateTime());
 
 private:
   Pipe *pipe;
@@ -27,6 +27,7 @@ private:
   QVector<Room> rooms;
 
   QVector<Request> requests;
+  QVector<Billing> billings;
 };
 
 #endif // SERVER_H

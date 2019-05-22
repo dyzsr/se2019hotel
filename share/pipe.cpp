@@ -184,7 +184,7 @@ void Pipe::delRequests(const QVector<Request> &requests)
   qDebug() << "del requests";
 }
 
-QVector<Billing> Pipe::getBillings(QString usrId, int roomId)
+QVector<Billing> Pipe::getBillings(int roomId)
 {
   QSqlQuery query(db);
   QSqlRecord rec;
