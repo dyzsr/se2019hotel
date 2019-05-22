@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
   Pipe pipe;
   Server server(&w, &pipe);
-  Manager manager(&w);
+  Manager manager(&w, &pipe);
 
   w.show();
   return a.exec();

@@ -21,7 +21,7 @@ public:
   Room getRoom(QString usrId);
 
   // 获取账目列表（以roomId来筛选）
-  QVector<Billing> getBillings(QString usrId = nullptr, int roomId = -1);
+  QVector<Billing> getBillings(int roomId);
 
   // 向数据库里写请求（添加在request表的末尾）
   void sendRequest(const Request &request);

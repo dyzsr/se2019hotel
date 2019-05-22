@@ -16,12 +16,20 @@ Server::~Server() {}
 
 void Server::fetchRequest()
 {
+  qDebug() << "[Server] ";
   QVector<Request> _request = pipe->getRequests();
   requests.append(_request);
+  qDebug() << "[Server] ";
   pipe->delRequests(_request);
 }
 
 void Server::handleRequest()
 {
 
+}
+
+QVector<Billing> Server::getBillings(QDateTime start, QDateTime end)
+{
+  // TODO
+  return billings;
 }
