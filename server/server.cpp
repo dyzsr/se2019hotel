@@ -23,6 +23,8 @@ void Server::init()
       user2room[room.usrId] = room.roomId;
     }
   }
+  need2AddDocument.resize(rooms.size());
+  need2AddDocument.fill(false);
   room_lock.unlock();
 }
 
@@ -83,12 +85,21 @@ void Server::handleRequests()
 
 void Server::updateRooms()
 {
-
+  // TODO:
+  // 按照settemp setwdspd state的值
+  // 更新temp wdspd
+  // room.usrId如果为空则是空房间
 }
 
 void Server::updateBillings()
 {
-
+  // TODO:
+  // 针对每个room更新billing
+  // room.usrId如果为空则是空房间 不计费
+  // 只更新每个room时间最新的一条记录
+  // need2AddDocument与rooms一一对应
+  // 表示对于这个房间是否需要增加新的一条记录
+  // 如果need2AddDocument[i]为真 则对于room[i]应该新加一条billing记录
 }
 
 void Server::uploadData()
@@ -111,7 +122,7 @@ QVector<Billing> Server::getBillings(QDateTime start, QDateTime end)
          it != billings.rend(); ++it) {
       if (it->start <= end)
         break;
-      rear++;
+      rear--;
     }
   }
   return billings.mid(front, rear - front);

@@ -35,13 +35,18 @@ private:
   Pipe *pipe;
 
   QVector<User> users;
+
   QVector<Room> rooms;
+  QReadWriteLock room_lock;
+
   QMap<QString, int> user2room;
 
-  QReadWriteLock room_lock;
+  QVector<Request> requests;
   QReadWriteLock req_lock;
 
-  QVector<Request> requests;
+  // 表示是否需要增加一条billing记录
+  QVector<bool> need2AddDocument;
+
   QVector<Billing> billings;
 };
 
