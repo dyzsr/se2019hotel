@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
   Server server(&w, &pipe);
   Manager manager(&w, &pipe);
 
+  QObject::connect(&manager, &Manager::sgn_getBilling, &server, &Server::getBillings);
+
   w.show();
   return a.exec();
 }

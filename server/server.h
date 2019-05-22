@@ -4,8 +4,10 @@
 #include "../share/objects.h"
 #include "../share/pipe.h"
 
+#include <QMap>
 #include <QObject>
 #include <QVector>
+#include <QReadWriteLock>
 
 class Server : public QObject
 {
@@ -16,15 +18,28 @@ public:
 
 signals:
 
-private slots:
-  void fetchRequest();
-  void handleRequest();
+public slots:
+  void process();
   QVector<Billing> getBillings(QDateTime start = QDateTime(), QDateTime end = QDateTime());
 
 private:
+  void init();
+  int allocateRoom(QString usrId);
+  void fetchRequests();
+  void handleRequests();
+  void updateRooms();
+  void updateBillings();
+  void uploadData();
+
+private:
   Pipe *pipe;
+
   QVector<User> users;
   QVector<Room> rooms;
+  QMap<QString, int> user2room;
+
+  QReadWriteLock room_lock;
+  QReadWriteLock req_lock;
 
   QVector<Request> requests;
   QVector<Billing> billings;

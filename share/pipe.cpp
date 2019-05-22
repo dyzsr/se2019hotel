@@ -323,3 +323,33 @@ void Pipe::setRooms(const QVector<Room> &rooms)
   }
   qDebug() << "set rooms";
 }
+
+QVector<Room> Pipe::getRooms()
+{
+  QSqlQuery query(db);
+  query.prepare("SELECT * FROM tcs_app_room;");
+  QVector<Room> rooms;
+  if (query.exec()) {
+    while (query.next()) {
+      Room room;
+      room.roomId = query.record().value("id").toInt();
+      room.usrId = query.record().value("user_id_id").toString();
+      room.temp = query.record().value("temp").toDouble();
+      room.settemp = query.record().value("settemp").toDouble();
+      room.wdspd = query.record().value("wdspd").toDouble();
+      room.setwdspd = query.record().value("setwpspd").toDouble();
+      room.token = query.record().value("token").toString();
+      room.state = query.record().value("state").toInt();
+      room.mode = query.record().value("mode").toInt();
+      room.duration = query.record().value("duration").toDateTime();
+      room.start = query.record().value("start").toDateTime();
+      room.pwr = query.record().value("power").toDouble();
+      room.cost = query.record().value("costs").toDouble();
+      rooms.append(room);
+    }
+    qDebug() << "get rooms";
+  } else {
+    qDebug() << query.lastError();
+  }
+  return rooms;
+}
