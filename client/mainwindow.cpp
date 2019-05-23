@@ -21,15 +21,8 @@ void MainWindow::refresh(Room room)
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
   ui->lcd_setwdspd->display(room.setwdspd);
-  QString str;
-  str.append("费用：");
-  str.append(QString::number(room.cost));
-  str.append(" 元");
-  ui->lb_fee->setText(str);
-  str.clear();
-  str.append("费率：");
-  str.append(QString::number(room.pwr));
-  ui->lb_feeRate->setText(str);
+  ui->lb_fee->setNum(room.cost);
+  ui->lb_feeRate->setNum(room.pwr);
 }
 
 void MainWindow::on_bt_signIn_clicked()
