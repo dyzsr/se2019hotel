@@ -1,12 +1,36 @@
 #include "manager.h"
 
 #include <QDateTime>
+#include <QDebug>
 
 Manager::Manager(QObject *parent):
   QObject(parent),
   pipe(Pipe::getInstance())
 {
   Q_ASSERT(pipe != nullptr);
+  qDebug() << "[Manager] new";
+}
+
+Manager::~Manager()
+{
+  qDebug() << "[Manager] destroy";
+}
+
+bool Manager::signIn(QString name, QString pswd)
+{
+  adm = pipe->getAdmin(name);
+  if (pswd == adm.manpwsd) {
+    return true;
+  } else {
+    qDebug() << "<Input>" << name << pswd;
+    qDebug() << "<Database>" << adm.manId << adm.manpwsd;
+    return false;
+  }
+}
+
+bool Manager::signOut()
+{
+  return true;
 }
 
 void Manager::fetchBillings(QDateTime start, QDateTime end)

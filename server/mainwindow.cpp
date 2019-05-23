@@ -27,4 +27,5 @@ void MainWindow::on_bt_back_clicked()
 
 void MainWindow::on_bt_callManager_clicked()
 {
+  emit sgn_openNewWindow(this);
 }

@@ -16,7 +16,7 @@ public:
 
   static Pipe *getInstance();
   /*
-   * Methods for the client end
+   * Methods for Clients
    * */
 
   // 获取用户数据
@@ -25,14 +25,18 @@ public:
   // 获取房间数据
   Room getRoom(QString usrId);
 
-  // 获取账目列表（以roomId来筛选）
-  QVector<Billing> getBillings(int roomId);
-
   // 向数据库里写请求（添加在request表的末尾）
   void sendRequest(const Request &request);
 
   /*
-   * Methods for the server end
+   * Methods for the FrontDesk
+   * */
+
+  // 获取账目列表（以roomId来筛选）
+  QVector<Billing> getBillings(int roomId);
+
+  /*
+   * Methods for Managers
    * */
 
   // 添加用户
@@ -70,6 +74,8 @@ public:
 
   // 获取管理员信息列表
   QVector<Admin> getAdmins();
+
+  Admin getAdmin(QString name);
 
   // 获取主机配置信息
   Host getHost();

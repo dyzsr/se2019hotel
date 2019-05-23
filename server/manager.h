@@ -12,21 +12,24 @@ class Manager : public QObject
   Q_OBJECT
 public:
   explicit Manager(QObject *parent = nullptr);
+  ~Manager();
 
 signals:
   QVector<Billing> sgn_getBilling(QDateTime, QDateTime);
 
 public slots:
-  // TODO
+  bool signIn(QString name, QString pswd);
+  bool signOut();
+
   QVector<Billing> getDayReport();
-  // TODO
   QVector<Billing> getWeekReport();
-  // TODO
   QVector<Billing> getMonthReport();
   QVector<Billing> getReport(QDateTime start, QDateTime end);
 
 private:
   Pipe *pipe;
+
+  Admin adm;
   QVector<Billing> billings;
 
   void fetchBillings(QDateTime start, QDateTime end);
