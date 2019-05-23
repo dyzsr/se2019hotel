@@ -28,8 +28,6 @@ signals:
 
 public slots:
   void refresh(Room room);
-  void showBilling(QVector<Billing> billings);
-  void showDetails(QVector<Billing> billings);
 
 private slots:
   void on_bt_signIn_clicked();
@@ -46,8 +44,6 @@ private slots:
   void on_bt_state1_clicked(bool checked);
   void on_bt_state2_clicked(bool checked);
 
-  void on_bt_showBilling_clicked();
-  void on_bt_showDetails_clicked();
   void on_bt_backToDashboard_clicked();
 
 private:

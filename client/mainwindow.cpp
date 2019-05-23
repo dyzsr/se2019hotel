@@ -21,16 +21,15 @@ void MainWindow::refresh(Room room)
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
   ui->lcd_setwdspd->display(room.setwdspd);
-}
-
-void MainWindow::showBilling(QVector<Billing> billings)
-{
-
-}
-
-void MainWindow::showDetails(QVector<Billing> billings)
-{
-
+  QString str;
+  str.append("费用：");
+  str.append(QString::number(room.cost));
+  str.append(" 元");
+  ui->lb_fee->setText(str);
+  str.clear();
+  str.append("费率：");
+  str.append(QString::number(room.pwr));
+  ui->lb_feeRate->setText(str);
 }
 
 void MainWindow::on_bt_signIn_clicked()
@@ -126,20 +125,6 @@ void MainWindow::on_bt_state2_clicked(bool checked)
     ui->bt_state2->setChecked(true);
     emit sgn_setState(2);
   }
-}
-
-void MainWindow::on_bt_showBilling_clicked()
-{
-  ui->stackedWidget->setCurrentIndex(2);
-  QDateTime start, end;
-  QVector<Billing> billings = emit sgn_getBilling(start, end);
-}
-
-void MainWindow::on_bt_showDetails_clicked()
-{
-  ui->stackedWidget->setCurrentIndex(2);
-  QDateTime start, end;
-  QVector<Billing> details = emit sgn_getBilling(start, end);
 }
 
 void MainWindow::on_bt_backToDashboard_clicked()

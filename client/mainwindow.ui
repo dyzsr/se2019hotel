@@ -299,32 +299,6 @@ color: #000000;</string>
        <string>登出账户</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="bt_showBilling">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>230</y>
-        <width>80</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>查看账单</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_showDetails">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>270</y>
-        <width>80</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>查看详单</string>
-      </property>
-     </widget>
      <widget class="QSpinBox" name="sb_settemp">
       <property name="geometry">
        <rect>
@@ -459,6 +433,32 @@ color: #ff3333;</string>
        <string>设定风速</string>
       </property>
      </widget>
+     <widget class="QLabel" name="lb_fee">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>230</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>费用：0 元</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_feeRate">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>270</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>费率：0</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_billings">
      <widget class="QPushButton" name="bt_backToDashboard">
@@ -483,7 +483,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
