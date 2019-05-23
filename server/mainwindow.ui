@@ -30,14 +30,14 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_frontdesk">
      <widget class="QPushButton" name="bt_callManager">
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>280</y>
+        <y>290</y>
         <width>80</width>
         <height>20</height>
        </rect>
@@ -46,105 +46,775 @@
        <string>管理员</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="page_manager1">
-     <widget class="QPushButton" name="bt_signIn">
+     <widget class="QWidget" name="room_0" native="true">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>210</y>
-        <width>80</width>
-        <height>20</height>
+        <x>50</x>
+        <y>20</y>
+        <width>231</width>
+        <height>41</height>
        </rect>
       </property>
-      <property name="text">
-       <string>登陆</string>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
       </property>
+      <widget class="QPushButton" name="bt_details_0">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_0">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_0">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_0">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 0</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLabel" name="lb_adminname">
+     <widget class="QWidget" name="room_1" native="true">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>50</x>
+        <y>70</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_1">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_1">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_1">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_1">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 1</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
         <y>120</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>管理员用户名</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="edit_adminpswd">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>160</y>
-        <width>181</width>
-        <height>21</height>
+        <width>231</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #ffffff;
-color: #000000;</string>
+       <string notr="true">background-color: #ccaaff;</string>
       </property>
+      <widget class="QPushButton" name="bt_details_2">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_2">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_2">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 2</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLineEdit" name="edit_adminname">
+     <widget class="QWidget" name="room_3" native="true">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>50</x>
+        <y>170</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_3">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_3">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_3">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 3</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_4" native="true">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>220</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_4">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_4">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_4">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_4">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 4</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_5" native="true">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>70</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_5">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_5">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_5">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_5">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 6</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_6" native="true">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>220</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_6">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_6">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_6">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_6">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 10</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_7" native="true">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>20</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #ccaaff;</string>
+      </property>
+      <widget class="QPushButton" name="bt_details_7">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_7">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_7">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_7">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 5</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="room_8" native="true">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
         <y>120</y>
-        <width>181</width>
-        <height>21</height>
+        <width>231</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #ffffff;
-color: #000000;</string>
+       <string notr="true">background-color: #ccaaff;</string>
       </property>
+      <widget class="QPushButton" name="bt_details_8">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_8">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_8">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_8">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 7</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLabel" name="lb_adminpswd">
+     <widget class="QWidget" name="room_9" native="true">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>160</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>管理员密码</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_verdict">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>210</y>
-        <width>191</width>
-        <height>16</height>
+        <x>320</x>
+        <y>170</y>
+        <width>231</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: #ff0000</string>
+       <string notr="true">background-color: #ccaaff;</string>
       </property>
-      <property name="text">
-       <string>Invalid admin name or password</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="page_manager2">
-     <widget class="QPushButton" name="bt_back">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>30</y>
-        <width>80</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>返回</string>
-      </property>
+      <widget class="QPushButton" name="bt_details_9">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_billing_9">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkout_9">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_room_9">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>Room 8</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>

@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   ui->stackedWidget->setCurrentWidget(ui->page_frontdesk);
-  ui->lb_verdict->hide();
 }
 
 MainWindow::~MainWindow()
@@ -15,17 +14,25 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
-void MainWindow::on_bt_signIn_clicked()
-{
-  ui->stackedWidget->setCurrentWidget(ui->page_manager2);
-}
-
-void MainWindow::on_bt_back_clicked()
-{
-  ui->stackedWidget->setCurrentWidget(ui->page_manager1);
-}
-
 void MainWindow::on_bt_callManager_clicked()
 {
   emit sgn_openNewWindow(this);
+}
+
+void MainWindow::on_bt_checkout_0_clicked()
+{
+  emit sgn_checkout(0);
+  // TODO
+}
+
+void MainWindow::on_bt_billing_0_clicked()
+{
+  QVector<Billing> billings = emit sgn_getBillings(0);
+  // TODO
+}
+
+void MainWindow::on_bt_details_0_clicked()
+{
+  QVector<Billing> billings = emit sgn_getBillings(0);
+  // TODO
 }

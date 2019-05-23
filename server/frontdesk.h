@@ -16,6 +16,10 @@ public:
 signals:
 
 public slots:
+  // 用户离开 在room表里将roomId对应的user id修改为空字符串
+  void checkOut(int roomId);
+  // 获取roomId对应房间的所有billing
+  QVector<Billing> getBillings(int roomId);
 
 private:
   Pipe *pipe;
