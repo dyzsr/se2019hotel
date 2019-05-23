@@ -21,6 +21,9 @@ signals:
 public slots:
   void process();
 
+  // TODO
+  void checkOut(int roomId);
+
   QVector<Billing> getBillings(QDateTime start = QDateTime(), QDateTime end = QDateTime());
 
 private:

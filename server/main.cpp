@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
   QObject::connect(&w, &MainWindow::sgn_checkout, &desk, &FrontDesk::checkOut);
   QObject::connect(&w, &MainWindow::sgn_getBillings, &desk, &FrontDesk::getBillings);
+  QObject::connect(&desk, &FrontDesk::sgn_checkout, &server, &Server::checkOut);
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);

@@ -52,6 +52,11 @@ void Server::process()
   updateBillings();
 }
 
+void Server::checkOut(int roomId)
+{
+  // TODO
+}
+
 void Server::fetchRequests()
 {
   req_lock.lockForWrite();
