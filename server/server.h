@@ -13,7 +13,7 @@ class Server : public QObject
 {
   Q_OBJECT
 public:
-  explicit Server(QObject *parent = nullptr, Pipe *_pipe = nullptr);
+  explicit Server(QObject *parent = nullptr);
   ~Server();
 
 signals:

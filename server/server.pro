@@ -29,17 +29,24 @@ SOURCES += \
         mainwindow.cpp \
     ../share/pipe.cpp \
     server.cpp \
-    manager.cpp
+    manager.cpp \
+    frontdesk.cpp \
+    managerwindow.cpp \
+    managercontrol.cpp
 
 HEADERS += \
         mainwindow.h \
     ../share/objects.h \
     ../share/pipe.h \
     server.h \
-    manager.h
+    manager.h \
+    frontdesk.h \
+    managerwindow.h \
+    managercontrol.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    managerwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

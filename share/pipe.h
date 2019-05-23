@@ -6,10 +6,15 @@
 
 class Pipe
 {
-public:
+private:
   Pipe();
   ~Pipe();
 
+  static Pipe pipe;
+
+public:
+
+  static Pipe *getInstance();
   /*
    * Methods for the client end
    * */
@@ -45,6 +50,7 @@ public:
   // 统一设置所有房间数据（删除原有的房间数据）
   void setRooms(const QVector<Room> &rooms);
 
+  // 获取所有房间信息
   QVector<Room> getRooms();
 
   // 增添一个房间

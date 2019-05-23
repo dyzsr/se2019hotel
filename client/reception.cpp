@@ -2,9 +2,9 @@
 
 #include <QDebug>
 
-Reception::Reception(QObject *parent, Pipe *_pipe):
+Reception::Reception(QObject *parent):
   QObject(parent),
-  pipe(_pipe)
+  pipe(Pipe::getInstance())
 {
   Q_ASSERT(pipe != nullptr);
 }

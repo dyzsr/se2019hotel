@@ -11,7 +11,7 @@ class Reception : public QObject
 {
   Q_OBJECT
 public:
-  explicit Reception(QObject *parent = nullptr, Pipe *_pipe = nullptr);
+  explicit Reception(QObject *parent = nullptr);
 
 signals:
 

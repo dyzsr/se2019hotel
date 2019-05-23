@@ -8,10 +8,8 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
   MainWindow w;
 
-  Pipe pipe;
-
-  Client client(&w, &pipe);
-  Reception reception(&w, &pipe);
+  Client client(&w);
+  Reception reception(&w);
 
   QObject::connect(&client, &Client::sgn_setRoom, &reception, &Reception::setRoom);
   QObject::connect(&client, &Client::sgn_refresh, &w, &MainWindow::refresh);

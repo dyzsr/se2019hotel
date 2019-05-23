@@ -11,7 +11,7 @@ class Manager : public QObject
 {
   Q_OBJECT
 public:
-  explicit Manager(QObject *parent = nullptr, Pipe *pipe = nullptr);
+  explicit Manager(QObject *parent = nullptr);
 
 signals:
   QVector<Billing> sgn_getBilling(QDateTime, QDateTime);
