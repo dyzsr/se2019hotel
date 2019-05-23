@@ -8,3 +8,14 @@ FrontDesk::FrontDesk(QObject *parent):
 {
   Q_ASSERT(pipe != nullptr);
 }
+
+void FrontDesk::checkOut(int roomId)
+{
+  qDebug() << "[FrontDesk] check out" << roomId;
+}
+
+QVector<Billing> FrontDesk::getBillings(int roomId)
+{
+  qDebug() << "[FrontDesk] get billings" << roomId;
+  return billings;
+}

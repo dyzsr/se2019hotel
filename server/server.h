@@ -20,6 +20,7 @@ signals:
 
 public slots:
   void process();
+
   QVector<Billing> getBillings(QDateTime start = QDateTime(), QDateTime end = QDateTime());
 
 private:

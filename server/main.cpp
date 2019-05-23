@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
   FrontDesk desk(&w);
   ManagerControl manager_control(&w);
 
+  QObject::connect(&w, &MainWindow::sgn_checkout, &desk, &FrontDesk::checkOut);
+  QObject::connect(&w, &MainWindow::sgn_getBillings, &desk, &FrontDesk::getBillings);
+
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);
 
