@@ -9,7 +9,7 @@ Server::Server(QObject *parent):
 {
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &Server::process);
-  timer->start(1000);
+  timer->start(3000);
 }
 
 Server::~Server() {}

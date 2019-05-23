@@ -260,6 +260,24 @@ QVector<Admin> Pipe::getAdmins()
   return q;
 }
 
+Admin Pipe::getAdmin(QString name)
+{
+  QSqlQuery query(db);
+  Admin adm;
+  query.prepare("SELECT * FROM tcs_app_manager "
+                "WHERE name = :name;");
+  query.bindValue(":name", name);
+  if (query.exec() && query.next()) {
+    adm.manId = query.record().value("name").toString();
+    adm.manpwsd = query.record().value("pswd").toString();
+    adm.privilege = query.record().value("privilege").toInt();
+    qDebug() << "get admin";
+  } else {
+    qDebug() << query.lastError();
+  }
+  return adm;
+}
+
 Host Pipe::getHost()
 {
   QSqlQuery query(db);
