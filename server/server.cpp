@@ -3,9 +3,9 @@
 #include <QTimer>
 #include <QDebug>
 
-Server::Server(QObject *parent, Pipe *_pipe):
+Server::Server(QObject *parent):
   QObject(parent),
-  pipe(_pipe)
+  pipe(Pipe::getInstance())
 {
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &Server::process);

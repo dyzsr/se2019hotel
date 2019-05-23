@@ -2,9 +2,9 @@
 
 #include <QDateTime>
 
-Manager::Manager(QObject *parent, Pipe *_pipe):
+Manager::Manager(QObject *parent):
   QObject(parent),
-  pipe(_pipe)
+  pipe(Pipe::getInstance())
 {
   Q_ASSERT(pipe != nullptr);
 }

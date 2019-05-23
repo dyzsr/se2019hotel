@@ -6,10 +6,15 @@
 
 class Pipe
 {
-public:
+private:
   Pipe();
   ~Pipe();
 
+  static Pipe pipe;
+
+public:
+
+  static Pipe *getInstance();
   /*
    * Methods for the client end
    * */

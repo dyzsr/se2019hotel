@@ -6,6 +6,8 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
+Pipe Pipe::pipe;
+
 Pipe::Pipe():
   db(QSqlDatabase::addDatabase("QODBC3"))
 {
@@ -23,6 +25,11 @@ Pipe::~Pipe()
 {
   db.close();
   qDebug() << "close db";
+}
+
+Pipe *Pipe::getInstance()
+{
+  return &pipe;
 }
 
 Room Pipe::getRoom(QString usrId)

@@ -12,7 +12,7 @@ class Client: public QObject
   Q_OBJECT
 
 public:
-  explicit Client(QObject *parent = nullptr, Pipe *_pipe = nullptr);
+  explicit Client(QObject *parent = nullptr);
   ~Client();
 
 signals:

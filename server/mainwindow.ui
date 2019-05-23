@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>酒店主机 —— 前台</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QStackedWidget" name="stackedWidget">
@@ -32,7 +32,22 @@
     <property name="currentIndex">
      <number>1</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="page_frontdesk">
+     <widget class="QPushButton" name="bt_callManager">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>280</y>
+        <width>80</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>管理员</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_manager1">
      <widget class="QPushButton" name="bt_signIn">
       <property name="geometry">
        <rect>
@@ -117,7 +132,7 @@ color: #000000;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="page_manager2">
      <widget class="QPushButton" name="bt_back">
       <property name="geometry">
        <rect>

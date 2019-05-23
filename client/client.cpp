@@ -3,9 +3,9 @@
 #include <QTimer>
 #include <QDebug>
 
-Client::Client(QObject *parent, Pipe *_pipe):
+Client::Client(QObject *parent):
   QObject(parent),
-  pipe(_pipe),
+  pipe(Pipe::getInstance()),
   timer(this)
 {
   Q_ASSERT(pipe != nullptr);

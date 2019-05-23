@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  ui->stackedWidget->setCurrentIndex(0);
+  ui->stackedWidget->setCurrentWidget(ui->page_frontdesk);
   ui->lb_verdict->hide();
 }
 
@@ -17,10 +17,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_bt_signIn_clicked()
 {
-  ui->stackedWidget->setCurrentIndex(1);
+  ui->stackedWidget->setCurrentWidget(ui->page_manager2);
 }
 
 void MainWindow::on_bt_back_clicked()
 {
-  ui->stackedWidget->setCurrentIndex(0);
+  ui->stackedWidget->setCurrentWidget(ui->page_manager1);
+}
+
+void MainWindow::on_bt_callManager_clicked()
+{
 }

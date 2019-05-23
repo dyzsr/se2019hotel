@@ -20,6 +20,8 @@ private slots:
 
   void on_bt_back_clicked();
 
+  void on_bt_callManager_clicked();
+
 private:
   Ui::MainWindow *ui;
 };
