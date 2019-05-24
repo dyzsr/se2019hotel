@@ -2,6 +2,9 @@
 #include "frontdesk.h"
 #include "server.h"
 #include "managercontrol.h"
+
+#include "recordscontrol.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -19,6 +22,10 @@ int main(int argc, char *argv[])
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);
+
+  RecordsControl recordsControl;
+  QObject::connect(&w, &MainWindow::sgn_getBillings,
+                   &recordsControl, &RecordsControl::slot_detailedBill);
 
   w.show();
   return a.exec();

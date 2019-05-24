@@ -32,7 +32,10 @@ SOURCES += \
     manager.cpp \
     frontdesk.cpp \
     managerwindow.cpp \
-    managercontrol.cpp
+    managercontrol.cpp \
+    records.cpp \
+    recordscontrol.cpp \
+    recordswindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,11 +45,15 @@ HEADERS += \
     manager.h \
     frontdesk.h \
     managerwindow.h \
-    managercontrol.h
+    managercontrol.h \
+    records.h \
+    recordscontrol.h \
+    recordswindow.h
 
 FORMS += \
         mainwindow.ui \
-    managerwindow.ui
+    managerwindow.ui \
+    recordswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
