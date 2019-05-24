@@ -12,9 +12,12 @@
 ## 任务列表
 
 - [x] 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义
-- [ ] 在`share/pipe.cpp`中完善`share/pipe.h`定义的接口
-- [ ] 为server添加接受请求功能
-- [ ] 建立server子项目的界面
+- [x] 在`share/pipe.cpp`中完善`share/pipe.h`定义的接口
+- [x] 为server添加接受请求功能
+- [x] 建立server子项目的界面
+- [ ] 完善server类的功能
+- [ ] 完善账单和详单功能
+- [ ] 开发管理员查看空调状态功能
 
 ## 项目目录
 
@@ -27,19 +30,29 @@ project
 │   ├── main.cpp
 │   ├── mainwindow.cpp
 │   ├── mainwindow.h
-│   ├── mainwindow.ui
-│   ├── reception.cpp
-│   └── reception.h
+│   └── mainwindow.ui
 ├── server
 │   ├── main.cpp
 │   ├── mainwindow.cpp
 │   ├── mainwindow.h
 │   ├── mainwindow.ui
+│   ├── managercontrol.cpp
+│   ├── managercontrol.h
 │   ├── manager.cpp
 │   ├── manager.h
+│   ├── managerwindow.cpp
+│   ├── managerwindow.h
+│   ├── managerwindow.ui
+│   ├── recordscontrol.cpp
+│   ├── recordscontrol.h
+│   ├── records.cpp
+│   ├── records.h
+│   ├── recordswindow.cpp
+│   ├── recordswindow.h
+│   ├── recordswindow.ui
 │   ├── server.cpp
 │   ├── server.h
-│   ├── server.pro
+│   └── server.pro
 ├── share
 │   ├── db.sql
 │   ├── objects.h
@@ -67,44 +80,9 @@ project
 
 ### 共享接口
 
-`share/pipe.h`
+见`share/pipe.h`
 
 用于提供数据通信功能，对数据库的访问做了一层封装。使用时无需考虑数据库的通信问题。
-
-```  CPP
-#ifndef PIPE_H
-#define PIPE_H
-
-#include <QSqlDatabase>
-#include "objects.h"
-
-class Pipe
-{
-public:
-  int getRooms(Room *rooms);
-  Room getRoom(int roomId);
-
-  void addUser(const User &user);
-  void delUser(const User &user);
-
-  int getBillings(Billing *billings);
-  Billing getBilling(int roomId);
-
-  void sendRequest(const Request &request);
-
-  void setRooms(const Room *rooms, int n);
-  void addRoom(const Room &room);
-  void delRoom(const Room &room);
-
-  int getUsers(User *users);
-  void setUsers(const User *users, int n);
-
-  int getRequests(Request *requests);
-  void delRequests(const Request *requests, int n);  
-};
-
-#endif // PIPE_H  
-```
 
 
 ## Client子项目
@@ -116,22 +94,6 @@ public:
 Client类代表客户。
 
 待实现的成员方法：
-
-- [x] `fetchData()`，通过pipe获得房间的数据
-- [ ] `incTemp()`，通过pipe发送升温请求
-- [ ] `decTemp()`，
-- [ ] `incWdspd()`，
-- [ ] `decWdspd()`，
-- [ ] `setState(int state)`，
-- [ ] `setMode(int mode)`，
-
-### Reception类
-
-Reception类代表前台。
-
-待实现的成员方法：
-
-- [ ] `fetchBillings()`，通过pipe获得房间的消费数据
 
 
 ## Server子项目
