@@ -36,6 +36,7 @@ int Server::allocateRoom(QString usrId)
     if (room.usrId.isEmpty()) {
       user2room[usrId] = room.roomId;
       room.usrId = usrId;
+      room.start = QDateTime::currentDateTime();
       roomId = room.roomId;
       break;
     }
@@ -50,6 +51,7 @@ void Server::process()
   handleRequests();
   updateRooms();
   updateBillings();
+  uploadData();
 }
 
 void Server::checkOut(int roomId)

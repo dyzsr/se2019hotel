@@ -336,7 +336,7 @@ void Pipe::setUsers(const QVector<User> &users)
   qDebug() << "set users";
 }
 
-void Pipe::setRooms(const QVector<Room> &rooms)
+void Pipe::addRooms(const QVector<Room> &rooms)
 {
   QSqlQuery query(db);
   query.prepare("DELETE from tcs_app_room");
@@ -346,7 +346,37 @@ void Pipe::setRooms(const QVector<Room> &rooms)
   {
     addRoom(rooms.at(i));
   }
-  qDebug() << "set rooms";
+  qDebug() << "add rooms";
+}
+
+void Pipe::updateRooms(const QVector<Room> &rooms)
+{
+  QSqlQuery query(db);
+  for (Room room : rooms) {
+    query.prepare("UPDATE tcs_app_room "
+                  "SET user_id_id = :usrId, "
+                  "temp = :temp, settemp = :settemp, "
+                  "wdspd = :wdspd, setwdspd = :setwdspd, "
+                  "state = :state, mode = :mode, "
+                  "token = :token, costs = :cost, power = :power, "
+                  "start = :start, duration = :duration "
+                  "WHERE id = :id;");
+    query.bindValue(":usrId", room.usrId);
+    query.bindValue(":temp", room.temp);
+    query.bindValue(":settemp", room.settemp);
+    query.bindValue(":wdspd", room.wdspd);
+    query.bindValue(":setwdspd", room.setwdspd);
+    query.bindValue(":state", room.state);
+    query.bindValue(":mode", room.mode);
+    query.bindValue(":cost", room.cost);
+    query.bindValue(":power", room.pwr);
+    query.bindValue(":start", room.start);
+    query.bindValue(":duration", room.duration);
+    query.bindValue(":id", room.roomId);
+    query.exec();
+    query.finish();
+  }
+  qDebug() << "update rooms";
 }
 
 QVector<Room> Pipe::getRooms()

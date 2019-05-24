@@ -95,7 +95,6 @@ void MainWindow::on_bt_state0_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setChecked(true);
     ui->bt_state1->setChecked(false);
-    ui->bt_state2->setChecked(false);
     emit sgn_setState(0);
   }
 }
@@ -105,18 +104,7 @@ void MainWindow::on_bt_state1_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setChecked(false);
     ui->bt_state1->setChecked(true);
-    ui->bt_state2->setChecked(false);
     emit sgn_setState(1);
-  }
-}
-
-void MainWindow::on_bt_state2_clicked(bool checked)
-{
-  if (!checked) {
-    ui->bt_state0->setChecked(false);
-    ui->bt_state1->setChecked(false);
-    ui->bt_state2->setChecked(true);
-    emit sgn_setState(2);
   }
 }
 

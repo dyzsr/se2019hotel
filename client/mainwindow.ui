@@ -252,38 +252,25 @@ color: #000000;</string>
        <rect>
         <x>120</x>
         <y>310</y>
-        <width>51</width>
+        <width>81</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>0</string>
+       <string>待机</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_state1">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>210</x>
         <y>310</y>
-        <width>51</width>
+        <width>81</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_state2">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>310</y>
-        <width>51</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>2</string>
+       <string>开机</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_signOut">
