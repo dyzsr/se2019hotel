@@ -9,7 +9,8 @@ RecordsControl::RecordsControl(QObject *parent):
 
 void RecordsControl::slot_simpleBill(int roomId)
 {
-    recordsWindow.showSimpleBill(records.getSimpleBill(roomId));
+    Room room;
+    simpleBillWindow.showSimpleBill(room);
 }
 
 void RecordsControl::slot_detailedBill(int roomId)
@@ -18,7 +19,7 @@ void RecordsControl::slot_detailedBill(int roomId)
     recordsWindow.showDetailedBill(room, records.getDetailedBill(roomId));
 }
 
-void RecordsControl::slot_reportForm(QDateTime start, QDateTime end)
+void RecordsControl::slot_reportForm()
 {
-    recordsWindow.showReportForm(records.getReportForm(start, end));
+    reportFormWindow.showReportForm(records.getReportForm());
 }

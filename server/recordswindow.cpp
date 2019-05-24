@@ -8,6 +8,7 @@ RecordsWindow::RecordsWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->listWidget_db->setViewMode(QListView::ListMode);
     ui->lb_recordTitle->setAlignment(Qt::AlignCenter);
+    ui->lb_recordTitle->setText("详单");
 }
 
 RecordsWindow::~RecordsWindow()
@@ -15,21 +16,8 @@ RecordsWindow::~RecordsWindow()
     delete ui;
 }
 
-void RecordsWindow::showSimpleBill(QVector<QString> data)
-{
-    printData = data;
-    hideOptionalItems();
-    //To be continued
-
-    this->show();
-}
-
 void RecordsWindow::showDetailedBill(Room room, QVector<QString> data)
 {
-    recordTitle = "详单";
-    ui->lb_recordTitle->setText(recordTitle);
-    printData = data;
-    hideOptionalItems();
     //配置其他ui控件
     QString str;
     str.append("用户：");
@@ -54,22 +42,6 @@ void RecordsWindow::showDetailedBill(Room room, QVector<QString> data)
     }
     //显示
     this->show();
-    ui->widget_detailedBill->show();
-    ui->listWidget_db->show();
-}
-
-void RecordsWindow::showReportForm(QVector<QString> data)
-{
-    printData = data;
-    hideOptionalItems();
-    //To be continued
-
-    this->show();
-}
-
-void RecordsWindow::hideOptionalItems()
-{
-    ui->widget_detailedBill->hide();
 }
 
 void RecordsWindow::on_bt_return_clicked()

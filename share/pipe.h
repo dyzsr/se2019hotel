@@ -35,6 +35,9 @@ public:
   // 获取账目列表（以roomId来筛选）
   QVector<Billing> getBillings(int roomId);
 
+  // 获取全部bill
+  QVector<Billing> getAllBillings();
+
   // 添加用户
   void addUser(const User &user);
 

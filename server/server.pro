@@ -34,7 +34,9 @@ SOURCES += \
     managercontrol.cpp \
     records.cpp \
     recordscontrol.cpp \
-    recordswindow.cpp
+    recordswindow.cpp \
+    simplebillwindow.cpp \
+    reportformwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -46,12 +48,16 @@ HEADERS += \
     managercontrol.h \
     records.h \
     recordscontrol.h \
-    recordswindow.h
+    recordswindow.h \
+    simplebillwindow.h \
+    reportformwindow.h
 
 FORMS += \
         mainwindow.ui \
     managerwindow.ui \
-    recordswindow.ui
+    recordswindow.ui \
+    simplebillwindow.ui \
+    reportformwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

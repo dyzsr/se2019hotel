@@ -219,6 +219,32 @@ QVector<Billing> Pipe::getBillings(int roomId)
   return q;
 }
 
+QVector<Billing> Pipe::getAllBillings()
+{
+  QSqlQuery query(db);
+  QSqlRecord rec;
+  Billing bil;
+  QVector<Billing> q;
+  query.prepare("SELECT * FROM tcs_app_bill");
+  query.exec();
+  while (query.next()) {
+    rec = query.record();
+    bil.rate = rec.value("rate").toDouble();
+    bil.costs = rec.value("costs").toDouble();
+    bil.start = rec.value("start").toDateTime();
+    bil.wdspd = rec.value("wdspd").toInt();
+    bil.action = rec.value("action").toInt();
+    bil.roomId = rec.value("room_id_id").toInt();
+    bil.endTemp = rec.value("end_temp").toDouble();
+    bil.duration = rec.value("duration").toDateTime();
+    bil.billingId = rec.value("id").toInt();
+    bil.startTemp = rec.value("start_temp").toDouble();
+    q.append(bil);
+  }
+  qDebug() << "get all billings";
+  return q;
+}
+
 void Pipe::addBilling(const Billing &billing)
 {
   QSqlQuery query(db);

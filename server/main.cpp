@@ -21,6 +21,10 @@ int main(int argc, char *argv[])
 
   RecordsControl recordsControl(&w);
   QObject::connect(&w, &MainWindow::sgn_getBillings,
+                   &recordsControl, &RecordsControl::slot_simpleBill);
+  QObject::connect(&w, &MainWindow::sgn_getBillings,
+                   &recordsControl, &RecordsControl::slot_reportForm);
+  QObject::connect(&w, &MainWindow::sgn_getBillings,
                    &recordsControl, &RecordsControl::slot_detailedBill);
 
   w.show();

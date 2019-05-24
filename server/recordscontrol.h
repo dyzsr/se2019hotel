@@ -3,6 +3,8 @@
 
 #include "records.h"
 #include "recordswindow.h"
+#include "simplebillwindow.h"
+#include "reportformwindow.h"
 
 #include <QObject>
 
@@ -17,11 +19,13 @@ signals:
 public slots:
     void slot_simpleBill(int roomId);
     void slot_detailedBill(int roomId);
-    void slot_reportForm(QDateTime start, QDateTime end);
+    void slot_reportForm();
 
 private:
     Records records;
     RecordsWindow recordsWindow;
+    SimpleBillWindow simpleBillWindow;
+    ReportFormWindow reportFormWindow;
 };
 
 #endif // RECORDSCONTROL_H
