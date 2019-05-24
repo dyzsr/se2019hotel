@@ -42,7 +42,6 @@ private slots:
   void on_sb_setwdspd_valueChanged(int arg1);
   void on_bt_state0_clicked(bool checked);
   void on_bt_state1_clicked(bool checked);
-  void on_bt_state2_clicked(bool checked);
 
   void on_bt_backToDashboard_clicked();
 

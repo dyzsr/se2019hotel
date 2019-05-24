@@ -252,38 +252,25 @@ color: #000000;</string>
        <rect>
         <x>120</x>
         <y>310</y>
-        <width>51</width>
+        <width>81</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>0</string>
+       <string>待机</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_state1">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>210</x>
         <y>310</y>
-        <width>51</width>
+        <width>81</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_state2">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>310</y>
-        <width>51</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>2</string>
+       <string>开机</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_signOut">
@@ -436,27 +423,85 @@ color: #ff3333;</string>
      <widget class="QLabel" name="lb_fee">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>370</x>
         <y>230</y>
-        <width>91</width>
+        <width>31</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>费用：0 元</string>
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QLabel" name="lb_feeRate">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>370</x>
         <y>270</y>
-        <width>91</width>
+        <width>31</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>费率：0</string>
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>270</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>费率：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>230</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>费用：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>230</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>元</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>270</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>元</string>
       </property>
      </widget>
     </widget>
@@ -483,7 +528,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

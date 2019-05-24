@@ -21,15 +21,8 @@ void MainWindow::refresh(Room room)
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
   ui->lcd_setwdspd->display(room.setwdspd);
-  QString str;
-  str.append("费用：");
-  str.append(QString::number(room.cost));
-  str.append(" 元");
-  ui->lb_fee->setText(str);
-  str.clear();
-  str.append("费率：");
-  str.append(QString::number(room.pwr));
-  ui->lb_feeRate->setText(str);
+  ui->lb_fee->setNum(room.cost);
+  ui->lb_feeRate->setNum(room.pwr);
 }
 
 void MainWindow::on_bt_signIn_clicked()
@@ -102,7 +95,6 @@ void MainWindow::on_bt_state0_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setChecked(true);
     ui->bt_state1->setChecked(false);
-    ui->bt_state2->setChecked(false);
     emit sgn_setState(0);
   }
 }
@@ -112,18 +104,7 @@ void MainWindow::on_bt_state1_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setChecked(false);
     ui->bt_state1->setChecked(true);
-    ui->bt_state2->setChecked(false);
     emit sgn_setState(1);
-  }
-}
-
-void MainWindow::on_bt_state2_clicked(bool checked)
-{
-  if (!checked) {
-    ui->bt_state0->setChecked(false);
-    ui->bt_state1->setChecked(false);
-    ui->bt_state2->setChecked(true);
-    emit sgn_setState(2);
   }
 }
 

@@ -29,15 +29,11 @@ public:
   void sendRequest(const Request &request);
 
   /*
-   * Methods for the FrontDesk
+   * Methods for Server end
    * */
 
   // 获取账目列表（以roomId来筛选）
   QVector<Billing> getBillings(int roomId);
-
-  /*
-   * Methods for Managers
-   * */
 
   // 添加用户
   void addUser(const User &user);
@@ -52,7 +48,9 @@ public:
   void setUsers(const QVector<User> &users);
 
   // 统一设置所有房间数据（删除原有的房间数据）
-  void setRooms(const QVector<Room> &rooms);
+  void addRooms(const QVector<Room> &rooms);
+
+  void updateRooms(const QVector<Room> &rooms);
 
   // 获取所有房间信息
   QVector<Room> getRooms();
