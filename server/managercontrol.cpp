@@ -1,24 +1,17 @@
-#include "managercontrol.h"
+﻿#include "managercontrol.h"
 
 ManagerControl::ManagerControl(QObject *parent):
-  QObject(parent)
+  QObject(parent),
+  manager(parent),
+  window(static_cast<QWidget *>(parent))
 {
+  connect(&window, &ManagerWindow::sgn_signIn, &manager, &Manager::signIn);
+  connect(&window, &ManagerWindow::sgn_signOut, &manager, &Manager::signOut);
+  window.hide();
 }
 
-void ManagerControl::openNewWindow(QWidget *parent)
+void ManagerControl::openNewWindow()
 {
-  if (window == nullptr) {
-    window = new ManagerWindow(parent);
-    manager = new Manager(window);
-    window->show();
-    init();
-  } else if (!window->isVisible()) {
-    window->show();
-  }
-}
-
-void ManagerControl::init()
-{
-  connect(window, &ManagerWindow::sgn_signIn, manager, &Manager::signIn);
-  connect(window, &ManagerWindow::sgn_signOut, manager, &Manager::signOut);
+  window.init();
+  window.show();
 }

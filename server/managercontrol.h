@@ -1,4 +1,4 @@
-#ifndef MANAGERCONTROL_H
+﻿#ifndef MANAGERCONTROL_H
 #define MANAGERCONTROL_H
 
 #include "manager.h"
@@ -14,13 +14,11 @@ public:
   explicit ManagerControl(QObject *parent = nullptr);
 
 public slots:
-  void openNewWindow(QWidget *parent);
+  void openNewWindow();
 
 private:
-  Manager *manager;
-  ManagerWindow *window;
-
-  void init();
+  Manager manager;
+  ManagerWindow window;
 };
 
 #endif // MANAGERCONTROL_H

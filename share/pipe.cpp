@@ -1,4 +1,4 @@
-#include "pipe.h"
+﻿#include "pipe.h"
 
 #include <QDebug>
 #include <QSqlQuery>
@@ -112,7 +112,7 @@ void Pipe::addRoom(const Room &room)
                 ":cost, :pwr, :duration, :usrId, :start"
                 ");");
   query.bindValue(":roomId", room.roomId);
-  query.bindValue(":usrId", room.usrId);
+  query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
   query.bindValue(":temp", room.temp);
   query.bindValue(":settemp", room.settemp);
   query.bindValue(":wdspd", room.wdspd);
@@ -361,7 +361,7 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
                   "token = :token, costs = :cost, power = :power, "
                   "start = :start, duration = :duration "
                   "WHERE id = :id;");
-    query.bindValue(":usrId", room.usrId);
+    query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
     query.bindValue(":temp", room.temp);
     query.bindValue(":settemp", room.settemp);
     query.bindValue(":wdspd", room.wdspd);

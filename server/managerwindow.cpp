@@ -1,4 +1,4 @@
-#include "managerwindow.h"
+﻿#include "managerwindow.h"
 #include "ui_managerwindow.h"
 
 ManagerWindow::ManagerWindow(QWidget *parent) :
@@ -16,7 +16,9 @@ ManagerWindow::~ManagerWindow()
 
 void ManagerWindow::init()
 {
+  ui->stackedWidget->setCurrentIndex(0);
   ui->lb_verdict->hide();
+  ui->lb_adminpswd->setText(QString());
 }
 
 void ManagerWindow::on_bt_signIn_clicked()

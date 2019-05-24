@@ -30,7 +30,6 @@ SOURCES += \
     ../share/pipe.cpp \
     server.cpp \
     manager.cpp \
-    frontdesk.cpp \
     managerwindow.cpp \
     managercontrol.cpp \
     records.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
     ../share/pipe.h \
     server.h \
     manager.h \
-    frontdesk.h \
     managerwindow.h \
     managercontrol.h \
     records.h \

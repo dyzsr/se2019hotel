@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include "../share/objects.h"
@@ -23,8 +23,6 @@ signals:
   void sgn_setTemp(int temp);
   void sgn_setWdspd(int wdspd);
   void sgn_setState(int state);
-
-  QVector<Billing> sgn_getBilling(QDateTime start, QDateTime end);
 
 public slots:
   void refresh(Room room);

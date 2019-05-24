@@ -1,4 +1,4 @@
-#ifndef SERVER_H
+﻿#ifndef SERVER_H
 #define SERVER_H
 
 #include "../share/objects.h"
@@ -19,24 +19,26 @@ public:
 signals:
 
 public slots:
+  void handleRequests();
   void process();
 
   // TODO
   void checkOut(int roomId);
 
-  QVector<Billing> getBillings(QDateTime start = QDateTime(), QDateTime end = QDateTime());
+  Room getRoom(int roomId);
 
 private:
   void init();
   int allocateRoom(QString usrId);
-  void fetchRequests();
-  void handleRequests();
+
   void updateRooms();
   void updateBillings();
   void uploadData();
 
 private:
   Pipe *pipe;
+
+  Host info;
 
   QVector<User> users;
 
@@ -49,8 +51,7 @@ private:
   QReadWriteLock req_lock;
 
   // 表示是否需要增加一条billing记录
-  QVector<bool> need2AddDocument;
-
+  QVector<bool> newBilling;
   QVector<Billing> billings;
 };
 

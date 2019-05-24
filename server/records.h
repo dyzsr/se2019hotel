@@ -1,4 +1,4 @@
-#ifndef RECORDS_H
+﻿#ifndef RECORDS_H
 #define RECORDS_H
 
 #include "../share/objects.h"
