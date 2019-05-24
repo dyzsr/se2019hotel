@@ -1,5 +1,4 @@
-#include "mainwindow.h"
-#include "frontdesk.h"
+﻿#include "mainwindow.h"
 #include "server.h"
 #include "managercontrol.h"
 
@@ -13,17 +12,14 @@ int main(int argc, char *argv[])
   MainWindow w;
 
   Server server(&w);
-  FrontDesk desk(&w);
   ManagerControl manager_control(&w);
 
-  QObject::connect(&w, &MainWindow::sgn_checkout, &desk, &FrontDesk::checkOut);
-  QObject::connect(&w, &MainWindow::sgn_getBillings, &desk, &FrontDesk::getBillings);
-  QObject::connect(&desk, &FrontDesk::sgn_checkout, &server, &Server::checkOut);
+  QObject::connect(&w, &MainWindow::sgn_checkout, &server, &Server::checkOut);
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);
 
-  RecordsControl recordsControl;
+  RecordsControl recordsControl(&w);
   QObject::connect(&w, &MainWindow::sgn_getBillings,
                    &recordsControl, &RecordsControl::slot_detailedBill);
 

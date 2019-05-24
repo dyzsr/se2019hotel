@@ -1,8 +1,8 @@
-#include "recordswindow.h"
+﻿#include "recordswindow.h"
 #include "ui_recordswindow.h"
 
 RecordsWindow::RecordsWindow(QWidget *parent) :
-    QWidget(parent),
+    QWidget(parent, Qt::Window),
     ui(new Ui::RecordsWindow)
 {
     ui->setupUi(this);

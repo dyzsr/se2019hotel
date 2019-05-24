@@ -1,8 +1,10 @@
-#include "recordscontrol.h"
+﻿#include "recordscontrol.h"
 
-RecordsControl::RecordsControl(QObject *parent) : QObject(parent)
+RecordsControl::RecordsControl(QObject *parent):
+  QObject(parent),
+  records(parent),
+  recordsWindow(static_cast<QWidget *>(parent))
 {
-
 }
 
 void RecordsControl::slot_simpleBill(int roomId)

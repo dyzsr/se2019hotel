@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include "../share/objects.h"
@@ -20,7 +20,7 @@ public:
 signals:
   void sgn_openNewWindow(QWidget *parent);
   void sgn_checkout(int roomId);
-  QVector<Billing> sgn_getBillings(int roomId);
+  void sgn_getBillings(int roomId);
 
 private slots:
   void on_bt_callManager_clicked();

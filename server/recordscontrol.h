@@ -1,4 +1,4 @@
-#ifndef RECORDSCONTROL_H
+﻿#ifndef RECORDSCONTROL_H
 #define RECORDSCONTROL_H
 
 #include "records.h"

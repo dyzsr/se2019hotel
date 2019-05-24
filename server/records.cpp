@@ -1,4 +1,4 @@
-#include "records.h"
+﻿#include "records.h"
 
 Records::Records(QObject *parent) :
     QObject(parent),
@@ -9,6 +9,8 @@ Records::Records(QObject *parent) :
 
 QVector<QString> Records::getSimpleBill(int roomId)
 {
+  // TODO;
+  return QVector<QString>();
 }
 
 QVector<QString> Records::getDetailedBill(int roomId)
@@ -43,5 +45,6 @@ QVector<QString> Records::getDetailedBill(int roomId)
 
 QVector<QString> Records::getReportForm(QDateTime start, QDateTime end)
 {
-
+  // TODO
+  return QVector<QString>();
 }

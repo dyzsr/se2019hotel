@@ -1,4 +1,4 @@
-#include "client.h"
+﻿#include "client.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -27,7 +27,6 @@ bool Client::signIn(QString usrId, QString passwd)
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
     fetchData();
-    emit sgn_setRoom(room);
     connect(&timer, &QTimer::timeout, this, &Client::fetchData);
     timer.start(2000);
     qDebug() << "[Client] sign in";
