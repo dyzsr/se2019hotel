@@ -43,72 +43,82 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>10</y>
+     <y>20</y>
      <width>72</width>
      <height>15</height>
     </rect>
    </property>
    <property name="text">
-    <string>Title</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lb_times_db">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>40</y>
-     <width>141</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="text">
-    <string>请求次数：</string>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lb_room_db">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>40</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>房间：</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lb_user_db">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>40</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>用户：</string>
+    <string>详单</string>
    </property>
   </widget>
   <widget class="QListWidget" name="listWidget_db">
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>110</y>
+     <y>80</y>
      <width>411</width>
-     <height>271</height>
+     <height>301</height>
     </rect>
    </property>
+  </widget>
+  <widget class="QWidget" name="theColorBar" native="true">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>50</y>
+     <width>411</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="lb_user_db">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>用户：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_room_db">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>房间：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_times_db">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>10</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>请求次数：</string>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
