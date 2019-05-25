@@ -26,13 +26,14 @@ void Server::init()
 
   room_lock.lockForWrite();
   rooms = pipe->getRooms();
+  req_rooms = rooms;
   for (Room room : rooms) {
     if (!room.usrId.isEmpty()) {
       user2room[room.usrId] = room.roomId;
     }
   }
-  newBilling.resize(rooms.size());
-  newBilling.fill(false);
+  new_reqs.resize(rooms.size());
+  new_reqs.fill(false);
   room_lock.unlock();
 }
 
@@ -40,7 +41,7 @@ int Server::allocateRoom(QString usrId)
 {
   room_lock.lockForWrite();
   int roomId = -1;
-  for (Room room : rooms) {
+  for (Room &room : req_rooms) {
     if (room.usrId.isEmpty()) {
       user2room[usrId] = room.roomId;
       room.usrId = usrId;
@@ -72,13 +73,10 @@ void Server::handleRequests()
       roomId = allocateRoom(q.usrId);
 
     if (roomId != -1) {
-      if (rooms[roomId].setwdspd != q.setwdspd ||
-          rooms[roomId].state != q.state) {
-        newBilling[roomId] = true;
-      }
-      rooms[roomId].settemp = q.settemp;
-      rooms[roomId].setwdspd = q.setwdspd;
-      rooms[roomId].state = q.state;
+      new_reqs[roomId] = true;
+      req_rooms[roomId].settemp = q.settemp;
+      req_rooms[roomId].setwdspd = q.setwdspd;
+      req_rooms[roomId].state = q.state;
     }
   }
 
@@ -91,6 +89,9 @@ void Server::process()
   uploadRooms();
 
   updateBillings();
+  uploadBillings();
+
+  requestRooms();
 }
 
 void Server::checkOut(int roomId)
@@ -108,6 +109,7 @@ Room Server::getRoom(int roomId)
 
 void Server::updateRooms()
 {
+  room_lock.lockForWrite();
   for (Room room : rooms) {
     // empty room
     if (!room.usrId.isEmpty()) {
@@ -143,6 +145,7 @@ void Server::updateRooms()
       }
     }
   }
+  room_lock.unlock();
 }
 
 void Server::updateBillings()
@@ -155,15 +158,12 @@ void Server::updateBillings()
   // 表示对于这个房间是否需要增加新的一条记录
   // 如果newBilling[i]为真 则对于room[i]应该新加一条billing记录
   for (Room room : rooms) {
-    if (newBilling[room.roomId]) {
+    if (!room.usrId.isEmpty()) {
+      if (room.state == 1) {
 
+      }
     }
   }
-}
-
-void Server::addBillings()
-{
-
 }
 
 void Server::uploadRooms()
@@ -177,7 +177,16 @@ void Server::uploadBillings()
 
 }
 
-void Server::uploadNewBillings()
+void Server::requestRooms()
 {
-
+  for (int i = 0; i < rooms.size(); i++) {
+    if (new_reqs[i]) {
+      rooms[i].usrId = req_rooms[i].usrId;
+      rooms[i].token = req_rooms[i].token;
+      rooms[i].settemp = req_rooms[i].settemp;
+      rooms[i].setwdspd = req_rooms[i].setwdspd;
+      rooms[i].state = req_rooms[i].state;
+      rooms[i].start = req_rooms[i].start;
+    }
+  }
 }
