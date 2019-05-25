@@ -10,7 +10,9 @@ RecordsControl::RecordsControl(QObject *parent):
 void RecordsControl::slot_simpleBill(int roomId)
 {
     Room room;
-    simpleBillWindow.showSimpleBill(room);
+    room.usrId = "name";
+    //room.roomId = 0;
+    simpleBillWindow.showSimpleBill(room, records.getSimpleBills(roomId));
 }
 
 void RecordsControl::slot_detailedBill(int roomId)
