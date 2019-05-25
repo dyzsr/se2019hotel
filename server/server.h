@@ -33,7 +33,11 @@ private:
 
   void updateRooms();
   void updateBillings();
-  void uploadData();
+  void addBillings();
+
+  void uploadRooms();
+  void uploadBillings();
+  void uploadNewBillings();
 
 private:
   Pipe *pipe;
