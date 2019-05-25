@@ -16,7 +16,10 @@ void RecordsControl::slot_simpleBill(int roomId)
 void RecordsControl::slot_detailedBill(int roomId)
 {
     Room room;
+    room.usrId = "name";
     recordsWindow.showDetailedBill(room, records.getDetailedBill(roomId));
+
+
 }
 
 void RecordsControl::slot_reportForm()

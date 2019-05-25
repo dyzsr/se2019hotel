@@ -27,8 +27,14 @@ public:
 private slots:
     void on_bt_return_clicked();
 
+    void on_bt_print_clicked();
+
 private:
     Ui::RecordsWindow *ui;
+    Room printRoom;
+    QVector<QString> printData;
+
+    void printDetailedBill();
 };
 
 #endif // RECORDSWINDOW_H

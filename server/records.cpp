@@ -10,6 +10,11 @@ Records::Records(QObject *parent) :
 QVector<QString> Records::getDetailedBill(int roomId)
 {
     QVector<Billing> billings = pipe->getBillings(roomId);
+/*
+    Billing b;
+    b.duration = QDateTime();
+    billings.append(b);
+*/
     QVector<QString> data;
     QString str;
     for (int i=0; i<billings.length(); ++i)
@@ -21,17 +26,18 @@ QVector<QString> Records::getDetailedBill(int roomId)
         if (str.length() == 3)
             str.append(" ");
         //持续时间
+        str.append("持续时间：");
         str.append(billings.at(i).duration.toString());
-        str.append(" ");
+        str.append("    风速：");
         //风速
         str.append(QString::number(billings.at(i).wdspd));
-        str.append(" ");
+        str.append("     费率：");
         //费率
         str.append(QString::number(billings.at(i).rate));
-        str.append(" ");
+        str.append("    费用：");
         //费用
         str.append(QString::number(billings.at(i).costs));
-
+        str.append("元");
         data.append(str);
     }
     return data;
