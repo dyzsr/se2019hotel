@@ -13,9 +13,8 @@ class Records : public QObject
 public:
     explicit Records(QObject *parent = nullptr);
 
-    QVector<QString> getSimpleBill(int roomId);
     QVector<QString> getDetailedBill(int roomId);
-    QVector<QString> getReportForm(QDateTime start, QDateTime end);
+    QVector<Billing> getReportForm();
 
 signals:
 
@@ -23,7 +22,6 @@ public slots:
 
 private:
     Pipe *pipe;
-    void getBillings(int roomId, QDateTime start, QDateTime end);
 };
 
 #endif // RECORDS_H

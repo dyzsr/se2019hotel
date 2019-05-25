@@ -7,12 +7,6 @@ Records::Records(QObject *parent) :
     Q_ASSERT(pipe != nullptr);
 }
 
-QVector<QString> Records::getSimpleBill(int roomId)
-{
-  // TODO;
-  return QVector<QString>();
-}
-
 QVector<QString> Records::getDetailedBill(int roomId)
 {
     QVector<Billing> billings = pipe->getBillings(roomId);
@@ -43,8 +37,8 @@ QVector<QString> Records::getDetailedBill(int roomId)
     return data;
 }
 
-QVector<QString> Records::getReportForm(QDateTime start, QDateTime end)
+QVector<Billing> Records::getReportForm()
 {
   // TODO
-  return QVector<QString>();
+  return pipe->getAllBillings();
 }
