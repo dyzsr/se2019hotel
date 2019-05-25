@@ -44,8 +44,8 @@ Room Pipe::getRoom(QString usrId)
     room.usrId = query.record().value("user_id_id").toString();
     room.temp = query.record().value("temp").toDouble();
     room.settemp = query.record().value("settemp").toDouble();
-    room.wdspd = query.record().value("wdspd").toDouble();
-    room.setwdspd = query.record().value("setwpspd").toDouble();
+    room.wdspd = query.record().value("wdspd").toInt();
+    room.setwdspd = query.record().value("setwpspd").toInt();
     room.token = query.record().value("token").toString();
     room.state = query.record().value("state").toInt();
     room.mode = query.record().value("mode").toInt();
@@ -210,7 +210,7 @@ QVector<Billing> Pipe::getBillings(int roomId)
     bil.action = rec.value("action").toInt();
     bil.roomId = rec.value("room_id_id").toInt();
     bil.endTemp = rec.value("end_temp").toDouble();
-    bil.duration = rec.value("duration").toDateTime();
+    bil.duration = rec.value("duration").toLongLong();
     bil.billingId = rec.value("id").toInt();
     bil.startTemp = rec.value("start_temp").toDouble();
     q.append(bil);
@@ -236,7 +236,7 @@ QVector<Billing> Pipe::getAllBillings()
     bil.action = rec.value("action").toInt();
     bil.roomId = rec.value("room_id_id").toInt();
     bil.endTemp = rec.value("end_temp").toDouble();
-    bil.duration = rec.value("duration").toDateTime();
+    bil.duration = rec.value("duration").toLongLong();
     bil.billingId = rec.value("id").toInt();
     bil.startTemp = rec.value("start_temp").toDouble();
     q.append(bil);
@@ -417,8 +417,8 @@ QVector<Room> Pipe::getRooms()
       room.usrId = query.record().value("user_id_id").toString();
       room.temp = query.record().value("temp").toDouble();
       room.settemp = query.record().value("settemp").toDouble();
-      room.wdspd = query.record().value("wdspd").toDouble();
-      room.setwdspd = query.record().value("setwpspd").toDouble();
+      room.wdspd = query.record().value("wdspd").toInt();
+      room.setwdspd = query.record().value("setwpspd").toInt();
       room.token = query.record().value("token").toString();
       room.state = query.record().value("state").toInt();
       room.mode = query.record().value("mode").toInt();

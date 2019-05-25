@@ -88,8 +88,9 @@ void Server::handleRequests()
 void Server::process()
 {
   updateRooms();
+  uploadRooms();
+
   updateBillings();
-  uploadData();
 }
 
 void Server::checkOut(int roomId)
@@ -107,15 +108,39 @@ Room Server::getRoom(int roomId)
 
 void Server::updateRooms()
 {
-  // TODO:
-  // 按照settemp setwdspd state的值
-  // 更新temp wdspd
-  // room.usrId如果为空则是空房间
   for (Room room : rooms) {
+    // empty room
     if (!room.usrId.isEmpty()) {
-
-    } else {
-
+      // do nothing
+      room.usrId = "";
+    }
+    // air conditioner ON
+    else if (room.state == 1) {
+      room.wdspd = room.setwdspd;
+      // heating
+      if (room.temp < room.settemp) {
+        room.mode = 1;
+        if (room.wdspd == 1)
+          room.temp += info.paraLow;
+        else if (room.wdspd == 2)
+          room.temp += info.paraMid;
+        else if (room.wdspd == 3)
+          room.temp += info.paraHigh;
+        if (room.temp > room.settemp)
+          room.temp = room.settemp;
+      }
+      // refregerating
+      else if (room.temp > room.settemp) {
+        room.mode = 0;
+        if (room.wdspd == 1)
+          room.temp -= info.paraLow;
+        else if (room.wdspd == 2)
+          room.temp -= info.paraMid;
+        else if (room.wdspd == 3)
+          room.temp -= info.paraHigh;
+        if (room.temp < room.settemp)
+          room.temp = room.settemp;
+      }
     }
   }
 }
@@ -136,7 +161,23 @@ void Server::updateBillings()
   }
 }
 
-void Server::uploadData()
+void Server::addBillings()
 {
-  // TODO: upload local data to database
+
+}
+
+void Server::uploadRooms()
+{
+  qDebug() << "[Server]";
+  pipe->updateRooms(rooms);
+}
+
+void Server::uploadBillings()
+{
+
+}
+
+void Server::uploadNewBillings()
+{
+
 }

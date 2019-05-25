@@ -1,4 +1,4 @@
-#ifndef OBJECTS_H
+﻿#ifndef OBJECTS_H
 #define OBJECTS_H
 
 #include <string>
@@ -18,8 +18,8 @@ struct Room
   QString usrId;
   double temp;
   double settemp;
-  double wdspd;
-  double setwdspd;
+  int wdspd;
+  int setwdspd;
   QString token;
   int state;
   int mode;
@@ -30,7 +30,7 @@ struct Room
 
   Room(int _roomId = 0, QString _usrId = "",
        double _temp = 25, double _settemp = 25,
-       double _wdspd = 1, double _setwdspd = 1,
+       int _wdspd = 1, int _setwdspd = 1,
        QString _token = "", int _state = 0, int _mode = 0,
        QDateTime _duration = QDateTime(), QDateTime _start = QDateTime(),
        double _pwr = 0, double _cost = 0):
@@ -47,10 +47,10 @@ struct Request
   QString usrId;
   int state;
   double settemp;
-  double setwdspd;
+  int setwdspd;
 
   Request(int _reqId = 0, QString _usrId = "",
-          int _state = 0, double _settemp = 0, double _setwdspd = 0):
+          int _state = 0, double _settemp = 0, int _setwdspd = 0):
     reqId(_reqId), usrId(_usrId),
     state(_state), settemp(_settemp), setwdspd(_setwdspd)
   {}
@@ -62,7 +62,7 @@ struct Billing
   int roomId;
   QString userId;
   QDateTime start;
-  QDateTime duration;
+  long long duration;
   double costs;
   double wdspd;
   double startTemp;
@@ -70,10 +70,10 @@ struct Billing
   double rate;
   int action;
   
-  Billing(int _billingId=0, int _roomId=0, QString _userId="", QDateTime _start=QDateTime(),
-  		QDateTime _duration=QDateTime(), double _costs=0, double _wdspd=0, double _startTemp=0,
-		double _endTemp=0, double _rate=0, int _action=0):
-  	billingId(_billingId), roomId(_roomId), userId(_userId), start(_start), duration(_duration),
+  Billing(int _billingId = 0, int _roomId=0, QString _userId="", QDateTime _start=QDateTime(),
+          long long _duration=0, double _costs=0, double _wdspd=0, double _startTemp=0,
+          double _endTemp=0, double _rate=0, int _action=0):
+    billingId(_billingId), roomId(_roomId), userId(_userId), start(_start), duration(_duration),
     costs(_costs), wdspd(_wdspd), startTemp(_startTemp), endTemp(_endTemp), rate(_rate), action(_action)
 	{}
 };
