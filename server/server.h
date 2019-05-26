@@ -48,7 +48,7 @@ private:
 
   QVector<Room> rooms;
   QVector<Room> req_rooms;
-  QVector<bool> new_reqs;
+  QVector<int> new_reqs;
 
   QReadWriteLock room_lock;
 
@@ -58,8 +58,9 @@ private:
   QReadWriteLock req_lock;
 
   // 表示是否需要增加一条billing记录
-  QVector<bool> new_billings;
   QVector<Billing> billings;
+
+  int billings_cnt;
 };
 
 #endif // SERVER_H

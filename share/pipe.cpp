@@ -191,6 +191,18 @@ void Pipe::delRequests(const QVector<Request> &requests)
   qDebug() << "del requests";
 }
 
+int Pipe::getCurrentBillingId()
+{
+  QSqlQuery query(db);
+  query.prepare("SELECT MAX(id) as max_id FROM tcs_app_bill;");
+  if (query.exec() && query.next()) {
+    qDebug() << "get current billing id";
+    return query.record().value("max_id").toInt();
+  }
+  qDebug() << query.lastError();
+  return 0;
+}
+
 QVector<Billing> Pipe::getBillings(int roomId)
 {
   QSqlQuery query(db);
@@ -245,29 +257,32 @@ QVector<Billing> Pipe::getAllBillings()
   return q;
 }
 
-void Pipe::updateBilling(const Billing &billing)
+void Pipe::updateBillings(const QVector<Billing> &billings)
 {
   QSqlQuery query(db);
-  query.prepare("UPDATE tcs_app_bill "
-                "SET start = :start, "
-                "duration = :duration, costs = :costs, "
-                "wdspd = :wdspd, start_temp = :start_temp, "
-                "end_temp = :end_temp, rate = :rate, "
-                "action = :action, room_id_id = :room_id_id "
-                "WHERE id = :id");
-  query.bindValue(":id", billing.billingId);
-  query.bindValue(":start", billing.start);
-  query.bindValue(":duration", billing.start.secsTo(billing.duration));
-  query.bindValue(":costs", billing.costs);
-  query.bindValue(":wdspd", billing.wdspd);
-  query.bindValue(":start_temp", billing.startTemp);
-  query.bindValue(":end_temp", billing.endTemp);
-  query.bindValue(":rate", billing.rate);
-  query.bindValue(":action", billing.action);
-  query.bindValue(":room_id_id", billing.roomId);
-  if (query.exec())
-    qDebug() << "update billing" << billing.billingId;
-  else
+  bool success = true;
+  for (Billing billing : billings) {
+    query.prepare("UPDATE tcs_app_bill "
+                  "SET start = :start, "
+                  "duration = :duration, costs = :costs, "
+                  "wdspd = :wdspd, start_temp = :start_temp, "
+                  "end_temp = :end_temp, rate = :rate, "
+                  "action = :action, room_id_id = :room_id_id "
+                  "WHERE id = :id");
+    query.bindValue(":id", billing.billingId);
+    query.bindValue(":start", billing.start);
+    query.bindValue(":duration", billing.start.secsTo(billing.duration));
+    query.bindValue(":costs", billing.costs);
+    query.bindValue(":wdspd", billing.wdspd);
+    query.bindValue(":start_temp", billing.startTemp);
+    query.bindValue(":end_temp", billing.endTemp);
+    query.bindValue(":rate", billing.rate);
+    query.bindValue(":action", billing.action);
+    query.bindValue(":room_id_id", billing.roomId);
+    success &= query.exec();
+  }
+  qDebug() << "update billing";
+  if (!success)
     qDebug() << query.lastError();
 }
 

@@ -60,20 +60,19 @@ struct Billing
 {
   int billingId;
   int roomId;
-  QString userId;
   QDateTime start;
   QDateTime duration;
   double costs;
-  double wdspd;
+  int wdspd;
   double startTemp;
   double endTemp;
   double rate;
   int action;
   
-  Billing(int _billingId = 0, int _roomId=0, QString _userId="", QDateTime _start=QDateTime(),
-          QDateTime _duration=QDateTime(), double _costs=0, double _wdspd=0, double _startTemp=0,
+  Billing(int _billingId = 0, int _roomId=0, QDateTime _start=QDateTime(),
+          QDateTime _duration=QDateTime(), double _costs=0, int _wdspd=0, double _startTemp=0,
           double _endTemp=0, double _rate=0, int _action=0):
-    billingId(_billingId), roomId(_roomId), userId(_userId), start(_start), duration(_duration),
+    billingId(_billingId), roomId(_roomId), start(_start), duration(_duration),
     costs(_costs), wdspd(_wdspd), startTemp(_startTemp), endTemp(_endTemp), rate(_rate), action(_action)
 	{}
 };
