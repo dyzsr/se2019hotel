@@ -29,7 +29,8 @@ public slots:
 
 private:
   void init();
-  int allocateRoom(QString usrId);
+
+  int checkIn(QString usrId);
 
   void updateRooms();
   void uploadRooms();

@@ -45,12 +45,12 @@ Room Pipe::getRoom(QString usrId)
     room.temp = query.record().value("temp").toDouble();
     room.settemp = query.record().value("settemp").toDouble();
     room.wdspd = query.record().value("wdspd").toInt();
-    room.setwdspd = query.record().value("setwpspd").toInt();
+    room.setwdspd = query.record().value("setwdspd").toInt();
     room.token = query.record().value("token").toString();
     room.state = query.record().value("state").toInt();
     room.mode = query.record().value("mode").toInt();
     room.start = query.record().value("start").toDateTime();
-    room.duration = room.start.addSecs(query.record().value("duration").toLongLong());
+    room.duration = query.record().value("duration").toDateTime();
     room.pwr = query.record().value("power").toDouble();
     room.cost = query.record().value("costs").toDouble();
     qDebug() << "get room";
@@ -303,7 +303,7 @@ void Pipe::addBilling(const Billing &billing)
   query.bindValue(":action", billing.action);
   query.bindValue(":room_id_id", billing.roomId);
   if (query.exec())
-    qDebug() << "add billing" << billing.billingId;
+    qDebug() << "add billing id =" << billing.billingId;
   else
     qDebug() << query.lastError();
 }
@@ -350,19 +350,19 @@ Host Pipe::getHost()
   QSqlQuery query(db);
   query.prepare("SELECT * FROM tcs_app_host");
   Host host;
-  if (query.exec()) {
+  if (query.exec() & query.next()) {
     host.mode = query.record().value("mode").toInt();
     host.state = query.record().value("state").toInt();
     host.hostId = query.record().value("id").toInt();
-    host.lowRate = query.record().value("low_rate").toDouble();
     host.maxTemp = query.record().value("max_temp").toInt();
-    host.midRate = query.record().value("middle_rate").toDouble();
     host.minTemp = query.record().value("min_temp").toInt();
     host.paraLow = query.record().value("para_low").toDouble();
     host.paraMid = query.record().value("para_mid").toDouble();
+    host.paraHigh = query.record().value("para_high").toDouble();
+    host.lowRate = query.record().value("low_rate").toDouble();
+    host.midRate = query.record().value("middle_rate").toDouble();
     host.highRate = query.record().value("high_rate").toDouble();
     host.modeSche = query.record().value("mode_sche").toInt();
-    host.paraHigh = query.record().value("para_high").toDouble();
     host.startTemp = query.record().value("start_temp").toInt();
     host.defaultTemp = query.record().value("default_temp").toInt();
     host.defaultWdspd = query.record().value("default_wdspd").toInt();
@@ -441,7 +441,6 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
     query.bindValue(":duration", room.start.secsTo(room.duration));
     query.bindValue(":id", room.roomId);
     query.exec();
-    query.finish();
   }
   qDebug() << "update rooms";
 }

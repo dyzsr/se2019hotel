@@ -30,7 +30,7 @@ struct Room
 
   Room(int _roomId = 0, QString _usrId = "",
        double _temp = 25, double _settemp = 25,
-       int _wdspd = 1, int _setwdspd = 1,
+       int _wdspd = 0, int _setwdspd = 0,
        QString _token = "", int _state = 0, int _mode = 0,
        QDateTime _duration = QDateTime(), QDateTime _start = QDateTime(),
        double _pwr = 0, double _cost = 0):

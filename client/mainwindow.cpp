@@ -10,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   ui->stackedWidget->setCurrentIndex(0);
   ui->lb_verdict->hide();
+
+  ui->sb_settemp->setValue(25);
+  ui->sb_setwdspd->setValue(1);
+  ui->bt_state1->setDown(true);
+  ui->bt_state0->setDown(false);
 }
 
 MainWindow::~MainWindow()
@@ -63,12 +68,14 @@ void MainWindow::on_bt_signOut_clicked()
   }
 }
 
-void MainWindow::on_bt_checkIn_clicked()
+void MainWindow::on_bt_getIn_clicked()
 {
-
+  emit sgn_getIn(ui->bt_state1->isDown(),
+                 ui->sb_settemp->value(),
+                 ui->sb_setwdspd->value());
 }
 
-void MainWindow::on_bt_checkOut_clicked()
+void MainWindow::on_bt_getOut_clicked()
 {
 
 }
@@ -110,8 +117,8 @@ void MainWindow::on_sb_setwdspd_valueChanged(int wdspd)
 void MainWindow::on_bt_state0_clicked(bool checked)
 {
   if (!checked) {
-    ui->bt_state0->setChecked(true);
-    ui->bt_state1->setChecked(false);
+    ui->bt_state0->setDown(true);
+    ui->bt_state1->setDown(false);
     // 待机 == 2
     emit sgn_setState(2);
   }
@@ -120,8 +127,8 @@ void MainWindow::on_bt_state0_clicked(bool checked)
 void MainWindow::on_bt_state1_clicked(bool checked)
 {
   if (!checked) {
-    ui->bt_state0->setChecked(false);
-    ui->bt_state1->setChecked(true);
+    ui->bt_state0->setDown(false);
+    ui->bt_state1->setDown(true);
     // 开机 == 1
     emit sgn_setState(1);
   }
