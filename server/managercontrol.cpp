@@ -7,6 +7,7 @@ ManagerControl::ManagerControl(QObject *parent):
 {
   connect(&window, &ManagerWindow::sgn_signIn, &manager, &Manager::signIn);
   connect(&window, &ManagerWindow::sgn_signOut, &manager, &Manager::signOut);
+  connect(&window, &ManagerWindow::sgn_askManagerFunc, this, &ManagerControl::askManagerFunc);
   window.hide();
 }
 
@@ -14,4 +15,9 @@ void ManagerControl::openNewWindow()
 {
   window.init();
   window.show();
+}
+
+void ManagerControl::askManagerFunc()
+{
+    window.showManagerFunc(manager.getRoomStateStr());
 }
