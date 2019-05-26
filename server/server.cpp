@@ -58,7 +58,7 @@ void Server::init()
                     rooms[i].temp, // start temperature
                     rooms[i].temp, // end temperature
                     rooms[i].pwr,   // rate
-                    new_reqs[i]   // action
+                    0  // action
                     );
   }
 
