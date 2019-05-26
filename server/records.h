@@ -15,7 +15,7 @@ public:
 
     QVector<QString> getDetailedBill(int roomId);
     QVector<QString> getSimpleBills(int roomId);
-    QVector<Billing> getReportForm();
+    QVector<QString> getReportForm(QDateTime start , QDateTime end);
 
 signals:
 

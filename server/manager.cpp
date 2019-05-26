@@ -33,81 +33,50 @@ bool Manager::signOut()
   return true;
 }
 
-QVector<Room> Manager::getAllRooms()
+void Manager::fetchBillings(QDateTime start, QDateTime end)
 {
-    return pipe->getRooms();
+  billings = emit sgn_getBilling(start, end);
 }
 
-Room Manager::getOneRoom(int roomId)
+QVector<Billing> Manager::getDayReport()
 {
-    QVector<Room> q = getAllRooms();
-    for (int i=0; i<q.length(); ++i)
-        if (q.at(i).roomId == roomId)
-            return q.at(i);
-    return Room();
+  // TODO: 用fetchData获取billing 指定起止时间
+  QDateTime end;
+  QDateTime start;
+  end = QDateTime::currentDateTime();
+  QString sstart = QDateTime::currentDateTime().addDays(-1).toString("yyyy-MM-dd hh:mm:ss");
+  start = QDateTime::fromString(sstart);
+  fetchBillings(start, end);
+  return billings;
 }
 
-QVector<QString> Manager::getRoomStateStr()
+QVector<Billing> Manager::getWeekReport()
 {
-    QVector<Room> rooms = getAllRooms();
-    QVector<QString> q;
-    QString str;
-    int i, j;
-    for (i=0; i<rooms.length(); ++i)
-    {
-        //第一行
-        str.clear();
-        str.append("房间号：");
-        str.append(QString::number(rooms.at(i).roomId));
-        str.append("  状态：");
-        str.append(stateToStr(rooms.at(i).state));
-        str.append("  当前温度：");
-        str.append(QString::number(rooms.at(i).temp));
-        str.append("  目标温度：");
-        str.append(QString::number(rooms.at(i).settemp));
-        q.append(str);
-        //第二行
-        str.clear();
-        str.append("风速：");
-        str.append(QString::number(rooms.at(i).wdspd));
-        str.append("  费率：");
-        str.append(QString::number(rooms.at(i).pwr));
-        str.append("  时长：");
-        //时长
-        int du;
-        du = rooms.at(i).start.secsTo(rooms.at(i).duration);
-        //QString Duration;
-        //Duration = billings.at(i).duration.toString("yyyy-MM-dd hh:mm:ss");
-        int h = du / 3600;
-        int h1 = du % 3600;
-        str.append(QString::number(h));
-        str.append("时");
-        int m = h1 / 60;
-        int m1 = h1 % 60;
-        str.append(QString::number(m));
-        str.append("分");
-        str.append(QString::number(m1));
-        str.append("秒");
-        //else
-        str.append("  费用：");
-        str.append(QString::number(rooms.at(i).cost));
-        q.append(str);
-        //分隔行
-        str.clear();
-        for (j=0; j<63; ++j)
-            str.append("-");
-        q.append(str);
-    }
-    return q;
+  // TODO: 用fetchData获取billing 指定起止时间
+  QDateTime end;
+  QDateTime start;
+  end = QDateTime::currentDateTime();
+  QString sstart = QDateTime::currentDateTime().addDays(-7).toString("yyyy-MM-dd hh:mm:ss");
+  start = QDateTime::fromString(sstart);
+  fetchBillings(start, end);
+  return billings;
 }
 
-QString Manager::stateToStr(int state)
+QVector<Billing> Manager::getMonthReport()
 {
-    switch (state) {
-    case 0: return QString("关机");
-    case 1: return QString("运行");
-    case 2: return QString("待机");
-    case 3: return QString("调度");
-    default: return QString("不明");
-    }
+  // TODO: 用fetchData获取billing 指定起止时间
+  QDateTime end;
+  QDateTime start;
+  end = QDateTime::currentDateTime();
+  QString sstart = QDateTime::currentDateTime().addMonths(-1).toString("yyyy-MM-dd hh:mm:ss");
+  start = QDateTime::fromString(sstart);
+  fetchBillings(start, end);
+  return billings;
+}
+
+QVector<Billing> Manager::getReport(QDateTime start, QDateTime end)
+{
+  // 用fetchData获取billing 指定起止时间
+  fetchBillings(start, end);
+  return billings;
 }

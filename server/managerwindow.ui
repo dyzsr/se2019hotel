@@ -32,9 +32,9 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
-   <widget class="QWidget" name="login">
+   <widget class="QWidget" name="page">
     <widget class="QLabel" name="lb_adminname">
      <property name="geometry">
       <rect>
@@ -122,73 +122,18 @@ color: #000000;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="managerFunc">
+   <widget class="QWidget" name="page_2">
     <widget class="QPushButton" name="bt_back">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>50</x>
        <y>30</y>
-       <width>93</width>
-       <height>28</height>
+       <width>80</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>返回</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="bt_checkReport">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>110</y>
-       <width>93</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>查看报表</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="bt_refresh">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>70</y>
-       <width>93</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>刷新</string>
-     </property>
-    </widget>
-    <widget class="QListWidget" name="lw_roomState">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>50</y>
-       <width>391</width>
-       <height>321</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>10</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Agency FB</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>房间信息</string>
      </property>
     </widget>
    </widget>
