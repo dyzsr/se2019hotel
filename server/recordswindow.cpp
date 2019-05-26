@@ -72,7 +72,7 @@ void RecordsWindow::printDetailedBill()
             s << " ";
         s << QString("详单") << "\n";
         //第二行
-        for (i=0; i<54; ++i)
+        for (i=0; i<55; ++i)
             s << "-";
         s << "\n";
         //第三行
@@ -85,7 +85,7 @@ void RecordsWindow::printDetailedBill()
         line3.append(ui->lb_times_db->text());
         s << line3 << "\n";
         //第四行
-        for (i=0; i<54; ++i)
+        for (i=0; i<55; ++i)
             s << "-";
         s << "\n";
         //List

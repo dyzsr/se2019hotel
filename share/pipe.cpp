@@ -49,8 +49,8 @@ Room Pipe::getRoom(QString usrId)
     room.token = query.record().value("token").toString();
     room.state = query.record().value("state").toInt();
     room.mode = query.record().value("mode").toInt();
-    room.duration = query.record().value("duration").toDateTime();
     room.start = query.record().value("start").toDateTime();
+    room.duration = room.start.addSecs(query.record().value("duration").toLongLong());
     room.pwr = query.record().value("power").toDouble();
     room.cost = query.record().value("costs").toDouble();
     qDebug() << "get room";
@@ -120,7 +120,7 @@ void Pipe::addRoom(const Room &room)
   query.bindValue(":token", room.token);
   query.bindValue(":state", room.state);
   query.bindValue(":mode", room.mode);
-  query.bindValue(":duration", room.duration);
+  query.bindValue(":duration", room.start.secsTo(room.duration));
   query.bindValue(":pwr", room.pwr);
   query.bindValue(":cost", room.cost);
   query.bindValue(":start", room.start);
@@ -210,7 +210,7 @@ QVector<Billing> Pipe::getBillings(int roomId)
     bil.action = rec.value("action").toInt();
     bil.roomId = rec.value("room_id_id").toInt();
     bil.endTemp = rec.value("end_temp").toDouble();
-    bil.duration = rec.value("duration").toLongLong();
+    bil.duration = bil.start.addSecs(rec.value("duration").toLongLong());
     bil.billingId = rec.value("id").toInt();
     bil.startTemp = rec.value("start_temp").toDouble();
     q.append(bil);
@@ -236,7 +236,7 @@ QVector<Billing> Pipe::getAllBillings()
     bil.action = rec.value("action").toInt();
     bil.roomId = rec.value("room_id_id").toInt();
     bil.endTemp = rec.value("end_temp").toDouble();
-    bil.duration = rec.value("duration").toLongLong();
+    bil.duration = bil.start.addSecs(rec.value("duration").toLongLong());
     bil.billingId = rec.value("id").toInt();
     bil.startTemp = rec.value("start_temp").toDouble();
     q.append(bil);
@@ -253,7 +253,7 @@ void Pipe::addBilling(const Billing &billing)
                 ":action, :room_id_id);");
   query.bindValue(":id", billing.billingId);
   query.bindValue(":start", billing.start);
-  query.bindValue(":duration", billing.duration);
+  query.bindValue(":duration", billing.start.secsTo(billing.duration));
   query.bindValue(":costs", billing.costs);
   query.bindValue(":wdspd", billing.wdspd);
   query.bindValue(":start_temp", billing.startTemp);
@@ -397,7 +397,7 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);
-    query.bindValue(":duration", room.duration);
+    query.bindValue(":duration", room.start.secsTo(room.duration));
     query.bindValue(":id", room.roomId);
     query.exec();
     query.finish();
@@ -422,8 +422,8 @@ QVector<Room> Pipe::getRooms()
       room.token = query.record().value("token").toString();
       room.state = query.record().value("state").toInt();
       room.mode = query.record().value("mode").toInt();
-      room.duration = query.record().value("duration").toDateTime();
       room.start = query.record().value("start").toDateTime();
+      room.duration = room.start.addSecs(query.record().value("duration").toLongLong());
       room.pwr = query.record().value("power").toDouble();
       room.cost = query.record().value("costs").toDouble();
       rooms.append(room);

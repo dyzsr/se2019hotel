@@ -32,12 +32,12 @@ private:
   int allocateRoom(QString usrId);
 
   void updateRooms();
-  void updateBillings();
-  void addBillings();
-
   void uploadRooms();
+
+  void updateBillings();
   void uploadBillings();
-  void uploadNewBillings();
+
+  void requestRooms();
 
 private:
   Pipe *pipe;
@@ -47,6 +47,9 @@ private:
   QVector<User> users;
 
   QVector<Room> rooms;
+  QVector<Room> req_rooms;
+  QVector<bool> new_reqs;
+
   QReadWriteLock room_lock;
 
   QMap<QString, int> user2room;
@@ -55,7 +58,6 @@ private:
   QReadWriteLock req_lock;
 
   // 表示是否需要增加一条billing记录
-  QVector<bool> newBilling;
   QVector<Billing> billings;
 };
 
