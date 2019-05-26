@@ -58,6 +58,7 @@ private:
   QReadWriteLock req_lock;
 
   // 表示是否需要增加一条billing记录
+  QVector<bool> new_billings;
   QVector<Billing> billings;
 };
 

@@ -25,6 +25,7 @@ void Server::init()
   info = pipe->getHost();
 
   room_lock.lockForWrite();
+
   rooms = pipe->getRooms();
   req_rooms = rooms;
   for (Room room : rooms) {
@@ -32,14 +33,20 @@ void Server::init()
       user2room[room.usrId] = room.roomId;
     }
   }
+  // init new_reqs
   new_reqs.resize(rooms.size());
   new_reqs.fill(false);
+  // init new_billings
+  new_billings.resize(rooms.size());
+  new_billings.fill(false);
+
   room_lock.unlock();
 }
 
 int Server::allocateRoom(QString usrId)
 {
   room_lock.lockForWrite();
+
   int roomId = -1;
   for (Room &room : req_rooms) {
     if (room.usrId.isEmpty()) {
@@ -50,6 +57,7 @@ int Server::allocateRoom(QString usrId)
       break;
     }
   }
+
   room_lock.unlock();
   return roomId;
 }
@@ -97,8 +105,11 @@ void Server::process()
 void Server::checkOut(int roomId)
 {
   room_lock.lockForWrite();
+
   user2room.remove(rooms[roomId].usrId);
-  rooms[roomId].usrId = "";
+  req_rooms[roomId].usrId = "";
+  new_reqs[roomId] = true;
+
   room_lock.unlock();
 }
 
@@ -110,6 +121,7 @@ Room Server::getRoom(int roomId)
 void Server::updateRooms()
 {
   room_lock.lockForWrite();
+
   for (Room room : rooms) {
     // empty room
     if (!room.usrId.isEmpty()) {
@@ -145,6 +157,7 @@ void Server::updateRooms()
       }
     }
   }
+
   room_lock.unlock();
 }
 
@@ -174,19 +187,26 @@ void Server::uploadRooms()
 
 void Server::uploadBillings()
 {
-
+  qDebug() << "[Server]";
 }
 
 void Server::requestRooms()
 {
+  room_lock.lockForWrite();
+
   for (int i = 0; i < rooms.size(); i++) {
+    // change the states of the room in response to the requests
     if (new_reqs[i]) {
+      new_billings[i] = true;
       rooms[i].usrId = req_rooms[i].usrId;
       rooms[i].token = req_rooms[i].token;
       rooms[i].settemp = req_rooms[i].settemp;
       rooms[i].setwdspd = req_rooms[i].setwdspd;
       rooms[i].state = req_rooms[i].state;
       rooms[i].start = req_rooms[i].start;
+      new_reqs[i] = false;
     }
   }
+
+  room_lock.unlock();
 }
