@@ -245,6 +245,32 @@ QVector<Billing> Pipe::getAllBillings()
   return q;
 }
 
+void Pipe::updateBilling(const Billing &billing)
+{
+  QSqlQuery query(db);
+  query.prepare("UPDATE tcs_app_bill "
+                "SET start = :start, "
+                "duration = :duration, costs = :costs, "
+                "wdspd = :wdspd, start_temp = :start_temp, "
+                "end_temp = :end_temp, rate = :rate, "
+                "action = :action, room_id_id = :room_id_id "
+                "WHERE id = :id");
+  query.bindValue(":id", billing.billingId);
+  query.bindValue(":start", billing.start);
+  query.bindValue(":duration", billing.start.secsTo(billing.duration));
+  query.bindValue(":costs", billing.costs);
+  query.bindValue(":wdspd", billing.wdspd);
+  query.bindValue(":start_temp", billing.startTemp);
+  query.bindValue(":end_temp", billing.endTemp);
+  query.bindValue(":rate", billing.rate);
+  query.bindValue(":action", billing.action);
+  query.bindValue(":room_id_id", billing.roomId);
+  if (query.exec())
+    qDebug() << "update billing" << billing.billingId;
+  else
+    qDebug() << query.lastError();
+}
+
 void Pipe::addBilling(const Billing &billing)
 {
   QSqlQuery query(db);
@@ -262,7 +288,7 @@ void Pipe::addBilling(const Billing &billing)
   query.bindValue(":action", billing.action);
   query.bindValue(":room_id_id", billing.roomId);
   if (query.exec())
-    qDebug() << "add billing";
+    qDebug() << "add billing" << billing.billingId;
   else
     qDebug() << query.lastError();
 }

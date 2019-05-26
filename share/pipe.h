@@ -70,6 +70,9 @@ public:
   // 删除数据库中给定的请求
   void delRequests(const QVector<Request> &requests);
 
+  // 更新一条账目记录
+  void updateBilling(const Billing &billing);
+
   // 添加一条账目记录
   void addBilling(const Billing &billing);
 
