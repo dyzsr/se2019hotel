@@ -2,7 +2,8 @@
 #include "ui_recordswindow.h"
 #include <QFile>
 #include <QDebug>
-#pragma execution_character_set("utf-8");
+#pragma execution_character_set("utf-8")
+
 RecordsWindow::RecordsWindow(QWidget *parent) :
     QWidget(parent, Qt::Window),
     ui(new Ui::RecordsWindow)
