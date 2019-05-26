@@ -32,12 +32,6 @@ public:
    * Methods for Server end
    * */
 
-  // 获取账目列表（以roomId来筛选）
-  QVector<Billing> getBillings(int roomId);
-
-  // 获取全部bill
-  QVector<Billing> getAllBillings();
-
   // 添加用户
   void addUser(const User &user);
 
@@ -69,6 +63,17 @@ public:
 
   // 删除数据库中给定的请求
   void delRequests(const QVector<Request> &requests);
+
+  int getCurrentBillingId();
+
+  // 获取账目列表（以roomId来筛选）
+  QVector<Billing> getBillings(int roomId);
+
+  // 获取全部bill
+  QVector<Billing> getAllBillings();
+
+  // 更新一条账目记录
+  void updateBillings(const QVector<Billing> &billings);
 
   // 添加一条账目记录
   void addBilling(const Billing &billing);
