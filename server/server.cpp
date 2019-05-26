@@ -15,7 +15,7 @@ Server::Server(QObject *parent):
 
   QTimer *timer_h = new QTimer(this);
   connect(timer_h, &QTimer::timeout, this, &Server::handleRequests);
-  timer_h->start(3000);
+  timer_h->start(1000);
 }
 
 Server::~Server() {}
@@ -40,13 +40,13 @@ void Server::init()
   billings_cnt = pipe->getCurrentBillingId();
   billings.resize(rooms.size());
   for (int i = 0; i < rooms.size(); i++) {
-    double rate = 0;
+    rooms[i].pwr = 0;
     if (rooms[i].setwdspd == 1)
-      rate = info.lowRate;
+      rooms[i].pwr = info.lowRate;
     else if (rooms[i].setwdspd == 2)
-      rate = info.midRate;
+      rooms[i].pwr = info.midRate;
     else if (rooms[i].setwdspd == 3)
-      rate = info.highRate;
+      rooms[i].pwr = info.highRate;
 
     billings[i] = Billing(
                     billings_cnt++, // billing id
@@ -57,31 +57,12 @@ void Server::init()
                     rooms[i].wdspd, // windspeed
                     rooms[i].temp, // start temperature
                     rooms[i].temp, // end temperature
-                    rate,   // rate
+                    rooms[i].pwr,   // rate
                     new_reqs[i]   // action
                     );
   }
 
   room_lock.unlock();
-}
-
-int Server::allocateRoom(QString usrId)
-{
-  room_lock.lockForWrite();
-
-  int roomId = -1;
-  for (Room &room : req_rooms) {
-    if (room.usrId.isEmpty()) {
-      user2room[usrId] = room.roomId;
-      room.usrId = usrId;
-      room.start = QDateTime::currentDateTime();
-      roomId = room.roomId;
-      break;
-    }
-  }
-
-  room_lock.unlock();
-  return roomId;
 }
 
 void Server::handleRequests()
@@ -100,14 +81,14 @@ void Server::handleRequests()
     if (user2room.contains(q.usrId))
       roomId = user2room[q.usrId];
     else
-      roomId = allocateRoom(q.usrId);
+      roomId = checkIn(q.usrId);
 
     if (roomId != -1) {
       if (q.state != rooms[roomId].state && q.state == 3)
         new_reqs[roomId] = 0;
       if (q.state != rooms[roomId].state && q.state == 1)
         new_reqs[roomId] = 1;
-      if (qAbs(q.settemp - rooms[roomId].settemp) < 1e-3)
+      if (qAbs(q.settemp - rooms[roomId].settemp) > 1e-3)
         new_reqs[roomId] = 2;
       if (q.setwdspd != rooms[roomId].setwdspd)
         new_reqs[roomId] = 3;
@@ -131,13 +112,32 @@ void Server::process()
   requestRooms();
 }
 
+int Server::checkIn(QString usrId)
+{
+  room_lock.lockForWrite();
+
+  int roomId = -1;
+  for (Room &room : req_rooms) {
+    if (room.usrId.isEmpty()) {
+      user2room[usrId] = room.roomId;
+      room.usrId = usrId;
+      room.start = QDateTime::currentDateTime();
+      roomId = room.roomId;
+      break;
+    }
+  }
+
+  room_lock.unlock();
+  return roomId;
+}
+
 void Server::checkOut(int roomId)
 {
   room_lock.lockForWrite();
 
   user2room.remove(rooms[roomId].usrId);
-  req_rooms[roomId].usrId = "";
-  new_reqs[roomId] = true;
+  req_rooms[roomId] = Room(roomId);
+  new_reqs[roomId] = 0;
 
   room_lock.unlock();
 }
@@ -152,14 +152,15 @@ void Server::updateRooms()
   // 只更新rooms 不上传
   room_lock.lockForWrite();
 
-  for (Room room : rooms) {
+  for (Room &room : rooms) {
     // empty room
-    if (!room.usrId.isEmpty()) {
+    if (room.usrId.isEmpty()) {
       // do nothing
-      room.usrId = "";
+      continue;
     }
+
     // air conditioner ON
-    else if (room.state == 1) {
+    if (room.state == 1) {
       room.wdspd = room.setwdspd;
       // heating
       if (room.temp < room.settemp) {
@@ -186,6 +187,8 @@ void Server::updateRooms()
           room.temp = room.settemp;
       }
     }
+
+    room.cost += room.pwr;
   }
 
   room_lock.unlock();
@@ -228,21 +231,24 @@ void Server::requestRooms()
 
   for (int i = 0; i < rooms.size(); i++) {
     // change the states of the room in response to the requests
-    if (new_reqs[i] >= 0) {
+    if (new_reqs[i] == 0) {
+      rooms[i] = Room(rooms[i].roomId);
+    }
+    else if (new_reqs[i] > 0) {
       rooms[i].usrId = req_rooms[i].usrId;
       rooms[i].token = req_rooms[i].token;
       rooms[i].settemp = req_rooms[i].settemp;
       rooms[i].setwdspd = req_rooms[i].setwdspd;
       rooms[i].state = req_rooms[i].state;
       rooms[i].start = req_rooms[i].start;
-
-      double rate = 0;
-      if (rooms[i].setwdspd == 1)
-        rate = info.lowRate;
+      if (rooms[i].setwdspd == 0)
+        rooms[i].pwr = 0.;
+      else if (rooms[i].setwdspd == 1)
+        rooms[i].pwr = info.lowRate;
       else if (rooms[i].setwdspd == 2)
-        rate = info.midRate;
+        rooms[i].pwr = info.midRate;
       else if (rooms[i].setwdspd == 3)
-        rate = info.highRate;
+        rooms[i].pwr = info.highRate;
 
       billings[i] = Billing(
                       billings_cnt++, // billing id
@@ -253,11 +259,11 @@ void Server::requestRooms()
                       rooms[i].wdspd, // windspeed
                       rooms[i].temp, // start temperature
                       rooms[i].temp, // end temperature
-                      rate,   // rate
+                      rooms[i].pwr,   // rate
                       new_reqs[i]   // action
                       );
       pipe->addBilling(billings[i]);
-      qDebug() << "add billing" << i;
+      qDebug() << "add billing for room" << i;
 
       new_reqs[i] = -1;
     }

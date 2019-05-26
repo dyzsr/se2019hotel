@@ -22,6 +22,8 @@ public slots:
   bool signIn(QString usrId, QString passwd);
   bool signOut();
 
+  void getIn(int state, double settemp, int setwdspd);
+
   void setTemp(int temp);
   void setWdspd(int wdspd);
   void setState(int state);
