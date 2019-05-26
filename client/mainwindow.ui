@@ -234,7 +234,7 @@ color: #000000;</string>
        <string>UP</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_state">
+     <widget class="QLabel" name="lb_action">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -244,7 +244,7 @@ color: #000000;</string>
        </rect>
       </property>
       <property name="text">
-       <string>模式</string>
+       <string>操作</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_state0">
@@ -504,6 +504,58 @@ color: #ff3333;</string>
        <string>元</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>230</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>状态：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>270</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>模式：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_state">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>230</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>关机</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_mode">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>270</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>制冷</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_billings">
      <widget class="QPushButton" name="bt_backToDashboard">
@@ -528,7 +580,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
