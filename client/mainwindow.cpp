@@ -1,6 +1,8 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#pragma execution_character_set("utf-8")
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -23,6 +25,21 @@ void MainWindow::refresh(Room room)
   ui->lcd_setwdspd->display(room.setwdspd);
   ui->lb_fee->setNum(room.cost);
   ui->lb_feeRate->setNum(room.pwr);
+
+  if(room.mode==false)
+    ui->lb_mode->setText("制冷");
+  else
+    ui->lb_mode->setText("制热");
+
+  if(room.state==0)
+      ui->lb_state->setText("关机");
+  else if(room.state==1)
+      ui->lb_state->setText("运行");
+  else if(room.state==2)
+      ui->lb_state->setText("待机");
+  else
+      ui->lb_state->setText("调度");
+
 }
 
 void MainWindow::on_bt_signIn_clicked()
