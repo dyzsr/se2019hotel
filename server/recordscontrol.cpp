@@ -26,5 +26,9 @@ void RecordsControl::slot_detailedBill(int roomId)
 
 void RecordsControl::slot_reportForm()
 {
-    reportFormWindow.showReportForm(records.getReportForm());
+    QDateTime ini;
+    ini = QDateTime::currentDateTime().addDays(-1);
+    QDateTime ini2;
+    ini2 = QDateTime::currentDateTime();
+    reportFormWindow.showReportForm(records.getReportForm(ini,ini2));
 }
