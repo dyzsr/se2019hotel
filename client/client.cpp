@@ -26,6 +26,8 @@ bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
+    pipe->sendRequest(Request(0, user.id, 2, 25, 1));
+
     connect(&timer, &QTimer::timeout, this, &Client::fetchData);
     timer.start(2000);
     qDebug() << "[Client] sign in";

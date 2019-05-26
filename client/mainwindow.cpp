@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->sb_settemp->setValue(25);
   ui->sb_setwdspd->setValue(1);
-  ui->bt_state1->setDown(true);
-  ui->bt_state0->setDown(false);
+  ui->bt_state1->setDown(false);
+  ui->bt_state0->setDown(true);
 }
 
 MainWindow::~MainWindow()
