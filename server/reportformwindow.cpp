@@ -111,7 +111,7 @@ void ReportFormWindow::on_print_clicked()
 
 void ReportFormWindow::Updatereport(QVector<QString> dat)
 {
-    ui->display->clear();
+
     printDat = dat;
     int k, num = dat.length();
     for (k=0; k<num; ++k)
@@ -126,6 +126,159 @@ void ReportFormWindow::on_OK_clicked()
 {
     QDateTime startt = ui->s_dateTime->dateTime();
     QDateTime endt = ui->e_dateTime->dateTime();
+    ui->display->clear();
     rrr = ui->type->currentIndex();
-    Updatereport(records.getReportForm(startt,endt));
+    if(rrr == 0)
+    {
+        QDateTime v;
+        v = startt;
+        uint stime;
+        uint etime;
+        int tRet;
+        stime = v.addDays(1).toTime_t();
+        etime = endt.toTime_t();
+        tRet = stime - etime;
+        if(tRet < 0)
+        {Updatereport(records.getReportForm(v,v.addDays(1)));}
+        else {
+
+        }
+        while(tRet < 0)
+        {
+            v = v.addDays(1);
+            stime = v.addDays(1).toTime_t();
+            etime = endt.toTime_t();
+            tRet = stime - etime;
+           if(tRet > 0)
+            {
+                break;
+            }
+            Updatereport(records.getReportForm(v,v.addDays(1)));
+        }
+        stime = v.toTime_t();
+        etime = endt.toTime_t();
+        tRet = stime - etime;
+        if(tRet < 0)
+        {
+            Updatereport(records.getReportForm(v,endt));
+        }
+    }
+    else if(rrr == 1)
+    {
+        QDateTime v1;
+        v1 = startt;
+        uint stime1;
+        uint etime1;
+        QString StrCurrentTime = startt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        QString x =  StrCurrentTime.mid(StrCurrentTime.length()-1,1);
+        int strDayOfWeek;
+        int tRet1;
+        if(x == "一")
+        {
+            strDayOfWeek = 7;
+        }
+        else if(x == "二")
+        {
+            strDayOfWeek = 6;
+        }
+        else if(x == "三")
+        {
+            strDayOfWeek = 5;
+        }
+        else if(x == "四")
+        {
+            strDayOfWeek = 4;
+        }
+        else if(x == "五")
+        {
+            strDayOfWeek = 3;
+        }
+        else if(x == "六")
+        {
+            strDayOfWeek = 2;
+        }
+        else if(x == "日")
+        {
+            strDayOfWeek = 1;
+        }
+        stime1 = v1.addDays(strDayOfWeek).toTime_t();
+        etime1 = endt.toTime_t();
+        tRet1 = stime1 - etime1;
+        if(tRet1 < 0)
+        {Updatereport(records.getReportForm(v1,v1.addDays(strDayOfWeek)));
+        v1 = v1.addDays(strDayOfWeek);
+        }
+        else {
+
+        }
+        while(tRet1 < 0)
+        {
+            stime1 = v1.addDays(7).toTime_t();
+            etime1 = endt.toTime_t();
+            tRet1 = stime1 - etime1;
+           if(tRet1 > 0)
+            {
+                break;
+            }
+            Updatereport(records.getReportForm(v1,v1.addDays(7)));
+            v1 = v1.addDays(7);
+        }
+        stime1 = v1.toTime_t();
+        etime1 = endt.toTime_t();
+        tRet1 = stime1 - etime1;
+        if(tRet1 < 0)
+        {
+            Updatereport(records.getReportForm(v1,endt));
+        }
+    }
+    else if(rrr == 2)
+    {
+        QDateTime v2;
+        v2 = startt;
+        uint stime2;
+        uint etime2;
+        QString StrCurrentTime = startt.addMonths(1).toString("yyyy-MM-dd hh:mm:ss");
+        QString x =  StrCurrentTime.mid(5,2);
+        QString y;
+        if(x == "12")
+        {
+            y =  startt.addYears(1).toString("yyyy-MM-dd hh:mm:ss").mid(0,5);
+            y.append("01");
+        }
+        else
+        y =  StrCurrentTime.mid(0,7);
+        int tRet2;
+        y.append("-01 00:00:00");
+        QDateTime time1;
+        time1 = QDateTime::fromString(y, "yyyy-MM-dd hh:mm:ss");
+        stime2 = time1.toTime_t();
+        etime2 = endt.toTime_t();
+        tRet2 = stime2 - etime2;
+        if(tRet2 < 0)
+        {Updatereport(records.getReportForm(v2,time1));
+        v2 = time1;
+        }
+        else {
+
+        }
+        while(tRet2 < 0)
+        {
+            stime2 = v2.addMonths(1).toTime_t();
+            etime2 = endt.toTime_t();
+            tRet2 = stime2 - etime2;
+           if(tRet2 > 0)
+            {
+                break;
+            }
+            Updatereport(records.getReportForm(v2,v2.addMonths(1)));
+            v2 = v2.addMonths(1);
+        }
+        stime2 = v2.toTime_t();
+        etime2 = endt.toTime_t();
+        tRet2 = stime2 - etime2;
+        if(tRet2 < 0)
+        {
+            Updatereport(records.getReportForm(v2,endt));
+        }
+    }
 }
