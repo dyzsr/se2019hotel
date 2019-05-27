@@ -2,7 +2,7 @@
 #include "ui_simplebillwindow.h"
 #include <QFile>
 #include <QDebug>
-#pragma execution_character_set("utf-8");
+#pragma execution_character_set("utf-8")
 
 SimpleBillWindow::SimpleBillWindow(QWidget *parent) :
     QWidget(parent, Qt::Window),
@@ -69,7 +69,8 @@ void SimpleBillWindow::printSimpleBill()
         s << QString("账单") << "\n";
         //第二行
         for (i=0; i<54; ++i)
-            s << "-\n";
+            s << "-";
+            s << "\n";
         //第三行
         QString l(ui->sim_user->text());
         for (i=0; i<25-l.length(); ++i)
