@@ -75,8 +75,11 @@ public:
   // 获取全部bill
   QVector<Billing> getAllBillings();
 
-  // 更新一条账目记录
+  // 更新多条账目记录
   void updateBillings(const QVector<Billing> &billings);
+
+  // 更新一条账目记录
+  void updateBilling(const Billing &billing);
 
   // 添加一条账目记录
   void addBilling(const Billing &billing);

@@ -4,7 +4,7 @@
 #include <QDebug>
 
 /* 回温的坑：
- * 回温判断条件：目前是state==1
+ * 回温判断条件：目前是state > 1
  * 回温模拟温度变化的方式：1分钟升1度
  * 回温检查当前室温：与settemp温差超过tempDiff=1，则重新发request_setTemp，不知道主机是否需要从机这样
  * 2秒刷新（检查state）一次，可能2秒发一次request，会不会过于频繁
