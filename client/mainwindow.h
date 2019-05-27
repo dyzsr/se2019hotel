@@ -43,8 +43,6 @@ private slots:
   void on_bt_state0_clicked(bool checked);
   void on_bt_state1_clicked(bool checked);
 
-  void on_bt_backToDashboard_clicked();
-
 private:
   Ui::MainWindow *ui;
 };
