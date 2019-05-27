@@ -29,13 +29,17 @@ public slots:
   void setState(int state);
 
 private slots:
-  void fetchData();
+  void fetchDataAndCheck();
+  void forceRoomChanged();
 
 private:
   Pipe *pipe;
-  QTimer timer;
+  QTimer timer, recoverTimer;
   Room room;
   User user;
+
+  void recoverTemp();
+  void fetchData();
 };
 
 #endif // CLIENT_H

@@ -50,6 +50,8 @@ public:
 
   void updateRooms(const QVector<Room> &rooms);
 
+  void updateRoomTemp(int roomId, double temp);
+
   // 获取所有房间信息
   QVector<Room> getRooms();
 

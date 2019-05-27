@@ -472,3 +472,19 @@ QVector<Room> Pipe::getRooms()
   }
   return rooms;
 }
+
+void Pipe::updateRoomTemp(int roomId, double temp)
+{
+    QSqlQuery query(db);
+    query.prepare("UPDATE tcs_app_room SET temp = :temp WHERE id = :id;");
+    query.bindValue(":temp", temp);
+    query.bindValue(":id", roomId);
+    if (query.exec())
+    {
+        qDebug() << "Room temp updated";
+    }
+    else
+    {
+        qDebug() << "Room temp update failed";
+    }
+}
