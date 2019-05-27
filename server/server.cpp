@@ -88,7 +88,7 @@ void Server::handleRequests()
       roomId = checkIn(q.usrId);
 
     if (!dispatch.contains(roomId) && dispatch.size() < dispatch_size) {
-
+      dispatch.append(roomId);
     }
     if (dispatch.contains(roomId)) {
       if (roomId != -1) {
@@ -105,6 +105,9 @@ void Server::handleRequests()
         req_rooms[roomId].state = q.state;
       }
       it = requests.erase(it);
+    }
+    else {
+      ++it;
     }
   }
 
