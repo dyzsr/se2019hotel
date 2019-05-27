@@ -60,3 +60,8 @@ void ManagerWindow::on_bt_refresh_clicked()
 {
     emit sgn_askManagerFunc();
 }
+
+void ManagerWindow::on_bt_checkReport_clicked()
+{
+    emit sgn_askReportForm_clicked();
+}

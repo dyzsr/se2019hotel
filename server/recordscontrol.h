@@ -17,9 +17,9 @@ public:
 signals:
 
 public slots:
-    void slot_simpleBill(int roomId);
-    void slot_detailedBill(int roomId);
-    void slot_reportForm();
+    void slot_showSimpleBill(Room room);
+    void slot_showDetailedBill(Room room);
+    void slot_showReportForm();
 
 private:
     Records records;

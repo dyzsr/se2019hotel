@@ -7,24 +7,17 @@ RecordsControl::RecordsControl(QObject *parent):
 {
 }
 
-void RecordsControl::slot_simpleBill(int roomId)
+void RecordsControl::slot_showSimpleBill(Room room)
 {
-    Room room;
-    room.usrId = "name";
-    //room.roomId = 0;
-    simpleBillWindow.showSimpleBill(room, records.getSimpleBills(roomId));
+    simpleBillWindow.showSimpleBill(room, records.getSimpleBills(room.roomId));
 }
 
-void RecordsControl::slot_detailedBill(int roomId)
+void RecordsControl::slot_showDetailedBill(Room room)
 {
-    Room room;
-    room.usrId = "name";
-    recordsWindow.showDetailedBill(room, records.getDetailedBill(roomId));
-
-
+    recordsWindow.showDetailedBill(room, records.getDetailedBill(room.roomId));
 }
 
-void RecordsControl::slot_reportForm()
+void RecordsControl::slot_showReportForm()
 {
     QDateTime ini;
     ini = QDateTime::currentDateTime().addDays(-1);

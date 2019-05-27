@@ -18,14 +18,20 @@ int main(int argc, char *argv[])
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);
+  QObject::connect(&w, &MainWindow::sgn_checkRoomIdValid,
+                   &manager_control, &ManagerControl::slot_checkRoomIdValid);
+  QObject::connect(&w, &MainWindow::sgn_askSimpleBill_clicked,
+                   &manager_control, &ManagerControl::slot_askSimpleBill_clicked);
+  QObject::connect(&w, &MainWindow::sgn_askDetailedBill_clicked,
+                   &manager_control, &ManagerControl::slot_askDetailedBill_clicked);
 
   RecordsControl recordsControl(&w);
-  QObject::connect(&w, &MainWindow::sgn_getBillings,
-                   &recordsControl, &RecordsControl::slot_simpleBill);
-  QObject::connect(&w, &MainWindow::sgn_getBillings,
-                   &recordsControl, &RecordsControl::slot_reportForm);
-  QObject::connect(&w, &MainWindow::sgn_getBillings,
-                   &recordsControl, &RecordsControl::slot_detailedBill);
+  QObject::connect(&manager_control, &ManagerControl::sgn_showSimpleBill,
+                   &recordsControl, &RecordsControl::slot_showSimpleBill);
+  QObject::connect(&manager_control, &ManagerControl::sgn_showDetailedBill,
+                   &recordsControl, &RecordsControl::slot_showDetailedBill);
+  QObject::connect(&manager_control, &ManagerControl::sgn_showReportForm,
+                   &recordsControl, &RecordsControl::slot_showReportForm);
 
   w.show();
   return a.exec();

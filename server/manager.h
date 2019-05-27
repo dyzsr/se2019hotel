@@ -14,7 +14,10 @@ public:
   explicit Manager(QObject *parent = nullptr);
   ~Manager();
     QVector<QString> getRoomStateStr();
+    QVector<Room> getAllRooms();
     Room getOneRoom(int roomId);
+    void setTheRoom(Room room);
+    Room getTheRoom();
 
 signals:
 
@@ -24,9 +27,9 @@ public slots:
 
 private:
   Pipe *pipe;
+  Room theAskedRoom;
 
   Admin adm;
-  QVector<Room> getAllRooms();
   QString stateToStr(int state);
 };
 
