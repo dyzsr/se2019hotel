@@ -31,20 +31,19 @@ void MainWindow::refresh(Room room)
   ui->lb_fee->setNum(room.cost);
   ui->lb_feeRate->setNum(room.pwr);
 
-  if(room.mode==false)
+  if (room.mode == false)
     ui->lb_mode->setText("制冷");
   else
     ui->lb_mode->setText("制热");
 
-  if(room.state==0)
-      ui->lb_state->setText("关机");
-  else if(room.state==1)
-      ui->lb_state->setText("运行");
-  else if(room.state==2)
-      ui->lb_state->setText("待机");
-  else
+  if (room.state == 0)
+    ui->lb_state->setText("关机");
+  else if (room.state == 1)
+    ui->lb_state->setText("运行");
+  else if (room.state == 2)
+    ui->lb_state->setText("待机");
+  else if (room.state == 3)
       ui->lb_state->setText("调度");
-
 }
 
 void MainWindow::on_bt_signIn_clicked()
@@ -119,8 +118,8 @@ void MainWindow::on_bt_state0_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setDown(true);
     ui->bt_state1->setDown(false);
-    // 待机 == 2
-    emit sgn_setState(2);
+    // 关机 == 0
+    emit sgn_setState(0);
   }
 }
 
@@ -132,9 +131,4 @@ void MainWindow::on_bt_state1_clicked(bool checked)
     // 开机 == 1
     emit sgn_setState(1);
   }
-}
-
-void MainWindow::on_bt_backToDashboard_clicked()
-{
-  ui->stackedWidget->setCurrentIndex(1);
 }
