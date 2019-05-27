@@ -70,32 +70,35 @@ QVector<QString> Records::getSimpleBills(int roomId)
     uint stime;
     uint etime;
     int tRet;
-    for (int i=0; i<billing.length(); ++i)
+    if(!billing.empty())
     {
-        stime = max.toTime_t();
-        etime = billing.at(i).start.toTime_t();
-        tRet = stime - etime;
-        if(tRet < 0)
+        for (int i=0; i<billing.length(); ++i)
         {
-            max = billing.at(i).start;
-            maxi = i;
+            stime = max.toTime_t();
+            etime = billing.at(i).start.toTime_t();
+            tRet = stime - etime;
+            if(tRet < 0)
+            {
+                max = billing.at(i).start;
+                maxi = i;
+            }
         }
-    }
-    str.append("开始时间：");
-    //开始时间
-    QString startime;
-    startime = billing.at(maxi).start.toString("yyyy-MM-dd hh:mm:ss");
-    str.append(startime);
-    str.append(" 结束时间：");
-    //结束时间
-    QString Duration;
-    Duration = billing.at(maxi).duration.toString("yyyy-MM-dd hh:mm:ss");
-    str.append(Duration);
-    str.append(" 费用：");
-    //费用
-    str.append(QString::number(billing.at(maxi).costs));
-    str.append("元");
-    data.append(str);
+        str.append("开始时间：");
+        //开始时间
+        QString startime;
+        startime = billing.at(maxi).start.toString("yyyy-MM-dd hh:mm:ss");
+        str.append(startime);
+        str.append(" 结束时间：");
+        //结束时间
+        QString Duration;
+        Duration = billing.at(maxi).duration.toString("yyyy-MM-dd hh:mm:ss");
+        str.append(Duration);
+        str.append(" 费用：");
+        //费用
+        str.append(QString::number(billing.at(maxi).costs));
+        str.append("元");
+        data.append(str);
+     }
     return data;
 }
 

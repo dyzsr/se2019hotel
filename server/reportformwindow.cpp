@@ -60,7 +60,12 @@ void ReportFormWindow::on_print_clicked()
     QString dir = "../records/ReportForm/";
     QString fileName = "报表_";
     //fileName.append(printRoo.usrId);
-    fileName.append(".txt");
+    if(rrr == 0)
+    fileName.append("日.txt");
+    else if(rrr == 1)
+    fileName.append("周.txt");
+    else if(rrr == 2)
+    fileName.append("月.txt");
     QFile f(dir+fileName);
     if (!f.open(QIODevice::WriteOnly))
         qDebug() << "打开报表失败";
@@ -72,7 +77,12 @@ void ReportFormWindow::on_print_clicked()
         //第一行
         for (i=0; i<24; ++i)
             s << " ";
-        s << QString("报表") << "\n";
+        if(rrr == 0)
+        s << QString("日报表") << "\n";
+        else if(rrr == 1)
+        s << QString("周报表") << "\n";
+        else if(rrr == 2)
+        s << QString("月报表") << "\n";
         //第二行
         for (i=0; i<54; ++i)
             s << "-";
@@ -116,5 +126,6 @@ void ReportFormWindow::on_OK_clicked()
 {
     QDateTime startt = ui->s_dateTime->dateTime();
     QDateTime endt = ui->e_dateTime->dateTime();
+    rrr = ui->type->currentIndex();
     Updatereport(records.getReportForm(startt,endt));
 }

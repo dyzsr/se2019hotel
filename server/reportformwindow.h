@@ -38,6 +38,7 @@ private:
     Pipe *pipee;
     Ui::ReportFormWindow *ui;
     Room printRoo;
+    int rrr;
     QVector<QString> printDat;
 };
 
