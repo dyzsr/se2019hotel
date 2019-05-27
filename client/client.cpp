@@ -102,7 +102,7 @@ void Client::setState(int state)
 void Client::recoverTemp()
 {
     double tempDiff = 1;
-    bool recoverCondition = (room.state == 1);
+    bool recoverCondition = (room.state > 1);
     if (recoverCondition)
     {
         recoverTimer.start(60*1000);
