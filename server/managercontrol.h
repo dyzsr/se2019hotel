@@ -12,13 +12,22 @@ class ManagerControl: public QObject
 
 public:
   explicit ManagerControl(QObject *parent = nullptr);
+    Manager manager;
+
+signals:
+    void sgn_showSimpleBill(Room room);
+    void sgn_showDetailedBill(Room room);
+    void sgn_showReportForm();
 
 public slots:
   void openNewWindow();
   void askManagerFunc();
+  bool slot_checkRoomIdValid(int roomId);
+  void slot_askSimpleBill_clicked();
+  void slot_askDetailedBill_clicked();
+  void slot_askReportForm_clicked();
 
 private:
-  Manager manager;
   ManagerWindow window;
 };
 

@@ -111,3 +111,13 @@ QString Manager::stateToStr(int state)
     default: return QString("不明");
     }
 }
+
+void Manager::setTheRoom(Room room)
+{
+    theAskedRoom = room;
+}
+
+Room Manager::getTheRoom()
+{
+    return theAskedRoom;
+}

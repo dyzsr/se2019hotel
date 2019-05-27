@@ -22,12 +22,15 @@ signals:
   bool sgn_signIn(QString name, QString pswd);
   bool sgn_signOut();
   void sgn_askManagerFunc();
+  void sgn_askReportForm_clicked();
 
 private slots:
   void on_bt_signIn_clicked();
   void on_bt_back_clicked();
 
   void on_bt_refresh_clicked();
+
+  void on_bt_checkReport_clicked();
 
 private:
   Ui::ManagerWindow *ui;
