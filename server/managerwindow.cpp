@@ -27,7 +27,7 @@ void ManagerWindow::on_bt_signIn_clicked()
   QString pswd = ui->edit_adminpswd->text();
   bool success = emit sgn_signIn(name, pswd);
   if (success) {
-    ui->stackedWidget->setCurrentIndex(1);
+    emit sgn_askManagerFunc();
     ui->lb_verdict->hide();
   } else {
     ui->lb_verdict->show();
@@ -40,4 +40,23 @@ void ManagerWindow::on_bt_back_clicked()
   if (success) {
     ui->stackedWidget->setCurrentIndex(0);
   }
+}
+
+void ManagerWindow::showManagerFunc(QVector<QString> data)
+{
+    //绘制ui
+    ui->lw_roomState->clear();
+    int i, num = data.length();
+    for (i=0; i<num; ++i)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(data.at(i));
+        ui->lw_roomState->addItem(item);
+    }
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void ManagerWindow::on_bt_refresh_clicked()
+{
+    emit sgn_askManagerFunc();
 }

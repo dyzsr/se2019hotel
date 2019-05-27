@@ -69,8 +69,7 @@ void SimpleBillWindow::printSimpleBill()
         s << QString("账单") << "\n";
         //第二行
         for (i=0; i<54; ++i)
-            s << "-";
-            s << "\n";
+            s << "-\n";
         //第三行
         QString l(ui->sim_user->text());
         for (i=0; i<25-l.length(); ++i)
