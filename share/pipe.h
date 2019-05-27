@@ -1,6 +1,7 @@
 ﻿#ifndef PIPE_H
 #define PIPE_H
 
+#include <QLinkedList>
 #include <QSqlDatabase>
 #include "objects.h"
 
@@ -59,10 +60,10 @@ public:
   void delRoom(const Room &room);
 
   // 获取数据库中的所有请求
-  QVector<Request> getRequests();
+  QList<Request> getRequests();
 
   // 删除数据库中给定的请求
-  void delRequests(const QVector<Request> &requests);
+  void delRequests(const QList<Request> &requests);
 
   int getCurrentBillingId();
 

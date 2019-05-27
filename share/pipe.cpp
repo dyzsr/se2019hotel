@@ -141,12 +141,12 @@ void Pipe::delRoom(const Room &room)
     qDebug() << query.lastError();
 }
 
-QVector<Request> Pipe::getRequests()
+QList<Request> Pipe::getRequests()
 {
   QSqlQuery query(db);
   QSqlRecord rec;
   Request req;
-  QVector<Request> q;
+  QList<Request> q;
   query.prepare("SELECT * FROM tcs_app_request");
   query.exec();
   while (query.next()) {
@@ -178,14 +178,12 @@ void Pipe::sendRequest(const Request &request)
     qDebug() << query.lastError();
 }
 
-void Pipe::delRequests(const QVector<Request> &requests)
+void Pipe::delRequests(const QList<Request> &requests)
 {
   QSqlQuery query(db);
   query.prepare("DELETE FROM tcs_app_request WHERE id = :id");
-  int i;
-  for (i = 0; i < requests.length(); ++i)
-  {
-    query.bindValue(":id", requests.at(i).reqId);
+  for (Request req : requests) {
+    query.bindValue(":id", req.reqId);
     query.exec();
   }
   qDebug() << "del requests";

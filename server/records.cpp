@@ -1,5 +1,5 @@
 ﻿#include "records.h"
-#pragma execution_character_set("utf-8");
+#pragma execution_character_set("utf-8")
 
 Records::Records(QObject *parent) :
     QObject(parent),

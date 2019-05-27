@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QVector>
 #include <QReadWriteLock>
+#include <QQueue>
 
 class Server : public QObject
 {
@@ -46,6 +47,9 @@ private:
 
   QVector<User> users;
 
+  const int dispatch_size = 3;
+  QVector<int> dispatch;
+
   QVector<Room> rooms;
   QVector<Room> req_rooms;
   QVector<bool> new_reqs;
@@ -54,7 +58,7 @@ private:
 
   QMap<QString, int> user2room;
 
-  QVector<Request> requests;
+  QLinkedList<Request> requests;
   QReadWriteLock req_lock;
 
   // 表示是否需要增加一条billing记录

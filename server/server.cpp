@@ -59,24 +59,44 @@ void Server::handleRequests()
   req_lock.lockForWrite();
 
   qDebug() << "[Server] ";
-  QVector<Request> _requests = pipe->getRequests();
-  requests = _requests;
+  QList<Request> _requests = pipe->getRequests();
+  for (Request _req : _requests) {
+    requests.append(_req);
+  }
   qDebug() << "[Server] ";
   pipe->delRequests(_requests);
 
   qDebug() << "[Server] handle requests";
-  for (Request q : requests) {
+  for (auto it = requests.begin(); it != requests.end(); ) {
+    Request q = *it;
+
     int roomId = -1;
     if (user2room.contains(q.usrId))
       roomId = user2room[q.usrId];
     else
       roomId = allocateRoom(q.usrId);
 
-    if (roomId != -1) {
-      new_reqs[roomId] = true;
-      req_rooms[roomId].settemp = q.settemp;
-      req_rooms[roomId].setwdspd = q.setwdspd;
-      req_rooms[roomId].state = q.state;
+    if (!dispatch.contains(roomId) && dispatch.size() < dispatch_size) {
+      dispatch.append(roomId);
+    }
+    if (dispatch.contains(roomId)) {
+      if (roomId != -1) {
+        if (q.state != rooms[roomId].state && q.state == 3)
+          new_reqs[roomId] = 0;
+        if (q.state != rooms[roomId].state && q.state == 1)
+          new_reqs[roomId] = 1;
+        if (qAbs(q.settemp - rooms[roomId].settemp) > 1e-3)
+          new_reqs[roomId] = 2;
+        if (q.setwdspd != rooms[roomId].setwdspd)
+          new_reqs[roomId] = 3;
+        req_rooms[roomId].settemp = q.settemp;
+        req_rooms[roomId].setwdspd = q.setwdspd;
+        req_rooms[roomId].state = q.state;
+      }
+      it = requests.erase(it);
+    }
+    else {
+      ++it;
     }
   }
 
