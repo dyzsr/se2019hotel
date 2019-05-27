@@ -87,7 +87,6 @@ void Server::handleRequests()
     else
       roomId = checkIn(q.usrId);
 
-<<<<<<< HEAD
     if (!dispatch.contains(roomId) && dispatch.size() < dispatch_size) {
       dispatch.append(roomId);
     }
@@ -109,20 +108,6 @@ void Server::handleRequests()
     }
     else {
       ++it;
-=======
-    if (roomId != -1) {
-      if (q.state != rooms[roomId].state && q.state == 3)
-        new_reqs[roomId] = 0;
-      if (q.state != rooms[roomId].state && q.state == 1)
-        new_reqs[roomId] = 1;
-      if (qAbs(q.settemp - rooms[roomId].settemp) > 1e-3)
-        new_reqs[roomId] = 2;
-      if (q.setwdspd != rooms[roomId].setwdspd)
-        new_reqs[roomId] = 3;
-      req_rooms[roomId].settemp = q.settemp;
-      req_rooms[roomId].setwdspd = q.setwdspd;
-      req_rooms[roomId].state = q.state;
->>>>>>> parent of 2c02f2c... Add files via upload
     }
   }
 
