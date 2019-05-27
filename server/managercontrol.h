@@ -15,7 +15,6 @@ public:
 
 public slots:
   void openNewWindow();
-  void askManagerFunc();
 
 private:
   Manager manager;

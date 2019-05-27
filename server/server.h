@@ -30,8 +30,7 @@ public slots:
 
 private:
   void init();
-
-  int checkIn(QString usrId);
+  int allocateRoom(QString usrId);
 
   void updateRooms();
   void uploadRooms();
@@ -53,7 +52,7 @@ private:
 
   QVector<Room> rooms;
   QVector<Room> req_rooms;
-  QVector<int> new_reqs;
+  QVector<bool> new_reqs;
 
   QReadWriteLock room_lock;
 
@@ -64,8 +63,6 @@ private:
 
   // 表示是否需要增加一条billing记录
   QVector<Billing> billings;
-
-  int billings_cnt;
 };
 
 #endif // SERVER_H
