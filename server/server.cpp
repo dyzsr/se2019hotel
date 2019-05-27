@@ -2,6 +2,8 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QDateTime>
+#include <QTime>
 
 Server::Server(QObject *parent):
   QObject(parent),
@@ -66,40 +68,45 @@ void Server::fetchRequests()
 {
   req_lock.lockForWrite();
 
-  // fetch requests from database, store them to local
+  // 从数据库读取请求 保存在本地
   QList<Request> _requests = pipe->getRequests();
   requests = _requests;
   pipe->delRequests(_requests);
 
-  qDebug() << "fetch requests";
+  qDebug() << QTime::currentTime() << "fetch requests";
 
-  // map requests to rooms
+  // 处理读取的请求
   for (Request q : requests) {
     int roomId = -1;
     // if the user has a room currently
-    if (user2room.contains(q.usrId))
+    if (user2room.contains(q.usrId)) {
       roomId = user2room[q.usrId];
-    else  // allocate a new room
+    }
+    else {
+      // 分配新房间
       roomId = checkIn(q.usrId);
+      new_reqs[roomId] = 1;
+    }
 
     if (roomId != -1) {
-
-      // turn on the request flag of the corresponding room
-      // TODO
+      // 关机
       if (q.state == 0) {
         req_rooms[roomId].state = 0;
         new_reqs[roomId] = 0;
-      } else if (q.state == 2) {
-        if (req_rooms[roomId].state == 0)
-          req_rooms[roomId].state = 2;
+      }
+      // 除关机外的请求
+      else {
+        req_rooms[roomId].state = 3;
         new_reqs[roomId] = 1;
       }
+      // 设置温度
       if (qAbs(q.settemp - rooms[roomId].settemp) > 1e-3)
         new_reqs[roomId] = 2;
+      // 设置风速
       if (q.setwdspd != rooms[roomId].setwdspd)
         new_reqs[roomId] = 3;
 
-      // set the request of the room
+      // 将请求加入等待队列
       req_rooms[roomId].settemp = q.settemp;
       req_rooms[roomId].setwdspd = q.setwdspd;
       req_rooms[roomId].state = q.state;
@@ -174,6 +181,7 @@ void Server::updateRooms()
         if (serviceCompleted(room.roomId)) {
           // 服务完成 删除服务对象
           services.removeOne(room.roomId);
+          room.state = 2;
         }
       }
       // 制冷
@@ -184,6 +192,7 @@ void Server::updateRooms()
         if (serviceCompleted(room.roomId)) {
           // 服务完成 删除服务对象
           services.removeOne(room.roomId);
+          room.state = 2;
         }
       }
     }
@@ -235,6 +244,7 @@ void Server::updateService()
   for (int i = 0; i < new_reqs.size(); i++) {
     if (new_reqs[i] >= 0 && services.size() < MAX_SERVICE_NUM) {
       services.append(i);
+      rooms[i].state = 1;
     }
   }
 

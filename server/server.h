@@ -8,7 +8,6 @@
 #include <QObject>
 #include <QVector>
 #include <QReadWriteLock>
-#include <QQueue>
 
 class Server : public QObject
 {
