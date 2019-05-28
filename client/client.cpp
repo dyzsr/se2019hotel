@@ -3,26 +3,6 @@
 #include <QTimer>
 #include <QDebug>
 
-/* 回温的坑：
- * 回温判断条件：目前是state > 1
- * 回温模拟温度变化的方式：1分钟升1度
- * 回温检查当前室温：与settemp温差超过tempDiff=1，则重新发request_setTemp，不知道主机是否需要从机这样
- * 2秒刷新（检查state）一次，可能2秒发一次request，会不会过于频繁
- * 不测试不知道有没有语法bug
- *
- * 回温的逻辑：
- * 每2秒调用一次recoverTemp(),
- * recoverTemp():
- *     if 需要回温
- *         定时升温forceRoomChanged()
- *         检查温差，重发请求
- *     else
- *         取消定时升温
- * forceRoomChanged():
- *     在pipe新写了一个函数，修改roomId房间的temp
- */
-
-
 Client::Client(QObject *parent):
   QObject(parent),
   pipe(Pipe::getInstance()),
@@ -31,6 +11,7 @@ Client::Client(QObject *parent):
 {
   Q_ASSERT(pipe != nullptr);
   connect(&recoverTimer, &QTimer::timeout, this, &Client::forceRoomChanged);
+  recoverFlag = false;
 }
 
 Client::~Client()
@@ -101,22 +82,22 @@ void Client::setState(int state)
 
 void Client::recoverTemp()
 {
-    double tempDiff = 1;
-    bool recoverCondition = (room.state > 1);
+
+    bool recoverCondition = (room.state == 0 || room.state == 2);
     if (recoverCondition)
     {
-        recoverTimer.start(60*1000);
-        //重新发送请求
-        if (room.temp > room.settemp + tempDiff || room.temp < room.settemp - tempDiff)
+        if (!recoverFlag)
         {
-            Request request(0, user.id, room.state, room.settemp, room.wdspd);
-            qDebug() << "[Client]";
-            pipe->sendRequest(request);
+            recoverTimer.start(getRecoverTime()*1000);
+            recoverFlag = true;
         }
+
+
     }
     else
     {
         recoverTimer.stop();
+        recoverFlag = false;
     }
 }
 
@@ -124,4 +105,22 @@ void Client::forceRoomChanged()
 {
     fetchData();
     pipe->updateRoomTemp(room.roomId, room.temp+1);
+}
+
+int Client::getRecoverTime()
+{
+    int setTime = 60;
+    QString str = emit sgn_getRecoverStr();
+    if (str.length() == 0)
+        return setTime;
+    const char *s = str.toLatin1().data();
+    while (*s && *s>='0' && *s<='9') s++;
+    if (*s)
+    {
+        return setTime;
+    }
+    else
+    {
+        return str.toInt();
+    }
 }

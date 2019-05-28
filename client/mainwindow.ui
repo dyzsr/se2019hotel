@@ -128,6 +128,42 @@ color: #000000;</string>
        <string>Invalid username or password</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="le_recoverSpeed">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>310</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_recoverFront">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>310</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>回温1度所需时间：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_recoverBack">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>310</y>
+        <width>61</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>秒</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_dashboard">
      <widget class="QPushButton" name="bt_tempDown">
@@ -173,26 +209,13 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>190</y>
+        <y>179</y>
         <width>80</width>
-        <height>20</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>入住</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_getOut">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>190</y>
-        <width>80</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>离开</string>
       </property>
      </widget>
      <widget class="QLabel" name="lb_wdspd">
@@ -251,22 +274,22 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>310</y>
+        <y>300</y>
         <width>81</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>待机</string>
+       <string>关机</string>
       </property>
      </widget>
      <widget class="QPushButton" name="bt_state1">
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>310</y>
+        <y>300</y>
         <width>81</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -276,10 +299,10 @@ color: #000000;</string>
      <widget class="QPushButton" name="bt_signOut">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>190</y>
+        <x>210</x>
+        <y>179</y>
         <width>80</width>
-        <height>20</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -389,7 +412,7 @@ color: #ff3333;</string>
        <rect>
         <x>200</x>
         <y>120</y>
-        <width>51</width>
+        <width>71</width>
         <height>21</height>
        </rect>
       </property>
@@ -415,7 +438,7 @@ color: #ff3333;</string>
        <rect>
         <x>490</x>
         <y>120</y>
-        <width>51</width>
+        <width>71</width>
         <height>21</height>
        </rect>
       </property>
@@ -568,7 +591,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

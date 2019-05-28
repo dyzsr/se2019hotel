@@ -17,6 +17,7 @@ public:
 
 signals:
   void sgn_refresh(Room room);
+  QString sgn_getRecoverStr();
 
 public slots:
   bool signIn(QString usrId, QString passwd);
@@ -37,9 +38,11 @@ private:
   QTimer timer, recoverTimer;
   Room room;
   User user;
+  bool recoverFlag;
 
   void recoverTemp();
   void fetchData();
+  int getRecoverTime();
 };
 
 #endif // CLIENT_H

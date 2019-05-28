@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
   QObject::connect(&w, &MainWindow::sgn_setWdspd, &client, &Client::setWdspd);
   QObject::connect(&w, &MainWindow::sgn_setState, &client, &Client::setState);
   QObject::connect(&w, &MainWindow::sgn_getIn, &client, &Client::getIn);
+  QObject::connect(&client, &Client::sgn_getRecoverStr, &w, &MainWindow::slot_getRecoverStr);
 
   w.show();
   return a.exec();
