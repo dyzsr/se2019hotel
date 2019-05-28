@@ -74,11 +74,6 @@ void MainWindow::on_bt_getIn_clicked()
                  ui->sb_setwdspd->value());
 }
 
-void MainWindow::on_bt_getOut_clicked()
-{
-
-}
-
 void MainWindow::on_bt_tempUp_clicked()
 {
   int temp = ui->sb_settemp->value();
@@ -128,7 +123,12 @@ void MainWindow::on_bt_state1_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setDown(false);
     ui->bt_state1->setDown(true);
-    // 开机 == 1
-    emit sgn_setState(1);
+    // 待机 == 2
+    emit sgn_setState(2);
   }
+}
+
+QString MainWindow::slot_getRecoverStr()
+{
+    return QString(ui->le_recoverSpeed->text());
 }
