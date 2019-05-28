@@ -69,7 +69,7 @@ QVector<QString> Records::getSimpleBills(int roomId)
     int maxi = 0;
     uint stime;
     uint etime;
-    int tRet;
+    int tRet,sss;
     if(!billing.empty())
     {
         for (int i=0; i<billing.length(); ++i)
@@ -83,19 +83,37 @@ QVector<QString> Records::getSimpleBills(int roomId)
                 maxi = i;
             }
         }
+
+        uint stimm;
+        uint etimm;
+        int cost=0;
+        //int dur=0;
+        //int duss=0;
+        for(int j=0; j<billing.length(); ++j)
+        {
+            stimm = billing.at(maxi).start.toTime_t();
+            etimm = billing.at(j).start.toTime_t();
+            sss = stimm - etimm;
+            //duss = billing.at(j).start.secsTo(billing.at(j).duration);
+            if(sss == 0)
+            {
+                cost = cost + billing.at(j).costs;
+                //dur = dur + duss;
+            }
+        }
         str.append("开始时间：");
         //开始时间
         QString startime;
         startime = billing.at(maxi).start.toString("yyyy-MM-dd hh:mm:ss");
         str.append(startime);
-        str.append(" 结束时间：");
+        /*str.append(" 结束时间：");
         //结束时间
         QString Duration;
         Duration = billing.at(maxi).duration.toString("yyyy-MM-dd hh:mm:ss");
-        str.append(Duration);
+        str.append(Duration);*/
         str.append(" 费用：");
         //费用
-        str.append(QString::number(billing.at(maxi).costs));
+        str.append(QString::number(cost));
         str.append("元");
         data.append(str);
      }
@@ -153,6 +171,15 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
             fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
          }
         }
+    str.append("开始日期：");
+    QString startime;
+    startime = start.toString("yyyy-MM-dd hh:mm:ss");
+    str.append(startime);
+    str.append("--->截止日期：");
+    QString endtime;
+    endtime = end.toString("yyyy-MM-dd hh:mm:ss");
+    str.append(endtime);
+    data.append(str);
     for (int i=0; i<rooms.size(); ++i)
     {
         str.clear();
@@ -193,6 +220,7 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
             str.append(QString::number(record[i]));
             data.append(str);
     }
+    data.append("----------------------------------------------------------------------------------------------------------------------");
         return data;
 }
 
