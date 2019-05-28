@@ -48,6 +48,8 @@ public:
   // 统一设置所有房间数据（删除原有的房间数据）
   void addRooms(const QVector<Room> &rooms);
 
+  bool updateRoom(const Room &room);
+
   void updateRooms(const QVector<Room> &rooms);
 
   void updateRoomTemp(int roomId, double temp);

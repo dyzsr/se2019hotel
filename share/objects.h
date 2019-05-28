@@ -41,6 +41,48 @@ struct Room
   {}
 };
 
+struct Dispatchable : public Room {
+  bool hasRequest;
+  int requestType;
+  QDateTime serviceStart;
+  int64_t serviceTime;
+  int64_t waitingTime;
+
+  Dispatchable():
+    hasRequest(false), requestType(0),
+    serviceStart(QDateTime()), serviceTime(0), waitingTime(0)
+  {}
+
+  void update(const Room &room) {
+    roomId = room.roomId;
+    usrId = room.usrId;
+    temp = room.temp;
+    settemp = room.settemp;
+    wdspd = room.wdspd;
+    setwdspd = room.setwdspd;
+    token = room.token;
+    state = room.state;
+    mode = room.mode;
+    duration = room.duration;
+    start = room.start;
+    pwr = room.pwr;
+    cost = room.cost;
+  }
+
+  bool operator< (const Dispatchable &o) {
+    if (!o.hasRequest) return true;
+    if (!hasRequest) return false;
+    if (wdspd > o.wdspd) return true;
+    if (wdspd < o.wdspd) return false;
+    if (serviceTime < o.serviceTime) return true;
+    if (serviceTime > o.serviceTime) return false;
+    if (waitingTime < o.waitingTime) return true;
+    if (waitingTime > o.waitingTime) return false;
+    return serviceStart < o.serviceStart;
+  }
+
+};
+
 struct Request
 {
   int reqId;
