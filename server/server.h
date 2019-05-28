@@ -21,8 +21,6 @@ signals:
 public slots:
   void fetchRequests();
   void process();
-
-  // TODO
   void checkOut(int roomId);
 
   Room getRoom(int roomId);
@@ -30,14 +28,10 @@ public slots:
 private:
   void init();
 
-  int checkIn(QString usrId);
+  void checkIn(QString usrId);
 
   void updateRooms();
-  void uploadRooms();
-
   void updateBillings();
-  void uploadBillings();
-
   void updateService();
 
   bool serviceCompleted(int roomId);
@@ -55,23 +49,19 @@ private:
   // 用户
   QVector<User> users;
 
-  const int MAX_SERVICE_NUM = 3;
+  int waiting_time = 120;
+  int max_nr_service = 3;
   QVector<int> services;
 
   // 房间
   QReadWriteLock room_lock;
   QVector<Room> rooms;
-  // 房间的请求（包含正在服务的和等待中的所有请求）
-  QVector<Room> req_rooms;
-  // 该房间是否有请求 request flag
-  QVector<int> new_reqs;
+
+  // 调度对象
+  QVector<Dispatchable> dsps;
 
   // 用户名到房间的映射
   QMap<QString, int> user2room;
-
-  // 从机发来的请求
-  QReadWriteLock req_lock;
-  QList<Request> requests;
 
   // 账单计数
   int billings_cnt;

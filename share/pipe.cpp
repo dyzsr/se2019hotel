@@ -440,10 +440,10 @@ void Pipe::addRooms(const QVector<Room> &rooms)
   qDebug() << "add rooms";
 }
 
-void Pipe::updateRooms(const QVector<Room> &rooms)
+bool Pipe::updateRoom(const Room &room)
 {
-  QSqlQuery query(db);
-  for (Room room : rooms) {
+  for (int i = 0; i < 3; i++) {
+    QSqlQuery query(db);
     query.prepare("UPDATE tcs_app_room "
                   "SET user_id_id = :usrId, "
                   "temp = :temp, settemp = :settemp, "
@@ -464,9 +464,18 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
     query.bindValue(":start", room.start);
     query.bindValue(":duration", room.start.secsTo(room.duration));
     query.bindValue(":id", room.roomId);
-    query.exec();
+    if (query.exec())
+      return true;
   }
-  qDebug() << "update rooms";
+  return false;
+}
+
+void Pipe::updateRooms(const QVector<Room> &rooms)
+{
+  QSqlQuery query(db);
+  for (Room room : rooms) {
+    updateRoom(room);
+  }
 }
 
 QVector<Room> Pipe::getRooms()
