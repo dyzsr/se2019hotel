@@ -23,7 +23,6 @@ public slots:
 
 private:
     Pipe *pipe;
-
     QString calcDurationStr(long long duration);
 };
 

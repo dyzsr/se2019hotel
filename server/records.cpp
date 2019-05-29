@@ -64,47 +64,41 @@ QVector<QString> Records::getSimpleBills(int roomId)
   // TODO
     QVector<Billing> billing = pipe->getBillings(roomId);
     QVector<QString> data;
+    QVector<Room> roomss = pipe->getRooms();
     QString str;
-    QDateTime max = QDateTime::fromString("00-00-00 00:00:00");
-    int maxi = 0;
-    uint stime;
-    uint etime;
+    //QDateTime max = QDateTime::fromString("00-00-00 00:00:00");
+    //int maxi = 0;
+    //uint stime;
+    //uint etime;
+    //uint htime;
     int tRet,sss;
     if(!billing.empty())
     {
-        for (int i=0; i<billing.length(); ++i)
-        {
-            stime = max.toTime_t();
-            etime = billing.at(i).start.toTime_t();
-            tRet = stime - etime;
-            if(tRet < 0)
-            {
-                max = billing.at(i).start;
-                maxi = i;
-            }
-        }
-
         uint stimm;
         uint etimm;
+        uint htimm;
+        int n,n1;
         int cost=0;
+        stimm = roomss.at(roomId).start.toTime_t();
+        htimm = roomss.at(roomId).duration.toTime_t();
+        n = htimm;
         //int dur=0;
         //int duss=0;
         for(int j=0; j<billing.length(); ++j)
         {
-            stimm = billing.at(maxi).start.toTime_t();
             etimm = billing.at(j).start.toTime_t();
-            sss = stimm - etimm;
+            tRet = etimm - stimm;
+            //sss = stimm - etimm;
             //duss = billing.at(j).start.secsTo(billing.at(j).duration);
-            if(sss == 0)
+            if(tRet <= n && tRet >= 0)
             {
                 cost = cost + billing.at(j).costs;
-                //dur = dur + duss;
             }
         }
         str.append("开始时间：");
         //开始时间
         QString startime;
-        startime = billing.at(maxi).start.toString("yyyy-MM-dd hh:mm:ss");
+        startime = roomss.at(roomId).start.toString("yyyy-MM-dd hh:mm:ss");
         str.append(startime);
         /*str.append(" 结束时间：");
         //结束时间
