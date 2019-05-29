@@ -19,7 +19,7 @@ void RecordsControl::slot_showSimpleBill(Room room)
 
 void RecordsControl::slot_showDetailedBill(Room room)
 {
-    recordsWindow.showDetailedBill(room, records.getDetailedBill(room.roomId));
+    recordsWindow.showDetailedBill(room, records.getDetailedBill(room));
 }
 
 void RecordsControl::slot_showReportForm()

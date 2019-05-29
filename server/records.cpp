@@ -8,53 +8,54 @@ Records::Records(QObject *parent) :
     Q_ASSERT(pipe != nullptr);
 }
 
-QVector<QString> Records::getDetailedBill(int roomId)
+QVector<QString> Records::getDetailedBill(Room room)
 {
-    QVector<Billing> billings = pipe->getBillings(roomId);
-/*
-    Billing b;
-    b.duration = QDateTime();
-    billings.append(b);
-*/
+    QVector<Billing> billings = pipe->getBillings(room.roomId);
+
     QVector<QString> data;
     QString str;
+    int count = 0;
     for (int i=0; i<billings.length(); ++i)
     {
-        str.clear();
-        //序号
-        str.append(QString::number(i+1));
-        str.append(".  ");
-        if (str.length() == 4)
-            str.append("  ");
-        //风速
-        str.append("风速：");
-        str.append(QString::number(billings.at(i).wdspd));
-        //费率
-        str.append("  费率：");
-        str.append(QString::number(billings.at(i).rate));
-        //持续时间
-        str.append("  时长：");
-        int du;
-        du = billings.at(i).start.secsTo(billings.at(i).duration);
-        //QString Duration;
-        //Duration = billings.at(i).duration.toString("yyyy-MM-dd hh:mm:ss");
-        int h = du / 3600;
-        int h1 = du % 3600;
-        str.append(QString::number(h));
-        str.append("时");
-        int m = h1 / 60;
-        int m1 = h1 % 60;
-        str.append(QString::number(m));
-        str.append("分");
-        str.append(QString::number(m1));
-        str.append("秒");
-        //str.append(calcDurationStr(billings.at(i).duration));
-        //费用
-        str.append("  费用：");
-        str.append(QString::number(billings.at(i).costs));
-        str.append("元");
+        if (room.start < billings.at(i).start)
+        {
+            str.clear();
+            //序号
+            count++;
+            str.append(QString::number(count));
+            str.append(".  ");
+            if (str.length() == 4)
+                str.append("  ");
+            //风速
+            str.append("风速：");
+            str.append(QString::number(billings.at(i).wdspd));
+            //费率
+            str.append("  费率：");
+            str.append(QString::number(billings.at(i).rate));
+            //持续时间
+            str.append("  时长：");
+            int du;
+            du = billings.at(i).start.secsTo(billings.at(i).duration);
+            //QString Duration;
+            //Duration = billings.at(i).duration.toString("yyyy-MM-dd hh:mm:ss");
+            int h = du / 3600;
+            int h1 = du % 3600;
+            str.append(QString::number(h));
+            str.append("时");
+            int m = h1 / 60;
+            int m1 = h1 % 60;
+            str.append(QString::number(m));
+            str.append("分");
+            str.append(QString::number(m1));
+            str.append("秒");
+            //str.append(calcDurationStr(billings.at(i).duration));
+            //费用
+            str.append("  费用：");
+            str.append(QString::number(billings.at(i).costs));
+            str.append("元");
 
-        data.append(str);
+            data.append(str);
+        }
     }
     return data;
 }

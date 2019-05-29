@@ -13,7 +13,7 @@ class Records : public QObject
 public:
     explicit Records(QObject *parent = nullptr);
 
-    QVector<QString> getDetailedBill(int roomId);
+    QVector<QString> getDetailedBill(Room room);
     QVector<QString> getSimpleBills(int roomId);
     QVector<QString> getReportForm(QDateTime start , QDateTime end);
 
