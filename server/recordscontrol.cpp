@@ -3,8 +3,13 @@
 RecordsControl::RecordsControl(QObject *parent):
   QObject(parent),
   records(parent),
-  recordsWindow(static_cast<QWidget *>(parent))
+  recordsWindow(static_cast<QWidget *>(parent)),
+  simpleBillWindow(static_cast<QWidget *>(parent)),
+  reportFormWindow(static_cast<QWidget *>(parent))
 {
+  recordsWindow.hide();
+  simpleBillWindow.hide();
+  reportFormWindow.hide();
 }
 
 void RecordsControl::slot_showSimpleBill(Room room)

@@ -7,7 +7,7 @@
 #pragma execution_character_set("utf-8")
 
 ReportFormWindow::ReportFormWindow(QWidget *parent) :
-  QWidget(parent),
+  QWidget(parent, Qt::Window),
   records(parent),
     ui(new Ui::ReportFormWindow)
 {
