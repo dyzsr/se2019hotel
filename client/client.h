@@ -16,7 +16,9 @@ public:
   ~Client();
 
 signals:
+  void sgn_init(double minTemp, double maxTemp);
   void sgn_refresh(Room room);
+  void sgn_disable();
   QString sgn_getRecoverStr();
 
 public slots:
@@ -35,6 +37,9 @@ private slots:
 
 private:
   Pipe *pipe;
+
+  Host info;
+
   QTimer timer, recoverTimer;
   Room room;
   User user;

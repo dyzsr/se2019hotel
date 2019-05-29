@@ -9,6 +9,9 @@ Client::Client(QObject *parent):
   timer(this),
   recoverTimer(this)
 {
+  info = pipe->getHost();
+  emit sgn_init(info.minTemp, info.maxTemp);
+
   Q_ASSERT(pipe != nullptr);
   connect(&recoverTimer, &QTimer::timeout, this, &Client::forceRoomChanged);
   recoverFlag = false;
@@ -20,9 +23,11 @@ Client::~Client()
 
 void Client::fetchData()
 {
-  qDebug() << "[Client]";
   room = pipe->getRoom(user.id);
-  emit sgn_refresh(room);
+  if (room.usrId.isEmpty())
+    emit sgn_disable();
+  else
+    emit sgn_refresh(room);
 }
 
 void Client::fetchDataAndCheck()
@@ -39,44 +44,41 @@ bool Client::signIn(QString usrId, QString passwd)
 
     connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
     timer.start(2000);
-    qDebug() << "[Client] sign in";
+    qDebug() << QTime::currentTime() << "sign in";
     return true;
   }
-  qDebug() << "[Client] input: " << usrId << " " << passwd;
-  qDebug() << "[Client] database: " << user.id << " " << user.pswd;
+  qDebug() << "input: " << usrId << " " << passwd;
+  qDebug() << "database: " << user.id << " " << user.pswd;
   return false;
 }
 
 bool Client::signOut()
 {
   timer.stop();
-  qDebug() << "[Client] sign out";
+  qDebug() << QTime::currentTime() << "sign out";
   return true;
 }
 
 void Client::getIn(int state, double settemp, int setwdspd)
 {
-  pipe->sendRequest(Request(0, user.id, 1, settemp, setwdspd));
+  pipe->sendRequest(Request(0, user.id, state ? 1 : 0, settemp, setwdspd));
 }
 
 void Client::setTemp(int temp)
 {
   Request request(0, user.id, 1, temp, room.setwdspd);
-  qDebug() << "[Client]";
   pipe->sendRequest(request);
 }
 
 void Client::setWdspd(int wdspd)
 {
   Request request(0, user.id, 1, room.settemp, wdspd);
-  qDebug() << "[Client]";
   pipe->sendRequest(request);
 }
 
 void Client::setState(int state)
 {
   Request request(0, user.id, state, room.settemp, room.setwdspd);
-  qDebug() << "[Client]";
   pipe->sendRequest(request);
 }
 
