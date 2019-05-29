@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
   Server server(&w);
   ManagerControl manager_control(&w);
 
+  QObject::connect(&server, &Server::sgn_init, &w, &MainWindow::init);
+
   QObject::connect(&w, &MainWindow::sgn_checkout, &server, &Server::checkOut);
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
@@ -25,6 +27,9 @@ int main(int argc, char *argv[])
   QObject::connect(&w, &MainWindow::sgn_askDetailedBill_clicked,
                    &manager_control, &ManagerControl::slot_askDetailedBill_clicked);
 
+  QObject::connect(&manager_control, &ManagerControl::sgn_getRoom,
+                   &server, &Server::getRoom);
+
   RecordsControl recordsControl(&w);
   QObject::connect(&manager_control, &ManagerControl::sgn_showSimpleBill,
                    &recordsControl, &RecordsControl::slot_showSimpleBill);
@@ -33,6 +38,7 @@ int main(int argc, char *argv[])
   QObject::connect(&manager_control, &ManagerControl::sgn_showReportForm,
                    &recordsControl, &RecordsControl::slot_showReportForm);
 
+  server.init();
   w.show();
   return a.exec();
 }

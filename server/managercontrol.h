@@ -15,6 +15,7 @@ public:
     Manager manager;
 
 signals:
+    Room sgn_getRoom(int roomId);
     void sgn_showSimpleBill(Room room);
     void sgn_showDetailedBill(Room room);
     void sgn_showReportForm();

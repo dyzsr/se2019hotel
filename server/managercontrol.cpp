@@ -27,6 +27,9 @@ void ManagerControl::askManagerFunc()
 
 bool ManagerControl::slot_checkRoomIdValid(int roomId)
 {
+  manager.setTheRoom(emit sgn_getRoom(roomId));
+  return true;
+  /*
     QVector<Room> rooms = manager.getAllRooms();
     for (int i=0; i<rooms.length(); ++i)
     {
@@ -37,6 +40,7 @@ bool ManagerControl::slot_checkRoomIdValid(int roomId)
         }
     }
     return false;
+    */
 }
 
 void ManagerControl::slot_askSimpleBill_clicked()
