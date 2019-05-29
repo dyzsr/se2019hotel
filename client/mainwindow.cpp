@@ -124,7 +124,7 @@ void MainWindow::on_bt_state1_clicked(bool checked)
     ui->bt_state0->setDown(false);
     ui->bt_state1->setDown(true);
     // 待机 == 2
-    emit sgn_setState(2);
+    emit sgn_setState(1);
   }
 }
 

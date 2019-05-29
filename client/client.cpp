@@ -35,7 +35,7 @@ bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
-    pipe->sendRequest(Request(0, user.id, 2, 25, 1));
+    pipe->sendRequest(Request(0, user.id, 1, 25, 1));
 
     connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
     timer.start(2000);
@@ -56,19 +56,19 @@ bool Client::signOut()
 
 void Client::getIn(int state, double settemp, int setwdspd)
 {
-  pipe->sendRequest(Request(0, user.id, state, settemp, setwdspd));
+  pipe->sendRequest(Request(0, user.id, 1, settemp, setwdspd));
 }
 
 void Client::setTemp(int temp)
 {
-  Request request(0, user.id, room.state, temp, room.setwdspd);
+  Request request(0, user.id, 1, temp, room.setwdspd);
   qDebug() << "[Client]";
   pipe->sendRequest(request);
 }
 
 void Client::setWdspd(int wdspd)
 {
-  Request request(0, user.id, room.state, room.settemp, wdspd);
+  Request request(0, user.id, 1, room.settemp, wdspd);
   qDebug() << "[Client]";
   pipe->sendRequest(request);
 }
@@ -91,8 +91,6 @@ void Client::recoverTemp()
             recoverTimer.start(getRecoverTime()*1000);
             recoverFlag = true;
         }
-
-
     }
     else
     {
