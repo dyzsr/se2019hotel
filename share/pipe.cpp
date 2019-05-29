@@ -478,6 +478,33 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
   }
 }
 
+bool Pipe::updateRoomExceptTemp(const Room &room)
+{
+  for (int i = 0; i < 3; i++) {
+    QSqlQuery query(db);
+    query.prepare("UPDATE tcs_app_room "
+                  "SET user_id_id = :usrId, "
+                  "wdspd = :wdspd, setwdspd = :setwdspd, "
+                  "state = :state, mode = :mode, "
+                  "token = :token, costs = :cost, power = :power, "
+                  "start = :start, duration = :duration "
+                  "WHERE id = :id;");
+    query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
+    query.bindValue(":wdspd", room.wdspd);
+    query.bindValue(":setwdspd", room.setwdspd);
+    query.bindValue(":state", room.state);
+    query.bindValue(":mode", room.mode);
+    query.bindValue(":cost", room.cost);
+    query.bindValue(":power", room.pwr);
+    query.bindValue(":start", room.start);
+    query.bindValue(":duration", room.start.secsTo(room.duration));
+    query.bindValue(":id", room.roomId);
+    if (query.exec())
+      return true;
+  }
+  return false;
+}
+
 QVector<Room> Pipe::getRooms()
 {
   QSqlQuery query(db);
@@ -522,4 +549,15 @@ void Pipe::updateRoomTemp(int roomId, double temp)
     {
         qDebug() << "Room temp update failed";
     }
+}
+
+double Pipe::getRoomTemp(int roomId)
+{
+  QSqlQuery query(db);
+  query.prepare("SELECT temp FROM tcs_app_room WHERE id = :id;");
+  query.bindValue(":id", roomId);
+  if (query.exec() && query.next()) {
+    return query.record().value("temp").toDouble();
+  }
+  return 0;
 }

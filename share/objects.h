@@ -70,6 +70,8 @@ struct Dispatchable : public Room {
   }
 
   bool operator< (const Dispatchable &o) {
+    if (o.usrId.isEmpty()) return true;
+    if (usrId.isEmpty()) return false;
     if (!o.hasRequest) return true;
     if (!hasRequest) return false;
     if (wdspd > o.wdspd) return true;

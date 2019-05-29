@@ -35,7 +35,7 @@ private:
 
   bool serviceCompleted(int roomId);
 
-  bool tempInRange(int roomId, double range);
+  bool tempInRange(double temp1, double temp2, double range);
 
   double getRate(int wdspd);
 

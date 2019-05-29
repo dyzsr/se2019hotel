@@ -52,7 +52,11 @@ public:
 
   void updateRooms(const QVector<Room> &rooms);
 
+  bool updateRoomExceptTemp(const Room &room);
+
   void updateRoomTemp(int roomId, double temp);
+
+  double getRoomTemp(int roomId);
 
   // 获取所有房间信息
   QVector<Room> getRooms();
