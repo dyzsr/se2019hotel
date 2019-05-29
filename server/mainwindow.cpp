@@ -25,6 +25,7 @@ bool MainWindow::checkRoomIdValid()
     bool isValid = true;
     QString str(ui->le_roomId->text());
 
+    /*
     if (str == "")
     {
         isValid = false;
@@ -42,14 +43,15 @@ bool MainWindow::checkRoomIdValid()
             isValid = true;
         }
     }
+    */
+    int roomId = str.toInt(&isValid);
     if (isValid)
     {
-        isValid = emit sgn_checkRoomIdValid(ui->le_roomId->text().toInt());
+        isValid = emit sgn_checkRoomIdValid(roomId);
     }
 
     if (isValid)
     {
-
         ui->lb_roomIdnotValid->hide();
     }
     else

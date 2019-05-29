@@ -31,10 +31,11 @@ private:
   void checkIn(QString usrId);
 
   void updateRooms();
-  void updateBillings();
   void updateService();
 
   bool serviceCompleted(int roomId);
+
+  bool tempInRange(int roomId, double range);
 
   double getRate(int wdspd);
 

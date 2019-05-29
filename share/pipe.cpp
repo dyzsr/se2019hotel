@@ -158,7 +158,7 @@ QList<Request> Pipe::getRequests()
     req.setwdspd = rec.value("setwdspd").toInt();
     q.append(req);
   }
-  qDebug() << "get requests";
+//  qDebug() << "get requests";
   return q;
 }
 
@@ -186,7 +186,7 @@ void Pipe::delRequests(const QList<Request> &requests)
     query.bindValue(":id", req.reqId);
     query.exec();
   }
-  qDebug() << "del requests";
+//  qDebug() << "del requests";
 }
 
 int Pipe::getCurrentBillingId()
