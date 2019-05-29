@@ -137,6 +137,9 @@ color: #000000;</string>
         <height>21</height>
        </rect>
       </property>
+      <property name="text">
+       <string>1</string>
+      </property>
      </widget>
      <widget class="QLabel" name="lb_recoverFront">
       <property name="geometry">
@@ -274,7 +277,7 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>300</y>
+        <y>310</y>
         <width>81</width>
         <height>31</height>
        </rect>
@@ -287,7 +290,7 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>300</y>
+        <y>310</y>
         <width>81</width>
         <height>31</height>
        </rect>
@@ -350,6 +353,9 @@ color: #000000;</string>
       <property name="styleSheet">
        <string notr="true">background-color: #050511;
 color: #3333ff;</string>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLCDNumber" name="lcd_settemp">
@@ -449,9 +455,9 @@ color: #ff3333;</string>
      <widget class="QLabel" name="lb_fee">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>360</x>
         <y>230</y>
-        <width>31</width>
+        <width>41</width>
         <height>21</height>
        </rect>
       </property>
@@ -465,9 +471,9 @@ color: #ff3333;</string>
      <widget class="QLabel" name="lb_feeRate">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>360</x>
         <y>270</y>
-        <width>31</width>
+        <width>41</width>
         <height>21</height>
        </rect>
       </property>
@@ -533,11 +539,14 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>470</x>
         <y>230</y>
-        <width>41</width>
+        <width>51</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
       </property>
       <property name="text">
        <string>状态：</string>
@@ -546,11 +555,14 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>470</x>
         <y>270</y>
-        <width>41</width>
+        <width>51</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
       </property>
       <property name="text">
        <string>模式：</string>
@@ -565,6 +577,9 @@ color: #ff3333;</string>
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
+      </property>
       <property name="text">
        <string>关机</string>
       </property>
@@ -578,8 +593,43 @@ color: #ff3333;</string>
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
+      </property>
       <property name="text">
        <string>制冷</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>190</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
+      </property>
+      <property name="text">
+       <string>房间：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_roomId">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>190</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 20px;</string>
+      </property>
+      <property name="text">
+       <string>关机</string>
       </property>
      </widget>
     </widget>
@@ -591,7 +641,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

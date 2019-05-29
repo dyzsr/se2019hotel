@@ -44,22 +44,22 @@ void Server::init()
   // 初始化账单
   billings_cnt = pipe->getCurrentBillingId();
   billings.resize(rooms.size());
-  for (int i = 0; i < rooms.size(); i++) {
-    rooms[i].pwr = getRate(rooms[i].setwdspd);
+//  for (int i = 0; i < rooms.size(); i++) {
+//    rooms[i].pwr = getRate(rooms[i].setwdspd);
 
-    billings[i] = Billing(
-                    billings_cnt++, // billing id
-                    rooms[i].roomId,   // room id
-                    QDateTime::currentDateTime(), // start
-                    QDateTime::currentDateTime(), // duration
-                    0.0, // costs
-                    rooms[i].wdspd, // windspeed
-                    rooms[i].temp, // start temperature
-                    rooms[i].temp, // end temperature
-                    rooms[i].pwr,   // rate
-                    0  // action
-                    );
-  }
+//    billings[i] = Billing(
+//                    0, // billing id
+//                    rooms[i].roomId,   // room id
+//                    QDateTime::currentDateTime(), // start
+//                    QDateTime::currentDateTime(), // duration
+//                    0.0, // costs
+//                    rooms[i].wdspd, // windspeed
+//                    rooms[i].temp, // start temperature
+//                    rooms[i].temp, // end temperature
+//                    rooms[i].pwr,   // rate
+//                    0  // action
+//                    );
+//  }
 
   room_lock.unlock();
 }

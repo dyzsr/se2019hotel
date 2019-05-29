@@ -27,7 +27,9 @@ signals:
   void sgn_setState(int state);
 
 public slots:
+  void init(double minTemp, double maxTemp);
   void refresh(Room room);
+  void disable();
   QString slot_getRecoverStr();
 
 private slots:
