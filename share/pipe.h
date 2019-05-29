@@ -88,7 +88,7 @@ public:
   void updateBilling(const Billing &billing);
 
   // 添加一条账目记录
-  void addBilling(const Billing &billing);
+  int64_t addBilling(const Billing &billing);
 
   // 获取管理员信息列表
   QVector<Admin> getAdmins();

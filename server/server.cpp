@@ -44,22 +44,6 @@ void Server::init()
   // 初始化账单
   billings_cnt = pipe->getCurrentBillingId();
   billings.resize(rooms.size());
-//  for (int i = 0; i < rooms.size(); i++) {
-//    rooms[i].pwr = getRate(rooms[i].setwdspd);
-
-//    billings[i] = Billing(
-//                    0, // billing id
-//                    rooms[i].roomId,   // room id
-//                    QDateTime::currentDateTime(), // start
-//                    QDateTime::currentDateTime(), // duration
-//                    0.0, // costs
-//                    rooms[i].wdspd, // windspeed
-//                    rooms[i].temp, // start temperature
-//                    rooms[i].temp, // end temperature
-//                    rooms[i].pwr,   // rate
-//                    0  // action
-//                    );
-//  }
 
   room_lock.unlock();
 }
@@ -78,7 +62,6 @@ void Server::fetchRequests()
     if (!user2room.contains(q.usrId)) {
       // 新用户
       checkIn(q.usrId);
-      continue;
     }
 
     int roomId = user2room[q.usrId];
@@ -129,7 +112,9 @@ void Server::checkIn(QString usrId)
       user2room[usrId] = rooms[i].roomId;
       rooms[i].usrId = usrId;
       rooms[i].settemp = 25;
+      rooms[i].temp = 25;
       rooms[i].setwdspd = 0;
+      rooms[i].wdspd = 0;
       rooms[i].state = 2;
       rooms[i].mode = 0;
       rooms[i].start = QDateTime::currentDateTime();
@@ -182,12 +167,12 @@ void Server::updateRooms()
   for (Room &room : rooms) {
     if (!room.usrId.isEmpty()) {
       room.temp = pipe->getRoomTemp(room.roomId);
+      room.wdspd = room.setwdspd;
 
       // 房间在拥有服务对象时才可以接收服务
+      // state == 1 OR state == 3
       if (services.contains(room.roomId) &&
           !tempInRange(room.temp, room.settemp, 1e-3)) {
-        // state == 1 OR state == 3
-        room.wdspd = room.setwdspd;
         // 制热
         if (room.temp < room.settemp) {
           room.mode = 1;
@@ -326,7 +311,7 @@ void Server::updateService()
       rooms[i].pwr = getRate(rooms[i].setwdspd);
 
       billings[i] = Billing(
-                      billings_cnt++, // billing id
+                      0, // billing id
                       rooms[i].roomId,   // room id
                       QDateTime::currentDateTime(), // start
                       QDateTime::currentDateTime(), // duration
@@ -337,7 +322,7 @@ void Server::updateService()
                       rooms[i].pwr,   // rate
                       dsps[i].requestType   // action
                       );
-      pipe->addBilling(billings[i]);
+      billings[i].billingId = pipe->addBilling(billings[i]);
     }
   }
   qDebug() << QTime::currentTime() << "serv" << services;

@@ -59,27 +59,9 @@ bool Client::signOut()
   return true;
 }
 
-void Client::getIn(int state, double settemp, int setwdspd)
+void Client::sendRequest(int state, double settemp, int setwdspd)
 {
   pipe->sendRequest(Request(0, user.id, state ? 1 : 0, settemp, setwdspd));
-}
-
-void Client::setTemp(int temp)
-{
-  Request request(0, user.id, 1, temp, room.setwdspd);
-  pipe->sendRequest(request);
-}
-
-void Client::setWdspd(int wdspd)
-{
-  Request request(0, user.id, 1, room.settemp, wdspd);
-  pipe->sendRequest(request);
-}
-
-void Client::setState(int state)
-{
-  Request request(0, user.id, state, room.settemp, room.setwdspd);
-  pipe->sendRequest(request);
 }
 
 void Client::recoverTemp()

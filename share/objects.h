@@ -102,7 +102,7 @@ struct Request
 
 struct Billing
 {
-  int billingId;
+  int64_t billingId;
   int roomId;
   QDateTime start;
   QDateTime duration;
@@ -113,7 +113,7 @@ struct Billing
   double rate;
   int action;
   
-  Billing(int _billingId = 0, int _roomId=0, QDateTime _start=QDateTime(),
+  Billing(int64_t _billingId = 0, int _roomId=0, QDateTime _start=QDateTime(),
           QDateTime _duration=QDateTime(), double _costs=0, int _wdspd=0, double _startTemp=0,
           double _endTemp=0, double _rate=0, int _action=0):
     billingId(_billingId), roomId(_roomId), start(_start), duration(_duration),
