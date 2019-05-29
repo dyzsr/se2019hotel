@@ -2,6 +2,7 @@
 
 #include <QDateTime>
 #include <QDebug>
+#pragma execution_character_set("utf-8")
 
 Manager::Manager(QObject *parent):
   QObject(parent),

@@ -310,7 +310,7 @@ void Pipe::updateBilling(const Billing &billing)
     qDebug() << query.lastError();
 }
 
-void Pipe::addBilling(const Billing &billing)
+int64_t Pipe::addBilling(const Billing &billing)
 {
   QSqlQuery query(db);
   query.prepare("INSERT INTO tcs_app_bill VALUES(:id, :start, :duration, "
@@ -330,6 +330,11 @@ void Pipe::addBilling(const Billing &billing)
     qDebug() << "add billing id =" << billing.billingId;
   else
     qDebug() << query.lastError();
+
+  if (query.exec("SELECT LAST_INSERT_ID();") && query.next()) {
+    return query.record().value(0).toLongLong();
+  }
+  return -1;
 }
 
 QVector<Admin> Pipe::getAdmins()
@@ -518,7 +523,7 @@ QVector<Room> Pipe::getRooms()
       room.temp = query.record().value("temp").toDouble();
       room.settemp = query.record().value("settemp").toDouble();
       room.wdspd = query.record().value("wdspd").toInt();
-      room.setwdspd = query.record().value("setwpspd").toInt();
+      room.setwdspd = query.record().value("setwdspd").toInt();
       room.token = query.record().value("token").toString();
       room.state = query.record().value("state").toInt();
       room.mode = query.record().value("mode").toInt();

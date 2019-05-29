@@ -20,11 +20,7 @@ signals:
   bool sgn_signIn(QString usrId, QString passwd);
   bool sgn_signOut();
 
-  void sgn_getIn(int state, double settemp, int setwdspd);
-
-  void sgn_setTemp(int temp);
-  void sgn_setWdspd(int wdspd);
-  void sgn_setState(int state);
+  void sgn_sendRequest(int state, double settemp, int setwdspd);
 
 public slots:
   void init(double minTemp, double maxTemp);

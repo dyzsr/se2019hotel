@@ -99,9 +99,11 @@ void MainWindow::on_bt_getIn_clicked()
   ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
   ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
   ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
-  emit sgn_getIn(1,
-                 ui->sb_settemp->value(),
-                 ui->sb_setwdspd->value());
+  ui->sb_settemp->setEnabled(true);
+  ui->sb_setwdspd->setEnabled(true);
+  emit sgn_sendRequest(1,
+                       ui->sb_settemp->value(),
+                       ui->sb_setwdspd->value());
   ui->bt_getIn->setEnabled(false);
 }
 
@@ -121,7 +123,9 @@ void MainWindow::on_sb_settemp_valueChanged(int temp)
 {
   ui->bt_tempUp->setEnabled(temp < ui->sb_settemp->maximum());
   ui->bt_tempDown->setEnabled(temp > ui->sb_settemp->minimum());
-  emit sgn_setTemp(temp);
+  emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                       ui->sb_settemp->value(),
+                       ui->sb_setwdspd->value());
 }
 
 void MainWindow::on_bt_wdspdUp_clicked()
@@ -140,7 +144,9 @@ void MainWindow::on_sb_setwdspd_valueChanged(int wdspd)
 {
   ui->bt_wdspdUp->setEnabled(wdspd < ui->sb_setwdspd->maximum());
   ui->bt_wdspdDown->setEnabled(wdspd > ui->sb_setwdspd->minimum());
-  emit sgn_setWdspd(wdspd);
+  emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                       ui->sb_settemp->value(),
+                       ui->sb_setwdspd->value());
 }
 
 void MainWindow::on_bt_state0_clicked(bool checked)
@@ -149,7 +155,9 @@ void MainWindow::on_bt_state0_clicked(bool checked)
     ui->bt_state0->setEnabled(false);
     ui->bt_state1->setEnabled(true);
     // 关机
-    emit sgn_setState(0);
+    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                         ui->sb_settemp->value(),
+                         ui->sb_setwdspd->value());
   }
 }
 
@@ -159,7 +167,9 @@ void MainWindow::on_bt_state1_clicked(bool checked)
     ui->bt_state0->setEnabled(true);
     ui->bt_state1->setEnabled(false);
     // 开机
-    emit sgn_setState(1);
+    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                         ui->sb_settemp->value(),
+                         ui->sb_setwdspd->value());
   }
 }
 

@@ -18,7 +18,6 @@ void ManagerWindow::init()
 {
   ui->stackedWidget->setCurrentIndex(0);
   ui->lb_verdict->hide();
-  ui->lb_adminpswd->setText(QString());
 }
 
 void ManagerWindow::on_bt_signIn_clicked()
