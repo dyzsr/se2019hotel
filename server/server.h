@@ -16,7 +16,10 @@ public:
   explicit Server(QObject *parent = nullptr);
   ~Server();
 
+  void init();
+
 signals:
+  void sgn_init(int nr_rooms);
 
 public slots:
   void fetchRequests();
@@ -26,8 +29,6 @@ public slots:
   Room getRoom(int roomId);
 
 private:
-  void init();
-
   void checkIn(QString usrId);
 
   void updateRooms();

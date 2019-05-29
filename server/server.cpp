@@ -8,17 +8,7 @@
 Server::Server(QObject *parent):
   QObject(parent),
   pipe(Pipe::getInstance())
-{
-  init();
-
-  QTimer *timer_p = new QTimer(this);
-  connect(timer_p, &QTimer::timeout, this, &Server::process);
-  timer_p->start(1000);
-
-  QTimer *timer_h = new QTimer(this);
-  connect(timer_h, &QTimer::timeout, this, &Server::fetchRequests);
-  timer_h->start(1000);
-}
+{}
 
 Server::~Server() {}
 
@@ -46,6 +36,16 @@ void Server::init()
   billings.resize(rooms.size());
 
   room_lock.unlock();
+
+  emit sgn_init(rooms.size());
+
+  QTimer *timer_p = new QTimer(this);
+  connect(timer_p, &QTimer::timeout, this, &Server::process);
+  timer_p->start(1000);
+
+  QTimer *timer_h = new QTimer(this);
+  connect(timer_h, &QTimer::timeout, this, &Server::fetchRequests);
+  timer_h->start(1000);
 }
 
 void Server::fetchRequests()
@@ -111,10 +111,10 @@ void Server::checkIn(QString usrId)
     if (rooms[i].usrId.isEmpty()) {
       user2room[usrId] = rooms[i].roomId;
       rooms[i].usrId = usrId;
-      rooms[i].settemp = 25;
-      rooms[i].temp = 25;
-      rooms[i].setwdspd = 0;
-      rooms[i].wdspd = 0;
+      rooms[i].settemp = info.defaultTemp;
+      rooms[i].temp = info.defaultTemp;
+      rooms[i].setwdspd = info.defaultWdspd;
+      rooms[i].wdspd = info.defaultWdspd;
       rooms[i].state = 2;
       rooms[i].mode = 0;
       rooms[i].start = QDateTime::currentDateTime();
@@ -139,7 +139,9 @@ void Server::checkOut(int roomId)
   // 保留此房间上一个用户的服务起始时间
   rooms[roomId].usrId = "";
   rooms[roomId].settemp = 25.;
+  rooms[roomId].temp = 25.;
   rooms[roomId].setwdspd = 0;
+  rooms[roomId].wdspd = 0;
   rooms[roomId].mode = 0;
   rooms[roomId].state = 0;
   rooms[roomId].duration = QDateTime::currentDateTime();
@@ -162,7 +164,6 @@ Room Server::getRoom(int roomId)
 void Server::updateRooms()
 {
   // 更新rooms
-//  qDebug() << QTime::currentTime() << "update rooms start";
 
   for (Room &room : rooms) {
     if (!room.usrId.isEmpty()) {
@@ -185,16 +186,18 @@ void Server::updateRooms()
           room.temp -= getPara(room.wdspd);
           room.temp = qMax(room.temp, room.settemp);
         }
-        // 记账
-        room.cost += room.pwr;
-        // 更新服务时间
-        dsps[room.roomId].serviceTime += 1;
 
         // 更新账单
         billings[room.roomId].duration = QDateTime::currentDateTime();
         int64_t secs = billings[room.roomId].start.secsTo(billings[room.roomId].duration);
+
+        // 房间记账
         billings[room.roomId].costs = billings[room.roomId].rate * secs;
         billings[room.roomId].endTemp = rooms[room.roomId].temp;
+        room.cost += dsps[room.roomId].cost + room.pwr * secs;
+
+        // 更新服务时间
+        dsps[room.roomId].serviceTime += 1;
 
         // 上传至数据库
         pipe->updateRoom(room);
@@ -220,15 +223,12 @@ void Server::updateRooms()
     }
   }
 
-//  qDebug() << QTime::currentTime() << "update rooms finish";
 }
 
 void Server::updateService()
 {
   // 更新rooms 添加新的billings并上传
-//  qDebug() << QTime::currentTime() << "update service start";
 
-//  qDebug() << QTime::currentTime() << "update service clear";
   // 清除已完成服务的对象
   for (auto it = services.begin(); it != services.end(); ) {
     int i = *it;
@@ -244,7 +244,6 @@ void Server::updateService()
       ++it;
   }
 
-  //qDebug() << QTime::currentTime() << "update service add";
   // 调度服务对象
   while (services.size() < max_nr_service) {
     // 寻找等待队列中最优先的调度对象
@@ -260,7 +259,6 @@ void Server::updateService()
       break;
   }
 
-//  qDebug() << QTime::currentTime() << "update service replace";
   if (services.size() == max_nr_service) {
     for (int j = 0; j < max_nr_service; j++) {
       // 寻找最可能被替换的服务对象
@@ -296,7 +294,6 @@ void Server::updateService()
     }
   }
 
-//  qDebug() << QTime::currentTime() << "update service open new billing";
   // 判断服务对象是否需要新开账单
   for (int i : services) {
     // state == 3 表示有新的请求
@@ -326,8 +323,6 @@ void Server::updateService()
     }
   }
   qDebug() << QTime::currentTime() << "serv" << services;
-
-//  qDebug() << QTime::currentTime() << "update service finish";
 }
 
 bool Server::serviceCompleted(int roomId)
