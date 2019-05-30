@@ -19,11 +19,13 @@ signals:
   void sgn_init(double minTemp, double maxTemp);
   void sgn_refresh(Room room);
   void sgn_disable();
-  QString sgn_getRecoverStr();
+  int sgn_getRecoverSpeed();
 
 public slots:
   bool signIn(QString usrId, QString passwd);
   bool signOut();
+
+  void getInfo(int &state, double &settemp, int &setwdspd);
 
   void sendRequest(int state, double settemp, int setwdspd);
 

@@ -79,7 +79,7 @@ QVector<QString> Records::getSimpleBills(int roomId)
         uint etimm;
         uint htimm;
         int n,n1;
-        int cost=0;
+        double cost=0;
         stimm = roomss.at(roomId).start.toTime_t();
         htimm = roomss.at(roomId).duration.toTime_t();
         n = htimm;

@@ -194,7 +194,7 @@ void Server::updateRooms()
         // 房间记账
         billings[room.roomId].costs = billings[room.roomId].rate * secs;
         billings[room.roomId].endTemp = rooms[room.roomId].temp;
-        room.cost += dsps[room.roomId].cost + room.pwr * secs;
+        room.cost = dsps[room.roomId].cost + room.pwr * secs;
 
         // 更新服务时间
         dsps[room.roomId].serviceTime += 1;
@@ -307,13 +307,15 @@ void Server::updateService()
       rooms[i].start = dsps[i].start;
       rooms[i].pwr = getRate(rooms[i].setwdspd);
 
+      dsps[i].cost = rooms[i].cost;
+
       billings[i] = Billing(
                       0, // billing id
                       rooms[i].roomId,   // room id
                       QDateTime::currentDateTime(), // start
                       QDateTime::currentDateTime(), // duration
                       0.0, // costs
-                      rooms[i].wdspd, // windspeed
+                      rooms[i].setwdspd, // windspeed
                       rooms[i].temp, // start temperature
                       rooms[i].temp, // end temperature
                       rooms[i].pwr,   // rate
