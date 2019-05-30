@@ -25,6 +25,8 @@ ReportFormWindow::ReportFormWindow(QWidget *parent) :
     ui->s_dateTime->setCalendarPopup(true);
     ui->e_dateTime->setCalendarPopup(true);
 
+    ui->s_dateTime->setDateTime(QDateTime::currentDateTime().addDays(-1));
+    ui->e_dateTime->setDateTime(QDateTime::currentDateTime());
 }
 
 
@@ -132,9 +134,9 @@ void ReportFormWindow::on_OK_clicked()
     {
         QDateTime v;
         v = startt;
-        uint stime;
-        uint etime;
-        int tRet;
+        int64_t stime;
+        int64_t etime;
+        int64_t tRet;
         stime = v.addDays(1).toTime_t();
         etime = endt.toTime_t();
         tRet = stime - etime;
@@ -167,12 +169,12 @@ void ReportFormWindow::on_OK_clicked()
     {
         QDateTime v1;
         v1 = startt;
-        uint stime1;
-        uint etime1;
+        int64_t stime1;
+        int64_t etime1;
         QString StrCurrentTime = startt.toString("yyyy-MM-dd hh:mm:ss ddd");
         QString x =  StrCurrentTime.mid(StrCurrentTime.length()-1,1);
-        int strDayOfWeek;
-        int tRet1;
+        int strDayOfWeek = 0;
+        int64_t tRet1;
         if(x == "一")
         {
             strDayOfWeek = 7;
@@ -235,8 +237,8 @@ void ReportFormWindow::on_OK_clicked()
     {
         QDateTime v2;
         v2 = startt;
-        uint stime2;
-        uint etime2;
+        int64_t stime2;
+        int64_t etime2;
         QString StrCurrentTime = startt.addMonths(1).toString("yyyy-MM-dd hh:mm:ss");
         QString x =  StrCurrentTime.mid(5,2);
         QString y;
@@ -247,7 +249,7 @@ void ReportFormWindow::on_OK_clicked()
         }
         else
         y =  StrCurrentTime.mid(0,7);
-        int tRet2;
+        int64_t tRet2;
         y.append("-01 00:00:00");
         QDateTime time1;
         time1 = QDateTime::fromString(y, "yyyy-MM-dd hh:mm:ss");
