@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,9 +25,13 @@
      <rect>
       <x>-1</x>
       <y>-1</y>
-      <width>601</width>
-      <height>361</height>
+      <width>641</width>
+      <height>441</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 16px;
+font-family: 幼圆;</string>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -36,62 +40,27 @@
      <widget class="QPushButton" name="bt_callManager">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>280</y>
-        <width>91</width>
+        <x>470</x>
+        <y>340</y>
+        <width>101</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: #666666;
+color: #ffffff;</string>
       </property>
       <property name="text">
        <string>管理员功能</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="bt_checkout">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>220</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>结账</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_simpleBill">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>220</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>查看账单</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_detailedBill">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>220</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>查看详单</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>60</y>
-        <width>72</width>
-        <height>15</height>
+        <x>130</x>
+        <y>40</y>
+        <width>51</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -101,8 +70,8 @@
      <widget class="QSpinBox" name="sb_roomId">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>50</y>
+        <x>200</x>
+        <y>40</y>
         <width>121</width>
         <height>31</height>
        </rect>
@@ -111,14 +80,14 @@
      <widget class="QWidget" name="room_bt_widget" native="true">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>110</y>
+        <x>40</x>
+        <y>90</y>
         <width>371</width>
         <height>71</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #ffffff;</string>
+       <string notr="true">background: #cccccc;</string>
       </property>
       <widget class="QRadioButton" name="rb_3">
        <property name="geometry">
@@ -147,8 +116,7 @@ font-size: 16px;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: #000000;
-font-size: 16px;</string>
+        <string notr="true">color: #000000;</string>
        </property>
        <property name="text">
         <string>4</string>
@@ -291,34 +259,226 @@ font-size: 16px;</string>
        </property>
       </widget>
      </widget>
-     <widget class="QLabel" name="label2">
+     <widget class="QWidget" name="widget" native="true">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>50</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>用户：</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_usrId">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>50</y>
-        <width>71</width>
-        <height>31</height>
+        <x>40</x>
+        <y>170</y>
+        <width>371</width>
+        <height>211</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: #ff0000;</string>
+       <string notr="true">background: #cccccc;
+color: #ffffff;</string>
       </property>
-      <property name="text">
-       <string>无人</string>
+      <widget class="QPushButton" name="bt_checkout">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>90</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;</string>
+       </property>
+       <property name="text">
+        <string>结账</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_detailedBill">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>140</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;</string>
+       </property>
+       <property name="text">
+        <string>查看详单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_simpleBill">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>140</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;</string>
+       </property>
+       <property name="text">
+        <string>查看账单</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_checkin">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>90</y>
+         <width>91</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;</string>
+       </property>
+       <property name="text">
+        <string>入住</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label2">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;</string>
+       </property>
+       <property name="text">
+        <string>用户：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_usrId">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #ff0000;</string>
+       </property>
+       <property name="text">
+        <string>无人</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cb_users">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>40</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>90</y>
+        <width>141</width>
+        <height>211</height>
+       </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background: #cccccc;
+color: #000000;</string>
+      </property>
+      <widget class="QLineEdit" name="le_usrid">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #ffffff;
+color: #000000;</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="le_usrpw">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>90</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #ffffff;
+color: #000000;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>用户名</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>70</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>密码</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_signup">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>160</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;
+color: #ffffff;</string>
+       </property>
+       <property name="text">
+        <string>新建用户</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_dup">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>130</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #ff0000;</string>
+       </property>
+       <property name="text">
+        <string>用户名重复</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -328,7 +488,7 @@ font-size: 16px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>640</width>
      <height>22</height>
     </rect>
    </property>

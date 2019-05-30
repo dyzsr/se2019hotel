@@ -6,12 +6,20 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
+#define GROUP
+#undef GROUP
+
 Pipe Pipe::pipe;
 
 Pipe::Pipe():
   db(QSqlDatabase::addDatabase("QODBC3"))
 {
+#ifdef GROUP
+  db.setDatabaseName("tcs_db");
+#else
   db.setDatabaseName("se_db");
+#endif
+
   db.open();
   qDebug() << "open db";
   if (db.isOpen()) {
