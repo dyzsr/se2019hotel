@@ -126,6 +126,7 @@ void ReportFormWindow::Updatereport(QVector<QString> dat)
 
 void ReportFormWindow::on_OK_clicked()
 {
+    records.getInfoOnce();
     QDateTime startt = ui->s_dateTime->dateTime();
     QDateTime endt = ui->e_dateTime->dateTime();
     ui->display->clear();

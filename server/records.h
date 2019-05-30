@@ -16,6 +16,7 @@ public:
     QVector<QString> getDetailedBill(Room room);
     QVector<QString> getSimpleBills(int roomId);
     QVector<QString> getReportForm(QDateTime start , QDateTime end);
+    void getInfoOnce();
 
 signals:
 
@@ -24,6 +25,8 @@ public slots:
 private:
     Pipe *pipe;
     QString calcDurationStr(long long duration);
+    QVector<Billing> billingss;
+    QVector<Room> rooms;
 };
 
 #endif // RECORDS_H

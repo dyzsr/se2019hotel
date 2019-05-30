@@ -118,8 +118,6 @@ QVector<QString> Records::getSimpleBills(int roomId)
 QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
 {
   // TODO
-    QVector<Billing> billingss = pipe->getAllBillings();
-    QVector<Room> rooms =  pipe->getRooms();
     QVector<QString> data;
     QString str;
     uint stim;
@@ -242,4 +240,10 @@ QString Records::calcDurationStr(long long duration)
         str.append("分");
     }
     return str;
+}
+
+void Records::getInfoOnce()
+{
+    billingss = pipe->getAllBillings();
+    rooms = pipe->getRooms();
 }

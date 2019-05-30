@@ -28,5 +28,6 @@ void RecordsControl::slot_showReportForm()
     ini = QDateTime::currentDateTime().addDays(-1);
     QDateTime ini2;
     ini2 = QDateTime::currentDateTime();
+    records.getInfoOnce();
     reportFormWindow.showReportForm(records.getReportForm(ini,ini2));
 }
