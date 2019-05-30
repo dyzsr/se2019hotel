@@ -1,5 +1,6 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#pragma execution_character_set("utf-8")
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -7,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   ui->stackedWidget->setCurrentWidget(ui->page_frontdesk);
-  ui->lb_roomIdnotValid->hide();
 }
 
 MainWindow::~MainWindow()
@@ -43,15 +43,6 @@ bool MainWindow::checkRoomIdValid()
     if (isValid)
     {
         isValid = emit sgn_checkRoomIdValid(roomId);
-    }
-
-    if (isValid)
-    {
-        ui->lb_roomIdnotValid->hide();
-    }
-    else
-    {
-        ui->lb_roomIdnotValid->show();
     }
     return isValid;
 }
@@ -129,6 +120,7 @@ void MainWindow::on_rb_9_clicked()
 
 void MainWindow::on_sb_roomId_valueChanged(int roomId)
 {
+  ui->lb_usrId->setText(emit sgn_getUsrId(roomId));
   switch (roomId) {
   case 0: ui->rb_0->setChecked(true); break;
   case 1: ui->rb_1->setChecked(true); break;

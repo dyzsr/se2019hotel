@@ -18,6 +18,7 @@ public:
   ~MainWindow();
 
 signals:
+  QString sgn_getUsrId(int roomId);
   void sgn_openNewWindow(QWidget *parent);
   void sgn_checkout(int roomId);
 //  void sgn_getBillings(int roomId);
