@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
   Server server(&w);
   ManagerControl manager_control(&w);
 
+  QObject::connect(&w, &MainWindow::sgn_getUsrId, &server, &Server::getUsrId);
   QObject::connect(&server, &Server::sgn_init, &w, &MainWindow::init);
 
   QObject::connect(&w, &MainWindow::sgn_checkout, &server, &Server::checkOut);

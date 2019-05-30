@@ -401,6 +401,26 @@ Host Pipe::getHost()
   return host;
 }
 
+bool Pipe::turnOnHost()
+{
+  QSqlQuery query(db);
+  for (int j = 0; j < 3; j++) {
+    if (query.exec("UPDATE tcs_app_host SET state = 1;"))
+      return true;
+  }
+  return false;
+}
+
+bool Pipe::turnOffHost()
+{
+  QSqlQuery query(db);
+  for (int j = 0; j < 3; j++) {
+    if (query.exec("UPDATE tcs_app_host SET state = 0;"))
+      return true;
+  }
+  return false;
+}
+
 QVector<User> Pipe::getUsers()
 {
   QSqlQuery query(db);

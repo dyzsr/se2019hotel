@@ -4,13 +4,19 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QTime>
+#pragma execution_character_set("utf-8")
 
 Server::Server(QObject *parent):
   QObject(parent),
   pipe(Pipe::getInstance())
-{}
+{
+  pipe->turnOnHost();
+}
 
-Server::~Server() {}
+Server::~Server()
+{
+  pipe->turnOffHost();
+}
 
 void Server::init()
 {
@@ -162,6 +168,14 @@ Room Server::getRoom(int roomId)
   return rooms[roomId];
 }
 
+QString Server::getUsrId(int roomId)
+{
+  if (rooms[roomId].usrId.isEmpty()) {
+    return "无人";
+  }
+  return rooms[roomId].usrId;
+}
+
 void Server::updateRooms()
 {
   // 更新rooms
@@ -300,7 +314,6 @@ void Server::updateService()
     // state == 3 表示有新的请求
     if (dsps[i].state == 3) {
       rooms[i].usrId = dsps[i].usrId;
-      rooms[i].token = dsps[i].token;
       rooms[i].settemp = dsps[i].settemp;
       rooms[i].setwdspd = dsps[i].setwdspd;
       // state == 1 表示进入服务队列 且已经记录下了最新请求

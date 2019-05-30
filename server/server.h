@@ -27,6 +27,7 @@ public slots:
   void checkOut(int roomId);
 
   Room getRoom(int roomId);
+  QString getUsrId(int roomId);
 
 private:
   void checkIn(QString usrId);

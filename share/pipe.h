@@ -98,6 +98,10 @@ public:
   // 获取主机配置信息
   Host getHost();
 
+  bool turnOnHost();
+
+  bool turnOffHost();
+
 private:
   QSqlDatabase db;
 };
