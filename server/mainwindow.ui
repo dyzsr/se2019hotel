@@ -276,7 +276,7 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>220</x>
-         <y>90</y>
+         <y>100</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -292,7 +292,7 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>140</y>
+         <y>150</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -308,7 +308,7 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>220</x>
-         <y>140</y>
+         <y>150</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -324,7 +324,7 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>90</y>
+         <y>100</y>
          <width>91</width>
          <height>31</height>
         </rect>
@@ -340,7 +340,7 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>40</y>
+         <y>20</y>
          <width>41</width>
          <height>21</height>
         </rect>
@@ -355,14 +355,14 @@ color: #ffffff;</string>
       <widget class="QLabel" name="lb_usrId">
        <property name="geometry">
         <rect>
-         <x>140</x>
-         <y>40</y>
+         <x>130</x>
+         <y>20</y>
          <width>71</width>
          <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: #ff0000;</string>
+        <string notr="true">color: #0000ff;</string>
        </property>
        <property name="text">
         <string>无人</string>
@@ -372,10 +372,30 @@ color: #ffffff;</string>
        <property name="geometry">
         <rect>
          <x>220</x>
-         <y>40</y>
+         <y>20</y>
          <width>81</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #000000;
+background: #ffffff;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb_err">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>60</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #ff0000;</string>
+       </property>
+       <property name="text">
+        <string>已有顾客入住</string>
        </property>
       </widget>
      </widget>

@@ -433,16 +433,16 @@ QVector<User> Pipe::getUsers()
 {
   QSqlQuery query(db);
   QSqlRecord rec;
-  User user;
   QVector<User> q;
-  query.prepare("SELECT * FROM tcs_app_user");
+  query.prepare("SELECT * FROM tcs_app_user;");
   query.exec();
-  do {
+  while (query.next()) {
     rec = query.record();
+    User user;
     user.id = rec.value("name").toString();
     user.pswd = rec.value("pswd").toString();
     q.append(user);
-  } while (query.next());
+  }
   qDebug() << "get users";
   return q;
 }

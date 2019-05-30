@@ -1,5 +1,8 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include <QDebug>
+
 #pragma execution_character_set("utf-8")
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,8 +20,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::init(int nr_room)
 {
+  ui->lb_err->hide();
+  ui->lb_dup->hide();
+  QStringList usrIds = emit sgn_getUsrIds();
+  ui->cb_users->addItems(usrIds);
+
   if (nr_room > 0) ui->sb_roomId->setRange(0, nr_room - 1);
   else ui->sb_roomId->setEnabled(false);
+
   if (nr_room <= 0) ui->rb_0->setEnabled(false);
   if (nr_room <= 1) ui->rb_1->setEnabled(false);
   if (nr_room <= 2) ui->rb_2->setEnabled(false);
@@ -66,6 +75,25 @@ void MainWindow::on_bt_detailedBill_clicked()
     if (!checkRoomIdValid())
         return;
     emit sgn_askDetailedBill_clicked();
+}
+
+void MainWindow::on_bt_checkin_clicked()
+{
+  int roomId = ui->sb_roomId->value();
+  QString usrId = ui->cb_users->currentText();
+  qDebug() << usrId << roomId;
+  bool success = emit sgn_checkin(roomId, usrId);
+  if (!success) {
+    ui->lb_err->show();
+  } else {
+    ui->lb_err->hide();
+  }
+  ui->lb_usrId->setText(emit sgn_getUsrId(roomId));
+}
+
+void MainWindow::on_bt_signup_clicked()
+{
+
 }
 
 void MainWindow::on_rb_0_clicked()

@@ -24,7 +24,13 @@ signals:
 public slots:
   void fetchRequests();
   void process();
+
+  bool checkInFromServer(int roomId, QString usrId);
   void checkOut(int roomId);
+
+
+  QStringList getUsrIds();
+  bool addNewUser(QString usrId, QString pswd);
 
   Room getRoom(int roomId);
   QString getUsrId(int roomId);

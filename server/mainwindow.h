@@ -18,10 +18,11 @@ public:
   ~MainWindow();
 
 signals:
+  QStringList sgn_getUsrIds();
   QString sgn_getUsrId(int roomId);
   void sgn_openNewWindow(QWidget *parent);
+  bool sgn_checkin(int roomd, QString usrId);
   void sgn_checkout(int roomId);
-//  void sgn_getBillings(int roomId);
   void sgn_askSimpleBill_clicked();
   void sgn_askDetailedBill_clicked();
   bool sgn_checkRoomIdValid(int roomId);
@@ -31,9 +32,12 @@ public slots:
 
 private slots:
   void on_bt_callManager_clicked();
+  void on_bt_checkin_clicked();
   void on_bt_checkout_clicked();
   void on_bt_simpleBill_clicked();
   void on_bt_detailedBill_clicked();
+
+  void on_bt_signup_clicked();
 
   void on_rb_0_clicked();
   void on_rb_1_clicked();
@@ -47,6 +51,7 @@ private slots:
   void on_rb_9_clicked();
 
   void on_sb_roomId_valueChanged(int arg1);
+
 
 private:
   Ui::MainWindow *ui;
