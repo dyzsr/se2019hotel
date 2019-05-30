@@ -87,8 +87,6 @@ void MainWindow::on_bt_signIn_clicked()
   if (success) {
     ui->lb_verdict->hide();
     ui->stackedWidget->setCurrentIndex(1);
-
-    on_bt_getIn_clicked();
   } else {
     ui->lb_verdict->show();
   }
