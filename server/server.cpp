@@ -21,6 +21,7 @@ Server::~Server()
 void Server::init()
 {
   info = pipe->getHost();
+  users = pipe->getUsers();
 
   room_lock.lockForWrite();
 
@@ -111,6 +112,36 @@ void Server::process()
   room_lock.unlock();
 }
 
+bool Server::checkInFromServer(int roomId, QString usrId)
+{
+  room_lock.lockForWrite();
+
+  if (!rooms[roomId].usrId.isEmpty() || user2room.contains(usrId)) {
+    room_lock.unlock();
+    return false;
+  }
+
+  user2room[usrId] = roomId;
+  rooms[roomId].usrId = usrId;
+  rooms[roomId].settemp = info.defaultTemp;
+  rooms[roomId].temp = info.defaultTemp;
+  rooms[roomId].setwdspd = info.defaultWdspd;
+  rooms[roomId].wdspd = info.defaultWdspd;
+  rooms[roomId].state = 2;
+  rooms[roomId].mode = 0;
+  rooms[roomId].start = QDateTime::currentDateTime();
+  rooms[roomId].duration = QDateTime::currentDateTime();
+  rooms[roomId].pwr = 0;
+  rooms[roomId].cost = 0;
+  dsps[roomId].update(rooms[roomId]);
+
+  pipe->updateRoom(rooms[roomId]);
+
+  qDebug() << "check in by server";
+  room_lock.unlock();
+  return true;
+}
+
 void Server::checkIn(QString usrId)
 {
   for (int i = 0; i < rooms.size(); i++) {
@@ -161,6 +192,20 @@ void Server::checkOut(int roomId)
 
   qDebug() << QTime::currentTime() << "checkout finish";
   room_lock.unlock();
+}
+
+QStringList Server::getUsrIds()
+{
+  QStringList usrIds;
+  for (User user : users) {
+    usrIds.append(user.id);
+  }
+  return usrIds;
+}
+
+bool Server::addNewUser(QString usrId, QString pswd)
+{
+  return false;
 }
 
 Room Server::getRoom(int roomId)
