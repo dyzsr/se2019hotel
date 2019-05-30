@@ -20,13 +20,15 @@ signals:
   bool sgn_signIn(QString usrId, QString passwd);
   bool sgn_signOut();
 
+  void sgn_getInfo(int &state, double &settemp, int &setwdspd);
+
   void sgn_sendRequest(int state, double settemp, int setwdspd);
 
 public slots:
   void init(double minTemp, double maxTemp);
   void refresh(Room room);
   void disable();
-  QString slot_getRecoverStr();
+  int slot_getRecoverSpeed();
 
 private slots:
   void on_bt_signIn_clicked();
@@ -43,6 +45,8 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
+  bool gotIn;
+  bool ac_on;
 };
 
 #endif // MAINWINDOW_H

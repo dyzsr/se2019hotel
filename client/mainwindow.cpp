@@ -10,9 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   ui->stackedWidget->setCurrentIndex(0);
   ui->lb_verdict->hide();
-
-  ui->sb_settemp->setValue(25);
-  ui->sb_setwdspd->setValue(1);
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +25,19 @@ void MainWindow::init(double minTemp, double maxTemp)
 
 void MainWindow::refresh(Room room)
 {
+  if (!gotIn) {
+    gotIn = true;
+    ui->bt_state0->setEnabled(ac_on);
+    ui->bt_state1->setEnabled(!ac_on);
+    ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
+    ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
+    ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
+    ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
+    ui->sb_settemp->setEnabled(true);
+    ui->sb_setwdspd->setEnabled(true);
+    ui->bt_getIn->setEnabled(false);
+  }
+
   ui->lcd_temp->display(room.temp);
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
@@ -58,6 +68,7 @@ void MainWindow::refresh(Room room)
 
 void MainWindow::disable()
 {
+  gotIn = false;
   ui->bt_state0->setEnabled(false);
   ui->bt_state1->setEnabled(false);
   ui->bt_tempUp->setEnabled(false);
@@ -76,6 +87,7 @@ void MainWindow::on_bt_signIn_clicked()
   if (success) {
     ui->lb_verdict->hide();
     ui->stackedWidget->setCurrentIndex(1);
+
     on_bt_getIn_clicked();
   } else {
     ui->lb_verdict->show();
@@ -93,17 +105,28 @@ void MainWindow::on_bt_signOut_clicked()
 
 void MainWindow::on_bt_getIn_clicked()
 {
-  ui->bt_state1->setEnabled(false);
-  ui->bt_state0->setEnabled(true);
+  gotIn = true;
+
+  int state, setwdspd;
+  double settemp;
+  emit sgn_getInfo(state, settemp, setwdspd);
+
+  ac_on = true;
+  ui->bt_state1->setEnabled(!state);
+  ui->bt_state0->setEnabled(state);
+  ui->sb_settemp->setValue(static_cast<int> (settemp));
+  ui->sb_setwdspd->setValue(setwdspd);
+
   ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
   ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
   ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
   ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
   ui->sb_settemp->setEnabled(true);
   ui->sb_setwdspd->setEnabled(true);
-  emit sgn_sendRequest(1,
-                       ui->sb_settemp->value(),
-                       ui->sb_setwdspd->value());
+
+  emit sgn_sendRequest(state,
+                       settemp,
+                       setwdspd);
   ui->bt_getIn->setEnabled(false);
 }
 
@@ -154,6 +177,7 @@ void MainWindow::on_bt_state0_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setEnabled(false);
     ui->bt_state1->setEnabled(true);
+    ac_on = false;
     // 关机
     emit sgn_sendRequest(ui->bt_state0->isEnabled(),
                          ui->sb_settemp->value(),
@@ -166,6 +190,7 @@ void MainWindow::on_bt_state1_clicked(bool checked)
   if (!checked) {
     ui->bt_state0->setEnabled(true);
     ui->bt_state1->setEnabled(false);
+    ac_on = true;
     // 开机
     emit sgn_sendRequest(ui->bt_state0->isEnabled(),
                          ui->sb_settemp->value(),
@@ -173,7 +198,7 @@ void MainWindow::on_bt_state1_clicked(bool checked)
   }
 }
 
-QString MainWindow::slot_getRecoverStr()
+int MainWindow::slot_getRecoverSpeed()
 {
-    return QString(ui->le_recoverSpeed->text());
+  return ui->sb_recoverSpeed->value();
 }

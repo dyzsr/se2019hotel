@@ -40,7 +40,7 @@ bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
-    pipe->sendRequest(Request(0, user.id, 1, 25, 1));
+    pipe->sendRequest(Request(0, user.id, 1, info.defaultTemp, info.defaultWdspd));
 
     connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
     timer.start(2000);
@@ -57,6 +57,13 @@ bool Client::signOut()
   timer.stop();
   qDebug() << QTime::currentTime() << "sign out";
   return true;
+}
+
+void Client::getInfo(int &state, double &settemp, int &setwdspd)
+{
+  state = info.state > 0 ? 1 : 0;
+  settemp = info.defaultTemp;
+  setwdspd = info.defaultWdspd;
 }
 
 void Client::sendRequest(int state, double settemp, int setwdspd)
@@ -91,18 +98,6 @@ void Client::forceRoomChanged()
 
 int Client::getRecoverTime()
 {
-    int setTime = 60;
-    QString str = emit sgn_getRecoverStr();
-    if (str.length() == 0)
-        return setTime;
-    const char *s = str.toLatin1().data();
-    while (*s && *s>='0' && *s<='9') s++;
-    if (*s)
-    {
-        return setTime;
-    }
-    else
-    {
-        return str.toInt();
-    }
+    int setTime = emit sgn_getRecoverSpeed();
+    return setTime;
 }
