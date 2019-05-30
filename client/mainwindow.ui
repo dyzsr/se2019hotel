@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_signIn">
      <widget class="QLineEdit" name="edit_username">
@@ -131,9 +131,9 @@ color: #000000;</string>
      <widget class="QLabel" name="lb_recoverFront">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>310</x>
         <y>310</y>
-        <width>101</width>
+        <width>131</width>
         <height>21</height>
        </rect>
       </property>
@@ -464,7 +464,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="lb_fee">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>370</x>
         <y>230</y>
         <width>41</width>
         <height>21</height>
@@ -480,7 +480,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="lb_feeRate">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>370</x>
         <y>270</y>
         <width>41</width>
         <height>21</height>
@@ -496,7 +496,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>320</x>
         <y>270</y>
         <width>51</width>
         <height>21</height>
@@ -509,7 +509,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>320</x>
         <y>230</y>
         <width>41</width>
         <height>21</height>
@@ -522,7 +522,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>420</x>
         <y>230</y>
         <width>16</width>
         <height>21</height>
@@ -535,7 +535,7 @@ color: #ff3333;</string>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>420</x>
         <y>270</y>
         <width>16</width>
         <height>21</height>
@@ -650,7 +650,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -93,7 +93,8 @@ void Client::recoverTemp()
 void Client::forceRoomChanged()
 {
     fetchData();
-    pipe->updateRoomTemp(room.roomId, room.temp+1);
+    if (room.temp <= 29)
+        pipe->updateRoomTemp(room.roomId, room.temp+1);
 }
 
 int Client::getRecoverTime()
