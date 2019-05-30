@@ -34,11 +34,11 @@ QVector<QString> Records::getDetailedBill(Room room)
             str.append(QString::number(billings.at(i).rate));
             //持续时间
             str.append("  时长：");
-            int du;
+            int64_t du;
             du = billings.at(i).start.secsTo(billings.at(i).duration);
             //QString Duration;
             //Duration = billings.at(i).duration.toString("yyyy-MM-dd hh:mm:ss");
-            int h = du / 3600;
+            int64_t h = du / 3600;
             int h1 = du % 3600;
             str.append(QString::number(h));
             str.append("时");
@@ -72,13 +72,13 @@ QVector<QString> Records::getSimpleBills(int roomId)
     //uint stime;
     //uint etime;
     //uint htime;
-    int tRet,sss;
+    int tRet;
     if(!billing.empty())
     {
         uint stimm;
         uint etimm;
         uint htimm;
-        int n,n1;
+        int n;
         double cost=0;
         stimm = roomss.at(roomId).start.toTime_t();
         htimm = roomss.at(roomId).duration.toTime_t();

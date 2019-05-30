@@ -71,6 +71,7 @@ void Server::fetchRequests()
       rooms[roomId].state = 0;
       dsps[roomId].hasRequest = false;
       dsps[roomId].update(rooms[roomId]);
+      services.removeOne(roomId);
     }
     // 除关机外的请求
     else {
@@ -209,7 +210,7 @@ void Server::updateRooms()
         if (dsps[room.roomId].waitingTime > 0)
           dsps[room.roomId].waitingTime -= 1;
       }
-      else if ((room.state == 0 || room.state == 2) &&
+      else if (room.state == 2 &&
                !tempInRange(room.temp, room.settemp, 1.) &&
                !dsps[room.roomId].hasRequest) {
         dsps[room.roomId].state = 3;
