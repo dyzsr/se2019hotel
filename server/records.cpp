@@ -12,6 +12,11 @@ QVector<QString> Records::getDetailedBill(Room room)
 {
     QVector<Billing> billings = pipe->getBillings(room.roomId);
 
+    Billing b;
+    b.roomId = 0;
+    b.start = room.start.addDays(1);
+    billings.append(b);
+
     QVector<QString> data;
     QString str;
     int count = 0;
@@ -50,7 +55,13 @@ QVector<QString> Records::getDetailedBill(Room room)
             str.append("  费用：");
             str.append(QString::number(billings.at(i).costs, 'f', 2));
             str.append("元");
-
+            data.append(str);
+            //第二行
+            str.clear();
+            str.append("       起始温度：");
+            str.append(QString::number(billings.at(i).startTemp));
+            str.append("  最终温度：");
+            str.append(QString::number(billings.at(i).endTemp));
             data.append(str);
         }
     }

@@ -60,14 +60,19 @@ QVector<QString> Manager::getRoomStateStr()
         str.clear();
         str.append("房间号：");
         str.append(QString::number(rooms.at(i).roomId));
-        str.append("  状态：");
+        str.append("  住户：");
+        str.append(rooms.at(i).usrId);
+        q.append(str);
+        //第二行
+        str.clear();
+        str.append("状态：");
         str.append(stateToStr(rooms.at(i).state));
         str.append("  当前温度：");
         str.append(QString::number(rooms.at(i).temp));
         str.append("  目标温度：");
         str.append(QString::number(rooms.at(i).settemp));
         q.append(str);
-        //第二行
+        //第三行
         str.clear();
         str.append("风速：");
         str.append(QString::number(rooms.at(i).wdspd));
