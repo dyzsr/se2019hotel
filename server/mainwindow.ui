@@ -30,8 +30,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size: 16px;
-font-family: 幼圆;</string>
+     <string notr="true">font-size: 14px;
+font-family: 幼圆;
+font-weight: bold;</string>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -40,8 +41,8 @@ font-family: 幼圆;</string>
      <widget class="QPushButton" name="bt_callManager">
       <property name="geometry">
        <rect>
-        <x>470</x>
-        <y>340</y>
+        <x>370</x>
+        <y>40</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -265,7 +266,7 @@ font-size: 16px;</string>
         <x>40</x>
         <y>170</y>
         <width>371</width>
-        <height>211</height>
+        <height>231</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -402,10 +403,10 @@ background: #ffffff;</string>
      <widget class="QWidget" name="widget_2" native="true">
       <property name="geometry">
        <rect>
-        <x>450</x>
+        <x>420</x>
         <y>90</y>
-        <width>141</width>
-        <height>211</height>
+        <width>191</width>
+        <height>311</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -415,8 +416,8 @@ color: #000000;</string>
       <widget class="QLineEdit" name="le_usrid">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>40</y>
+         <x>70</x>
+         <y>20</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -429,8 +430,8 @@ color: #000000;</string>
       <widget class="QLineEdit" name="le_usrpw">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>90</y>
+         <x>70</x>
+         <y>50</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -443,10 +444,10 @@ color: #000000;</string>
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>20</y>
          <width>51</width>
-         <height>16</height>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
@@ -456,23 +457,23 @@ color: #000000;</string>
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>70</y>
-         <width>31</width>
-         <height>16</height>
+         <x>10</x>
+         <y>50</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>密码</string>
+        <string>  密码</string>
        </property>
       </widget>
       <widget class="QPushButton" name="bt_signup">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>160</y>
+         <x>100</x>
+         <y>110</y>
          <width>81</width>
-         <height>31</height>
+         <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -486,9 +487,9 @@ color: #ffffff;</string>
       <widget class="QLabel" name="lb_dup">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>130</y>
-         <width>81</width>
+         <x>50</x>
+         <y>80</y>
+         <width>91</width>
          <height>21</height>
         </rect>
        </property>
@@ -497,6 +498,50 @@ color: #ffffff;</string>
        </property>
        <property name="text">
         <string>用户名重复</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bt_del">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #666666;
+color: #ffffff;</string>
+       </property>
+       <property name="text">
+        <string>删除用户</string>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="lw_usrIds">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>151</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #ffffff;
+color: #000000;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>150</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>用户列表</string>
        </property>
       </widget>
      </widget>

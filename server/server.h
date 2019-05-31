@@ -26,11 +26,13 @@ public slots:
   void process();
 
   bool checkInFromServer(int roomId, QString usrId);
-  void checkOut(int roomId);
+  bool checkOut(int roomId);
 
 
   QStringList getUsrIds();
-  bool addNewUser(QString usrId, QString pswd);
+  QStringList getAvailUsrIds();
+  bool addUser(QString usrId, QString pswd);
+  bool delUser(QString usrId, QString pswd);
 
   Room getRoom(int roomId);
   QString getUsrId(int roomId);
@@ -56,6 +58,7 @@ private:
   Host info;
 
   // 用户
+  QReadWriteLock user_lock;
   QVector<User> users;
 
   int waiting_time = 120;

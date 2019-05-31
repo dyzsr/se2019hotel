@@ -20,10 +20,27 @@ MainWindow::~MainWindow()
 
 void MainWindow::init(int nr_room)
 {
+  int roomId = ui->sb_roomId->value();
+  QString text = emit sgn_getUsrId(roomId);
+
+  if (text.isEmpty()) {
+    ui->bt_checkout->setEnabled(false);
+    ui->bt_checkin->setEnabled(true);
+    ui->lb_usrId->setText("无人");
+  }
+  else {
+    ui->bt_checkout->setEnabled(true);
+    ui->bt_checkin->setEnabled(false);
+    ui->lb_usrId->setText(text);
+  }
+
   ui->lb_err->hide();
   ui->lb_dup->hide();
+  QStringList availUsrIds = emit sgn_getAvailUsrIds();
+  ui->cb_users->addItems(availUsrIds);
+
   QStringList usrIds = emit sgn_getUsrIds();
-  ui->cb_users->addItems(usrIds);
+  ui->lw_usrIds->addItems(usrIds);
 
   if (nr_room > 0) ui->sb_roomId->setRange(0, nr_room - 1);
   else ui->sb_roomId->setEnabled(false);
@@ -40,6 +57,31 @@ void MainWindow::init(int nr_room)
   if (nr_room <= 9) ui->rb_9->setEnabled(false);
 }
 
+void MainWindow::refresh()
+{
+  int roomId = ui->sb_roomId->value();
+  QString text = emit sgn_getUsrId(roomId);
+
+  if (text.isEmpty()) {
+    ui->bt_checkout->setEnabled(false);
+    ui->bt_checkin->setEnabled(true);
+    ui->lb_usrId->setText("无人");
+  }
+  else {
+    ui->bt_checkout->setEnabled(true);
+    ui->bt_checkin->setEnabled(false);
+    ui->lb_usrId->setText(text);
+  }
+
+  QStringList availUsrIds = emit sgn_getAvailUsrIds();
+  ui->cb_users->clear();
+  ui->cb_users->addItems(availUsrIds);
+
+  QStringList usrIds = emit sgn_getUsrIds();
+  ui->lw_usrIds->clear();
+  ui->lw_usrIds->addItems(usrIds);
+}
+
 void MainWindow::on_bt_callManager_clicked()
 {
   emit sgn_openNewWindow(this);
@@ -47,34 +89,38 @@ void MainWindow::on_bt_callManager_clicked()
 
 bool MainWindow::checkRoomIdValid()
 {
-    bool isValid = true;
-    int roomId = ui->sb_roomId->value();
-    if (isValid)
-    {
-        isValid = emit sgn_checkRoomIdValid(roomId);
-    }
-    return isValid;
+  bool isValid = true;
+  int roomId = ui->sb_roomId->value();
+  if (isValid)
+  {
+    isValid = emit sgn_checkRoomIdValid(roomId);
+  }
+  return isValid;
 }
 
 void MainWindow::on_bt_checkout_clicked()
 {
-    if (!checkRoomIdValid())
-        return;
-    emit sgn_checkout(ui->sb_roomId->value());
+  if (!checkRoomIdValid())
+    return;
+  bool success = emit sgn_checkout(ui->sb_roomId->value());
+  if (success) {
+    int roomId = ui->sb_roomId->value();
+  }
+  refresh();
 }
 
 void MainWindow::on_bt_simpleBill_clicked()
 {
-    if (!checkRoomIdValid())
-        return;
-    emit sgn_askSimpleBill_clicked();
+  if (!checkRoomIdValid())
+    return;
+  emit sgn_askSimpleBill_clicked();
 }
 
 void MainWindow::on_bt_detailedBill_clicked()
 {
-    if (!checkRoomIdValid())
-        return;
-    emit sgn_askDetailedBill_clicked();
+  if (!checkRoomIdValid())
+    return;
+  emit sgn_askDetailedBill_clicked();
 }
 
 void MainWindow::on_bt_checkin_clicked()
@@ -88,12 +134,31 @@ void MainWindow::on_bt_checkin_clicked()
   } else {
     ui->lb_err->hide();
   }
-  ui->lb_usrId->setText(emit sgn_getUsrId(roomId));
+  refresh();
 }
 
 void MainWindow::on_bt_signup_clicked()
 {
+  bool success = emit sgn_signup(ui->le_usrid->text(), ui->le_usrpw->text());
+  if (!success) {
+    ui->lb_dup->setText("用户名重复");
+    ui->lb_dup->show();
+  }
+  else
+    ui->lb_dup->hide();
+  refresh();
+}
 
+void MainWindow::on_bt_del_clicked()
+{
+  bool success = emit sgn_del(ui->le_usrid->text(), ui->le_usrpw->text());
+  if (!success) {
+    ui->lb_dup->setText("用户名不存在");
+    ui->lb_dup->show();
+  }
+  else
+    ui->lb_dup->hide();
+  refresh();
 }
 
 void MainWindow::on_rb_0_clicked()
@@ -148,7 +213,6 @@ void MainWindow::on_rb_9_clicked()
 
 void MainWindow::on_sb_roomId_valueChanged(int roomId)
 {
-  ui->lb_usrId->setText(emit sgn_getUsrId(roomId));
   switch (roomId) {
   case 0: ui->rb_0->setChecked(true); break;
   case 1: ui->rb_1->setChecked(true); break;
@@ -161,4 +225,5 @@ void MainWindow::on_sb_roomId_valueChanged(int roomId)
   case 8: ui->rb_8->setChecked(true); break;
   case 9: ui->rb_9->setChecked(true); break;
   }
+  refresh();
 }

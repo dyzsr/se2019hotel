@@ -34,10 +34,10 @@ public:
    * */
 
   // 添加用户
-  void addUser(const User &user);
+  bool addUser(const User &user);
 
   // 删除用户
-  void delUser(const User &user);
+  bool delUser(const User &user);
 
   // 获取所有用户数据
   QVector<User> getUsers();
