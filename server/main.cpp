@@ -14,11 +14,17 @@ int main(int argc, char *argv[])
   Server server(&w);
   ManagerControl manager_control(&w);
 
+  QObject::connect(&w, &MainWindow::sgn_signup, &server, &Server::addUser);
+
+  QObject::connect(&w, &MainWindow::sgn_del, &server, &Server::delUser);
+
   QObject::connect(&w, &MainWindow::sgn_checkin, &server, &Server::checkInFromServer);
 
   QObject::connect(&w, &MainWindow::sgn_getUsrId, &server, &Server::getUsrId);
 
   QObject::connect(&w, &MainWindow::sgn_getUsrIds, &server, &Server::getUsrIds);
+
+  QObject::connect(&w, &MainWindow::sgn_getAvailUsrIds, &server, &Server::getAvailUsrIds);
 
   QObject::connect(&server, &Server::sgn_init, &w, &MainWindow::init);
 

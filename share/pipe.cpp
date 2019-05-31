@@ -88,27 +88,31 @@ User Pipe::getUser(QString usrId)
   return user;
 }
 
-void Pipe::addUser(const User &user)
+bool Pipe::addUser(const User &user)
 {
   QSqlQuery query(db);
   query.prepare("INSERT INTO tcs_app_user VALUES(:id, :pswd);");
   query.bindValue(":id", user.id);
   query.bindValue(":pswd", user.pswd);
-  if (query.exec())
+  if (query.exec()) {
     qDebug() << "add user";
-  else
-    qDebug() << query.lastError();
+    return true;
+  }
+  qDebug() << query.lastError();
+  return false;
 }
 
-void Pipe::delUser(const User &user)
+bool Pipe::delUser(const User &user)
 {
   QSqlQuery query(db);
   query.prepare("DELETE FROM tcs_app_user WHERE name = :id;");
   query.bindValue(":id", user.id);
-  if (query.exec())
+  if (query.exec()) {
     qDebug() << "del user";
-  else
-    qDebug() << query.lastError();
+    return true;
+  }
+  qDebug() << query.lastError();
+  return false;
 }
 
 void Pipe::addRoom(const Room &room)

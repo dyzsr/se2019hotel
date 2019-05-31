@@ -19,13 +19,17 @@ public:
 
 signals:
   QStringList sgn_getUsrIds();
+  QStringList sgn_getAvailUsrIds();
   QString sgn_getUsrId(int roomId);
   void sgn_openNewWindow(QWidget *parent);
   bool sgn_checkin(int roomd, QString usrId);
-  void sgn_checkout(int roomId);
+  bool sgn_checkout(int roomId);
   void sgn_askSimpleBill_clicked();
   void sgn_askDetailedBill_clicked();
   bool sgn_checkRoomIdValid(int roomId);
+
+  bool sgn_signup(QString usrId, QString pswd);
+  bool sgn_del(QString usrId, QString pswd);
 
 public slots:
   void init(int nr_room);
@@ -52,6 +56,9 @@ private slots:
 
   void on_sb_roomId_valueChanged(int arg1);
 
+  void refresh();
+
+  void on_bt_del_clicked();
 
 private:
   Ui::MainWindow *ui;

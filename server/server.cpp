@@ -167,7 +167,7 @@ void Server::checkIn(QString usrId)
   }
 }
 
-void Server::checkOut(int roomId)
+bool Server::checkOut(int roomId)
 {
   room_lock.lockForWrite();
   qDebug() << QTime::currentTime() << "checkout start";
@@ -188,23 +188,72 @@ void Server::checkOut(int roomId)
   if (services.contains(roomId)) {
     services.removeOne(roomId);
   }
-  pipe->updateRoom(rooms[roomId]);
+  bool success = pipe->updateRoom(rooms[roomId]);
 
   qDebug() << QTime::currentTime() << "checkout finish";
   room_lock.unlock();
+  return success;
 }
 
 QStringList Server::getUsrIds()
 {
   QStringList usrIds;
+  user_lock.lockForWrite();
+
+  users = pipe->getUsers();
   for (User user : users) {
     usrIds.append(user.id);
   }
+  user_lock.unlock();
   return usrIds;
 }
 
-bool Server::addNewUser(QString usrId, QString pswd)
+QStringList Server::getAvailUsrIds()
 {
+  QStringList usrIds;
+  QStringList excludes;
+
+  room_lock.lockForRead();
+  user_lock.lockForRead();
+
+  for (Room room : rooms) {
+    if (!room.usrId.isEmpty())
+      excludes.append(room.usrId);
+  }
+  for (User user : users) {
+    if (!excludes.contains(user.id))
+      usrIds.append(user.id);
+  }
+  user_lock.unlock();
+  room_lock.unlock();
+  return usrIds;
+}
+
+bool Server::addUser(QString usrId, QString pswd)
+{
+  user_lock.lockForWrite();
+  for (User user : users) {
+    if (usrId == user.id) {
+      user_lock.unlock();
+      return false;
+    }
+  }
+  bool success = pipe->addUser(User(usrId, pswd));
+  user_lock.unlock();
+  return success;
+}
+
+bool Server::delUser(QString usrId, QString pswd)
+{
+  user_lock.lockForWrite();
+  for (User user : users) {
+    if (usrId == user.id) {
+      bool success = pipe->delUser(User(usrId, pswd));
+      user_lock.unlock();
+      return success;
+    }
+  }
+  user_lock.unlock();
   return false;
 }
 
@@ -215,9 +264,6 @@ Room Server::getRoom(int roomId)
 
 QString Server::getUsrId(int roomId)
 {
-  if (rooms[roomId].usrId.isEmpty()) {
-    return "无人";
-  }
   return rooms[roomId].usrId;
 }
 
