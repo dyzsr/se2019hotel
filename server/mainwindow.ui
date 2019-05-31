@@ -30,9 +30,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size: 14px;
-font-family: 幼圆;
-font-weight: bold;</string>
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -48,8 +46,7 @@ font-weight: bold;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #666666;
-color: #ffffff;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>管理员功能</string>
@@ -88,7 +85,7 @@ color: #ffffff;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #cccccc;</string>
+       <string notr="true"/>
       </property>
       <widget class="QRadioButton" name="rb_3">
        <property name="geometry">
@@ -270,8 +267,7 @@ font-size: 16px;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #cccccc;
-color: #ffffff;</string>
+       <string notr="true"/>
       </property>
       <widget class="QPushButton" name="bt_checkout">
        <property name="geometry">
@@ -283,7 +279,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>结账</string>
@@ -299,7 +295,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>查看详单</string>
@@ -315,7 +311,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>查看账单</string>
@@ -331,7 +327,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>入住</string>
@@ -347,7 +343,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: #000000;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>用户：</string>
@@ -410,8 +406,7 @@ background: #ffffff;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #cccccc;
-color: #000000;</string>
+       <string notr="true"/>
       </property>
       <widget class="QLineEdit" name="le_usrid">
        <property name="geometry">
@@ -477,8 +472,7 @@ color: #000000;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;
-color: #ffffff;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>新建用户</string>
@@ -510,8 +504,7 @@ color: #ffffff;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background: #666666;
-color: #ffffff;</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>删除用户</string>
