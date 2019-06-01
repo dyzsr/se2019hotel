@@ -104,9 +104,9 @@ void MainWindow::on_bt_checkout_clicked()
     return;
   bool success = emit sgn_checkout(ui->sb_roomId->value());
   if (success) {
-    int roomId = ui->sb_roomId->value();
+//    int roomId = ui->sb_roomId->value();
+    refresh();
   }
-  refresh();
 }
 
 void MainWindow::on_bt_simpleBill_clicked()
@@ -133,8 +133,8 @@ void MainWindow::on_bt_checkin_clicked()
     ui->lb_err->show();
   } else {
     ui->lb_err->hide();
+    refresh();
   }
-  refresh();
 }
 
 void MainWindow::on_bt_signup_clicked()
@@ -144,9 +144,10 @@ void MainWindow::on_bt_signup_clicked()
     ui->lb_dup->setText("用户名重复");
     ui->lb_dup->show();
   }
-  else
+  else {
     ui->lb_dup->hide();
-  refresh();
+    refresh();
+  }
 }
 
 void MainWindow::on_bt_del_clicked()
@@ -156,9 +157,10 @@ void MainWindow::on_bt_del_clicked()
     ui->lb_dup->setText("用户名不存在");
     ui->lb_dup->show();
   }
-  else
+  else {
     ui->lb_dup->hide();
-  refresh();
+    refresh();
+  }
 }
 
 void MainWindow::on_rb_0_clicked()
@@ -213,6 +215,18 @@ void MainWindow::on_rb_9_clicked()
 
 void MainWindow::on_sb_roomId_valueChanged(int roomId)
 {
+  QString text = sgn_getUsrId(roomId);
+  if (text.isEmpty()) {
+    ui->bt_checkout->setEnabled(false);
+    ui->bt_checkin->setEnabled(true);
+    ui->lb_usrId->setText("无人");
+  }
+  else {
+    ui->bt_checkout->setEnabled(true);
+    ui->bt_checkin->setEnabled(false);
+    ui->lb_usrId->setText(text);
+  }
+
   switch (roomId) {
   case 0: ui->rb_0->setChecked(true); break;
   case 1: ui->rb_1->setChecked(true); break;
@@ -225,5 +239,4 @@ void MainWindow::on_sb_roomId_valueChanged(int roomId)
   case 8: ui->rb_8->setChecked(true); break;
   case 9: ui->rb_9->setChecked(true); break;
   }
-  refresh();
 }

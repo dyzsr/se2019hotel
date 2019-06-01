@@ -23,7 +23,7 @@ void Server::init()
   info = pipe->getHost();
   users = pipe->getUsers();
 
-  room_lock.lockForWrite();
+//  room_lock.lockForWrite();
 
   // 从数据库读取房间数据
   rooms = pipe->getRooms();
@@ -42,7 +42,7 @@ void Server::init()
   billings_cnt = pipe->getCurrentBillingId();
   billings.resize(rooms.size());
 
-  room_lock.unlock();
+//  room_lock.unlock();
 
   emit sgn_init(rooms.size());
 
@@ -57,8 +57,8 @@ void Server::init()
 
 void Server::fetchRequests()
 {
-  room_lock.lockForWrite();
-//  qDebug() << QTime::currentTime() << "fetch requests start";
+//  room_lock.lockForWrite();
+  qDebug() << QTime::currentTime() << "fetch requests start";
 
   // 从数据库读取请求 保存在本地
   QList<Request> requests = pipe->getRequests();
@@ -97,27 +97,29 @@ void Server::fetchRequests()
         dsps[roomId].requestType = 3;
         dsps[roomId].setwdspd = q.setwdspd;
       }
+
+      qDebug() << dsps[roomId].state << dsps[roomId].settemp << dsps[roomId].setwdspd;
     }
   }
 
-//  qDebug() << QTime::currentTime() << "fetch requests finish";
-  room_lock.unlock();
+  qDebug() << QTime::currentTime() << "fetch requests finish";
+//  room_lock.unlock();
 }
 
 void Server::process()
 {
-  room_lock.lockForWrite();
+//  room_lock.lockForWrite();
   updateRooms();
   updateService();
-  room_lock.unlock();
+//  room_lock.unlock();
 }
 
 bool Server::checkInFromServer(int roomId, QString usrId)
 {
-  room_lock.lockForWrite();
+//  room_lock.lockForWrite();
 
   if (!rooms[roomId].usrId.isEmpty() || user2room.contains(usrId)) {
-    room_lock.unlock();
+//    room_lock.unlock();
     return false;
   }
 
@@ -138,7 +140,7 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   pipe->updateRoom(rooms[roomId]);
 
   qDebug() << "check in by server";
-  room_lock.unlock();
+//  room_lock.unlock();
   return true;
 }
 
@@ -169,7 +171,7 @@ void Server::checkIn(QString usrId)
 
 bool Server::checkOut(int roomId)
 {
-  room_lock.lockForWrite();
+//  room_lock.lockForWrite();
   qDebug() << QTime::currentTime() << "checkout start";
 
   // 从用户房间映射表中删除用户
@@ -191,20 +193,22 @@ bool Server::checkOut(int roomId)
   bool success = pipe->updateRoom(rooms[roomId]);
 
   qDebug() << QTime::currentTime() << "checkout finish";
-  room_lock.unlock();
+//  room_lock.unlock();
   return success;
 }
 
 QStringList Server::getUsrIds()
 {
   QStringList usrIds;
-  user_lock.lockForWrite();
-
+//  user_lock.lockForWrite();
   users = pipe->getUsers();
+//  user_lock.unlock();
+
+//  user_lock.lockForRead();
   for (User user : users) {
     usrIds.append(user.id);
   }
-  user_lock.unlock();
+//  user_lock.unlock();
   return usrIds;
 }
 
@@ -213,47 +217,47 @@ QStringList Server::getAvailUsrIds()
   QStringList usrIds;
   QStringList excludes;
 
-  room_lock.lockForRead();
-  user_lock.lockForRead();
-
+//  room_lock.lockForRead();
   for (Room room : rooms) {
     if (!room.usrId.isEmpty())
       excludes.append(room.usrId);
   }
+//  room_lock.unlock();
+
+//  user_lock.lockForRead();
   for (User user : users) {
     if (!excludes.contains(user.id))
       usrIds.append(user.id);
   }
-  user_lock.unlock();
-  room_lock.unlock();
+//  user_lock.unlock();
   return usrIds;
 }
 
 bool Server::addUser(QString usrId, QString pswd)
 {
-  user_lock.lockForWrite();
+//  user_lock.lockForRead();
   for (User user : users) {
     if (usrId == user.id) {
-      user_lock.unlock();
+//      user_lock.unlock();
       return false;
     }
   }
   bool success = pipe->addUser(User(usrId, pswd));
-  user_lock.unlock();
+//  user_lock.unlock();
   return success;
 }
 
 bool Server::delUser(QString usrId, QString pswd)
 {
-  user_lock.lockForWrite();
+//  user_lock.lockForRead();
   for (User user : users) {
     if (usrId == user.id) {
       bool success = pipe->delUser(User(usrId, pswd));
-      user_lock.unlock();
+//      user_lock.unlock();
       return success;
     }
   }
-  user_lock.unlock();
+//  user_lock.unlock();
   return false;
 }
 
@@ -270,10 +274,14 @@ QString Server::getUsrId(int roomId)
 void Server::updateRooms()
 {
   // 更新rooms
+  qDebug() << QTime::currentTime() << "room start";
 
+  auto temps = pipe->getRoomTemps();
   for (Room &room : rooms) {
+    room.temp = temps[room.roomId];
+
     if (!room.usrId.isEmpty()) {
-      room.temp = pipe->getRoomTemp(room.roomId);
+//      room.temp = pipe->getRoomTemp(room.roomId);
       room.wdspd = room.setwdspd;
 
       // 房间在拥有服务对象时才可以接收服务
@@ -306,8 +314,8 @@ void Server::updateRooms()
         dsps[room.roomId].serviceTime += 1;
 
         // 上传至数据库
-        pipe->updateRoom(room);
-        pipe->updateBilling(billings[room.roomId]);
+//        pipe->updateRoom(room);
+//        pipe->updateBilling(billings[room.roomId]);
       }
       // 在等待队列中等待
       else if (room.state == 3) {
@@ -325,15 +333,19 @@ void Server::updateRooms()
       }
 
       room.duration = QDateTime::currentDateTime();
-      pipe->updateRoomExceptTemp(room);
+//      pipe->updateRoomExceptTemp(room);
     }
   }
+  pipe->updateRooms(rooms);
+  pipe->updateBillings(billings);
 
+  qDebug() << QTime::currentTime() << "room finish";
 }
 
 void Server::updateService()
 {
   // 更新rooms 添加新的billings并上传
+  qDebug() << QTime::currentTime() << "serv start";
 
   // 清除已完成服务的对象
   for (auto it = services.begin(); it != services.end(); ) {
