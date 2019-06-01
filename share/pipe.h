@@ -58,6 +58,8 @@ public:
 
   double getRoomTemp(int roomId);
 
+  QVector<double> getRoomTemps();
+
   // 获取所有房间信息
   QVector<Room> getRooms();
 

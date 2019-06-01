@@ -7,7 +7,7 @@
 #include <QSqlRecord>
 
 #define GROUP
-#undef GROUP
+//#undef GROUP
 
 Pipe Pipe::pipe;
 
@@ -510,15 +510,15 @@ bool Pipe::updateRoom(const Room &room)
 void Pipe::updateRooms(const QVector<Room> &rooms)
 {
   QSqlQuery query(db);
-  query.prepare("UPDATE tcs_app_room "
-                "SET user_id_id = :usrId, "
-                "temp = :temp, settemp = :settemp, "
-                "wdspd = :wdspd, setwdspd = :setwdspd, "
-                "state = :state, mode = :mode, "
-                "token = :token, costs = :cost, power = :power, "
-                "start = :start, duration = :duration "
-                "WHERE id = :id;");
   for (Room room : rooms) {
+    query.prepare("UPDATE tcs_app_room "
+                  "SET user_id_id = :usrId, "
+                  "temp = :temp, settemp = :settemp, "
+                  "wdspd = :wdspd, setwdspd = :setwdspd, "
+                  "state = :state, mode = :mode, "
+                  "token = :token, costs = :cost, power = :power, "
+                  "start = :start, duration = :duration "
+                  "WHERE id = :id;");
     query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
     query.bindValue(":temp", room.temp);
     query.bindValue(":settemp", room.settemp);
@@ -616,5 +616,17 @@ double Pipe::getRoomTemp(int roomId)
   if (query.exec() && query.next()) {
     return query.record().value("temp").toDouble();
   }
-  return 0;
+  return 0.;
+}
+
+QVector<double> Pipe::getRoomTemps()
+{
+  QVector<double> temps;
+  QSqlQuery query(db);
+  query.prepare("SELECT temp FROM tcs_app_room;");
+  query.exec();
+  while (query.next()) {
+    temps.append(query.record().value(0).toDouble());
+  }
+  return temps;
 }

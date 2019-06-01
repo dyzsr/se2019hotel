@@ -97,6 +97,8 @@ void Server::fetchRequests()
         dsps[roomId].requestType = 3;
         dsps[roomId].setwdspd = q.setwdspd;
       }
+
+      qDebug() << dsps[roomId].state << dsps[roomId].settemp << dsps[roomId].setwdspd;
     }
   }
 
@@ -274,8 +276,10 @@ void Server::updateRooms()
   // 更新rooms
   qDebug() << QTime::currentTime() << "room start";
 
-  rooms = pipe->getRooms();
+  auto temps = pipe->getRoomTemps();
   for (Room &room : rooms) {
+    room.temp = temps[room.roomId];
+
     if (!room.usrId.isEmpty()) {
 //      room.temp = pipe->getRoomTemp(room.roomId);
       room.wdspd = room.setwdspd;
