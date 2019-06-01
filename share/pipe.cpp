@@ -270,15 +270,15 @@ QVector<Billing> Pipe::getAllBillings()
 void Pipe::updateBillings(const QVector<Billing> &billings)
 {
   QSqlQuery query(db);
+  query.prepare("UPDATE tcs_app_bill "
+                "SET start = :start, "
+                "duration = :duration, costs = :costs, "
+                "wdspd = :wdspd, start_temp = :start_temp, "
+                "end_temp = :end_temp, rate = :rate, "
+                "action = :action, room_id_id = :room_id_id "
+                "WHERE id = :id");
   bool success = true;
   for (Billing billing : billings) {
-    query.prepare("UPDATE tcs_app_bill "
-                  "SET start = :start, "
-                  "duration = :duration, costs = :costs, "
-                  "wdspd = :wdspd, start_temp = :start_temp, "
-                  "end_temp = :end_temp, rate = :rate, "
-                  "action = :action, room_id_id = :room_id_id "
-                  "WHERE id = :id");
     query.bindValue(":id", billing.billingId);
     query.bindValue(":start", billing.start);
     query.bindValue(":duration", billing.start.secsTo(billing.duration));
@@ -510,8 +510,28 @@ bool Pipe::updateRoom(const Room &room)
 void Pipe::updateRooms(const QVector<Room> &rooms)
 {
   QSqlQuery query(db);
+  query.prepare("UPDATE tcs_app_room "
+                "SET user_id_id = :usrId, "
+                "temp = :temp, settemp = :settemp, "
+                "wdspd = :wdspd, setwdspd = :setwdspd, "
+                "state = :state, mode = :mode, "
+                "token = :token, costs = :cost, power = :power, "
+                "start = :start, duration = :duration "
+                "WHERE id = :id;");
   for (Room room : rooms) {
-    updateRoom(room);
+    query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
+    query.bindValue(":temp", room.temp);
+    query.bindValue(":settemp", room.settemp);
+    query.bindValue(":wdspd", room.wdspd);
+    query.bindValue(":setwdspd", room.setwdspd);
+    query.bindValue(":state", room.state);
+    query.bindValue(":mode", room.mode);
+    query.bindValue(":cost", room.cost);
+    query.bindValue(":power", room.pwr);
+    query.bindValue(":start", room.start);
+    query.bindValue(":duration", room.start.secsTo(room.duration));
+    query.bindValue(":id", room.roomId);
+    query.exec();
   }
 }
 

@@ -48,17 +48,17 @@ void Server::init()
 
   QTimer *timer_p = new QTimer(this);
   connect(timer_p, &QTimer::timeout, this, &Server::process);
-  timer_p->start(3000);
+  timer_p->start(1000);
 
   QTimer *timer_h = new QTimer(this);
   connect(timer_h, &QTimer::timeout, this, &Server::fetchRequests);
-  timer_h->start(2000);
+  timer_h->start(1000);
 }
 
 void Server::fetchRequests()
 {
 //  room_lock.lockForWrite();
-//  qDebug() << QTime::currentTime() << "fetch requests start";
+  qDebug() << QTime::currentTime() << "fetch requests start";
 
   // 从数据库读取请求 保存在本地
   QList<Request> requests = pipe->getRequests();
@@ -100,7 +100,7 @@ void Server::fetchRequests()
     }
   }
 
-//  qDebug() << QTime::currentTime() << "fetch requests finish";
+  qDebug() << QTime::currentTime() << "fetch requests finish";
 //  room_lock.unlock();
 }
 
@@ -272,10 +272,12 @@ QString Server::getUsrId(int roomId)
 void Server::updateRooms()
 {
   // 更新rooms
+  qDebug() << QTime::currentTime() << "room start";
 
+  rooms = pipe->getRooms();
   for (Room &room : rooms) {
     if (!room.usrId.isEmpty()) {
-      room.temp = pipe->getRoomTemp(room.roomId);
+//      room.temp = pipe->getRoomTemp(room.roomId);
       room.wdspd = room.setwdspd;
 
       // 房间在拥有服务对象时才可以接收服务
@@ -308,8 +310,8 @@ void Server::updateRooms()
         dsps[room.roomId].serviceTime += 1;
 
         // 上传至数据库
-        pipe->updateRoom(room);
-        pipe->updateBilling(billings[room.roomId]);
+//        pipe->updateRoom(room);
+//        pipe->updateBilling(billings[room.roomId]);
       }
       // 在等待队列中等待
       else if (room.state == 3) {
@@ -327,15 +329,19 @@ void Server::updateRooms()
       }
 
       room.duration = QDateTime::currentDateTime();
-      pipe->updateRoomExceptTemp(room);
+//      pipe->updateRoomExceptTemp(room);
     }
   }
+  pipe->updateRooms(rooms);
+  pipe->updateBillings(billings);
 
+  qDebug() << QTime::currentTime() << "room finish";
 }
 
 void Server::updateService()
 {
   // 更新rooms 添加新的billings并上传
+  qDebug() << QTime::currentTime() << "serv start";
 
   // 清除已完成服务的对象
   for (auto it = services.begin(); it != services.end(); ) {
