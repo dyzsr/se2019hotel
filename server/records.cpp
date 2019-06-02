@@ -117,12 +117,7 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     int64_t etim;
     int64_t etim2;
     int64_t tRet,tRet2;
-    int *op;//开关次数
-    int *temp;//调温
-    int *speed;//调风
-    int *record;//详单
-    int64_t *duratio;//时长
-    double *fee;//总消费
+
     op=(int*)calloc(rooms.size(),sizeof(int));
     temp=(int*)calloc(rooms.size(),sizeof(int));
     speed=(int*)calloc(rooms.size(),sizeof(int));

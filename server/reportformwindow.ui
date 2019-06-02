@@ -116,7 +116,7 @@
      <x>5</x>
      <y>151</y>
      <width>601</width>
-     <height>281</height>
+     <height>261</height>
     </rect>
    </property>
   </widget>
@@ -144,6 +144,32 @@
    </property>
    <property name="text">
     <string>打印</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="viewreport">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>410</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>操作统计</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="viewfee">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>410</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>费用统计</string>
    </property>
   </widget>
  </widget>
