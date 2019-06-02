@@ -21,21 +21,26 @@ void MainWindow::init(double minTemp, double maxTemp)
 {
   ui->sb_settemp->setMinimum(static_cast<int>(minTemp));
   ui->sb_settemp->setMaximum(static_cast<int>(maxTemp));
+
+  int state, setwdspd;
+  double settemp;
+  emit sgn_getInfo(state, settemp, setwdspd);
+  ui->bt_state1->setEnabled(!state);
+  ui->bt_state0->setEnabled(state);
+  ui->sb_settemp->setValue(static_cast<int> (settemp));
+  ui->sb_setwdspd->setValue(setwdspd);
 }
 
 void MainWindow::refresh(Room room)
 {
   if (!gotIn) {
     gotIn = true;
-    ui->bt_state0->setEnabled(ac_on);
-    ui->bt_state1->setEnabled(!ac_on);
     ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
     ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
     ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
     ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
     ui->sb_settemp->setEnabled(true);
     ui->sb_setwdspd->setEnabled(true);
-    ui->bt_getIn->setEnabled(false);
   }
 
   ui->lcd_temp->display(room.temp);
@@ -63,6 +68,16 @@ void MainWindow::refresh(Room room)
     ui->lb_state->setText("调度");
   }
 
+  if (room.state == 0)
+  {
+      ui->bt_state0->setEnabled(false);
+      ui->bt_state1->setEnabled(true);
+  }
+  else
+  {
+      ui->bt_state0->setEnabled(true);
+      ui->bt_state1->setEnabled(false);
+  }
   ui->lb_roomId->setNum(room.roomId);
 }
 
@@ -77,7 +92,6 @@ void MainWindow::disable()
   ui->bt_wdspdDown->setEnabled(false);
   ui->sb_settemp->setEnabled(false);
   ui->sb_setwdspd->setEnabled(false);
-  ui->bt_getIn->setEnabled(true);
 }
 
 void MainWindow::on_bt_signIn_clicked()
@@ -99,33 +113,6 @@ void MainWindow::on_bt_signOut_clicked()
     ui->stackedWidget->setCurrentIndex(0);
     ui->edit_password->setText("");
   }
-}
-
-void MainWindow::on_bt_getIn_clicked()
-{
-  gotIn = true;
-
-  int state, setwdspd;
-  double settemp;
-  emit sgn_getInfo(state, settemp, setwdspd);
-
-  ac_on = true;
-  ui->bt_state1->setEnabled(!state);
-  ui->bt_state0->setEnabled(state);
-  ui->sb_settemp->setValue(static_cast<int> (settemp));
-  ui->sb_setwdspd->setValue(setwdspd);
-
-  ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
-  ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
-  ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
-  ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
-  ui->sb_settemp->setEnabled(true);
-  ui->sb_setwdspd->setEnabled(true);
-
-  emit sgn_sendRequest(state,
-                       settemp,
-                       setwdspd);
-  ui->bt_getIn->setEnabled(false);
 }
 
 void MainWindow::on_bt_tempUp_clicked()

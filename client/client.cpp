@@ -78,7 +78,7 @@ void Client::recoverTemp()
     {
         if (!recoverFlag)
         {
-            recoverTimer.start(getRecoverTime()*1000);
+            recoverTimer.start(3000);
             recoverFlag = true;
         }
     }
@@ -91,12 +91,23 @@ void Client::recoverTemp()
 
 void Client::forceRoomChanged()
 {
-    double fixedTemp = 30;
+    double fixedTemp = getRecoverTime();
+    double fixedDiff = 0.025;
     fetchData();
-    if (room.temp <= fixedTemp - 1)
-        pipe->updateRoomTemp(room.roomId, room.temp+1);
-    else if (room.temp < fixedTemp)
-        pipe->updateRoomTemp(room.roomId, fixedTemp);
+    if (fixedTemp - room.temp > 0.000001)
+    {
+        if (room.temp <= fixedTemp - fixedDiff)
+            pipe->updateRoomTemp(room.roomId, room.temp+fixedDiff);
+        else
+            pipe->updateRoomTemp(room.roomId, fixedTemp);
+    }
+    else
+    {
+        if (room.temp >= fixedTemp + fixedDiff)
+            pipe->updateRoomTemp(room.roomId, room.temp-fixedDiff);
+        else
+            pipe->updateRoomTemp(room.roomId, fixedTemp);
+    }
 
     if (qAbs(room.temp - room.settemp) >= 1.) {
       pipe->sendRequest(Request(room.roomId, room.usrId, -1, -1, this->_wdspd));
