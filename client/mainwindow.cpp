@@ -27,8 +27,6 @@ void MainWindow::refresh(Room room)
 {
   if (!gotIn) {
     gotIn = true;
-    ui->bt_state0->setEnabled(ac_on);
-    ui->bt_state1->setEnabled(!ac_on);
     ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
     ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
     ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
@@ -63,6 +61,16 @@ void MainWindow::refresh(Room room)
     ui->lb_state->setText("调度");
   }
 
+  if (room.state == 0)
+  {
+      ui->bt_state0->setEnabled(false);
+      ui->bt_state1->setEnabled(true);
+  }
+  else
+  {
+      ui->bt_state0->setEnabled(true);
+      ui->bt_state1->setEnabled(false);
+  }
   ui->lb_roomId->setNum(room.roomId);
 }
 
