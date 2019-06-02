@@ -23,7 +23,8 @@ signals:
 
 public slots:
   void fetchRequests();
-  void process();
+  void updateRooms();
+  void updateService();
 
   bool checkInFromServer(int roomId, QString usrId);
   bool checkOut(int roomId);
@@ -39,10 +40,7 @@ public slots:
   QString getUsrId(int roomId);
 
 private:
-  void checkIn(QString usrId);
-
-  void updateRooms();
-  void updateService();
+//  void checkIn(QString usrId);
 
   bool serviceCompleted(int roomId);
 
