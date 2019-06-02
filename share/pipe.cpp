@@ -7,7 +7,7 @@
 #include <QSqlRecord>
 
 #define GROUP
-//#undef GROUP
+#undef GROUP
 
 Pipe Pipe::pipe;
 
@@ -164,10 +164,10 @@ QList<Request> Pipe::getRequests()
   while (query.next()) {
     rec = query.record();
     req.reqId = rec.value("id").toInt();
-    req.state = rec.value("state").toInt();
     req.usrId = rec.value("user_id_id").toString();
-    req.settemp = rec.value("settemp").toDouble();
-    req.setwdspd = rec.value("setwdspd").toInt();
+    req.state = rec.value("state").isNull() ? -1 : rec.value("state").toInt();
+    req.settemp = rec.value("settemp").isNull() ? -1 : rec.value("settemp").toDouble();
+    req.setwdspd = rec.value("setwdspd").isNull() ? -1 : rec.value("setwdspd").toInt();
     q.append(req);
   }
 //  qDebug() << "get requests";

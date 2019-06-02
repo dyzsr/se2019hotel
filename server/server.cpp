@@ -68,7 +68,8 @@ void Server::fetchRequests()
   for (Request q : requests) {
     if (!user2room.contains(q.usrId)) {
       // 新用户
-      checkIn(q.usrId);
+      //checkIn(q.usrId);
+      continue;
     }
 
     int roomId = user2room[q.usrId];
@@ -84,16 +85,19 @@ void Server::fetchRequests()
     else {
       dsps[roomId].hasRequest = true;
       dsps[roomId].requestType = 1;
+      if (dsps[roomId].state != 3)
+        dsps[roomId].waitingTime = waiting_time;
       dsps[roomId].state = 3;
-      dsps[roomId].waitingTime = waiting_time;
 
       // 设置温度
-      if (!tempInRange(q.settemp, dsps[roomId].settemp, 1e-3)) {
+      if (q.settemp >= 0 &&
+          !tempInRange(q.settemp, dsps[roomId].settemp, 1e-3)) {
         dsps[roomId].requestType = 2;
         dsps[roomId].settemp = q.settemp;
       }
       // 设置风速
-      if (q.setwdspd != dsps[roomId].setwdspd) {
+      if (q.setwdspd != -1 &&
+          q.setwdspd != dsps[roomId].setwdspd) {
         dsps[roomId].requestType = 3;
         dsps[roomId].setwdspd = q.setwdspd;
       }
@@ -129,7 +133,7 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].temp = info.defaultTemp;
   rooms[roomId].setwdspd = info.defaultWdspd;
   rooms[roomId].wdspd = info.defaultWdspd;
-  rooms[roomId].state = 2;
+  rooms[roomId].state = 0;
   rooms[roomId].mode = 0;
   rooms[roomId].start = QDateTime::currentDateTime();
   rooms[roomId].duration = QDateTime::currentDateTime();
@@ -329,7 +333,7 @@ void Server::updateRooms()
         dsps[room.roomId].state = 3;
         dsps[room.roomId].hasRequest = true;
         dsps[room.roomId].requestType = 2;
-        dsps[room.roomId].waitingTime = waiting_time;
+//        dsps[room.roomId].waitingTime = waiting_time;
       }
 
       room.duration = QDateTime::currentDateTime();
