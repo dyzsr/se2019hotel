@@ -4,6 +4,20 @@
 #include <QFile>
 #include <QDebug>
 #include "records.h"
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+
+QT_CHARTS_USE_NAMESPACE
+
 #pragma execution_character_set("utf-8")
 
 ReportFormWindow::ReportFormWindow(QWidget *parent) :
@@ -284,4 +298,83 @@ void ReportFormWindow::on_OK_clicked()
             Updatereport(records.getReportForm(v2,endt));
         }
     }
+}
+
+QT_CHARTS_USE_NAMESPACE
+void ReportFormWindow::on_viewreport_clicked()
+{
+    //QApplication a();
+    QObject *parent = Q_NULLPTR;
+    QBarSeries(Q_NULLPTR);
+    // 定义柱状条
+    QBarSet *set0 = new QBarSet("1");
+    QBarSet *set1 = new QBarSet("2");
+    QBarSet *set2 = new QBarSet("3");
+    QBarSet *set3 = new QBarSet("4");
+    // 柱状条赋值
+    *set0 << records.op[0] << records.speed[0] << records.temp[0] << records.record[0];
+    *set1 << records.op[1] << records.speed[1] << records.temp[1] << records.record[1];
+    *set2 << records.op[2] << records.speed[2] << records.temp[2] << records.record[2];
+    *set3 << records.op[3] << records.speed[3] << records.temp[3] << records.record[3];
+
+    // 设置柱状集
+    QBarSeries *series = new QBarSeries();
+    series->append(set0);
+    series->append(set1);
+    series->append(set2);
+    series->append(set3);
+    series->setLabelsPosition(QAbstractBarSeries::LabelsInsideEnd);
+    // 添加图表
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Requested Charts"); // 设置图表的标题
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->setTheme(QChart::ChartThemeBlueCerulean);
+    // 为图表添加坐标轴内容
+    QStringList categories;
+    categories <<  "开关次数" << "调风时间" << "调温次数" << "详单数量" ;
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
+    axis->append(categories);
+    chart->createDefaultAxes();
+    chart->setAxisX(axis, series);
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    // 将图表添加到显示窗口中
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    window.setCentralWidget(chartView);
+    window.resize(420, 300);
+    window.show();
+}
+
+void ReportFormWindow::on_viewfee_clicked()
+{
+    QPieSeries *series = new QPieSeries();
+    series->append("Jane", 1);
+    series->append("Joe", 2);
+    series->append("Andy", 3);
+    series->append("Barbara", 4);
+    series->append("Axel", 5);
+
+    QPieSlice *slice = series->slices().at(1);
+    slice->setExploded();
+    slice->setLabelVisible();
+    slice->setPen(QPen(Qt::darkGreen, 2));
+    slice->setBrush(Qt::green);
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Simple piechart example");
+    chart->legend()->hide();
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    window.setCentralWidget(chartView);
+    window.resize(400, 300);
+    window.show();
+
 }

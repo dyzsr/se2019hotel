@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QStringList>
 #include <QString>
+#include <QtWidgets/QMainWindow>
 #include "records.h"
 #include "../share/objects.h"
 #include "../share/pipe.h"
@@ -33,6 +34,10 @@ private slots:
 
     void on_OK_clicked();
 
+    void on_viewreport_clicked();
+
+    void on_viewfee_clicked();
+
 private:
     Records records;
     Pipe *pipee;
@@ -40,6 +45,7 @@ private:
     Room printRoo;
     int rrr;
     QVector<QString> printDat;
+    QMainWindow window;
 };
 
 #endif // REPORTFORMWINDOW_H

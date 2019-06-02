@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
-
+QT       += core gui sql charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 
 TARGET = server
 TEMPLATE = app
