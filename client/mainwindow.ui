@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page_signIn">
      <widget class="QLineEdit" name="edit_username">
@@ -201,19 +201,6 @@ color: #000000;</string>
        <string>温度</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="bt_getIn">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>179</y>
-        <width>80</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>入住</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="lb_wdspd">
       <property name="geometry">
        <rect>
@@ -257,7 +244,7 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>310</y>
+        <y>190</y>
         <width>41</width>
         <height>21</height>
        </rect>
@@ -270,7 +257,7 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>310</y>
+        <y>180</y>
         <width>81</width>
         <height>31</height>
        </rect>
@@ -283,7 +270,7 @@ color: #000000;</string>
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>310</y>
+        <y>180</y>
         <width>81</width>
         <height>31</height>
        </rect>
@@ -295,7 +282,7 @@ color: #000000;</string>
      <widget class="QPushButton" name="bt_signOut">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>340</x>
         <y>179</y>
         <width>80</width>
         <height>31</height>

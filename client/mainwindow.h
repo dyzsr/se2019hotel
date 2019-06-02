@@ -33,7 +33,6 @@ public slots:
 private slots:
   void on_bt_signIn_clicked();
   void on_bt_signOut_clicked();
-  void on_bt_getIn_clicked();
   void on_bt_tempUp_clicked();
   void on_bt_tempDown_clicked();
   void on_sb_settemp_valueChanged(int arg1);
