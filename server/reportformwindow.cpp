@@ -327,7 +327,7 @@ void ReportFormWindow::on_viewreport_clicked()
     // 添加图表
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Requested Charts"); // 设置图表的标题
+    chart->setTitle("操作统计"); // 设置图表的标题
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->setTheme(QChart::ChartThemeBlueCerulean);
     // 为图表添加坐标轴内容
@@ -353,25 +353,19 @@ void ReportFormWindow::on_viewreport_clicked()
 void ReportFormWindow::on_viewfee_clicked()
 {
     QPieSeries *series = new QPieSeries();
-    series->append("Jane", 1);
-    series->append("Joe", 2);
-    series->append("Andy", 3);
-    series->append("Barbara", 4);
-    series->append("Axel", 5);
+    series->setHoleSize(0.35);
+    series->append("room1", records.fee[0]);
+    series->append("room2", records.fee[1]);
+    series->append("room3", records.fee[2]);
+    series->append("room4", records.fee[3]);
 
-    QPieSlice *slice = series->slices().at(1);
-    slice->setExploded();
-    slice->setLabelVisible();
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
-
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Simple piechart example");
-    chart->legend()->hide();
-
-    QChartView *chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->chart()->setTitle("费用统计");
+    chartView->chart()->addSeries(series);
+    chartView->chart()->legend()->setAlignment(Qt::AlignBottom);
+    chartView->chart()->setTheme(QChart::ChartThemeBlueCerulean);
+    chartView->chart()->legend()->setFont(QFont("Arial", 7));
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
