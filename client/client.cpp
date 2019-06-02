@@ -110,7 +110,7 @@ void Client::forceRoomChanged()
     }
 
     if (qAbs(room.temp - room.settemp) >= 1.) {
-      pipe->sendRequest(Request(room.roomId, room.usrId, -1, -1, this->_wdspd));
+      pipe->sendRequest(Request(room.roomId, room.usrId, 1, room.settemp, this->_wdspd));
     }
 }
 
