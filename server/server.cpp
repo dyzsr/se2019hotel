@@ -102,7 +102,8 @@ void Server::fetchRequests()
         dsps[roomId].setwdspd = q.setwdspd;
       }
 
-      qDebug() << dsps[roomId].state << dsps[roomId].settemp << dsps[roomId].setwdspd;
+      qDebug() << "dsps: " << dsps[roomId].roomId
+               << dsps[roomId].state << dsps[roomId].settemp << dsps[roomId].setwdspd;
     }
   }
 
@@ -133,7 +134,7 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].temp = info.defaultTemp;
   rooms[roomId].setwdspd = info.defaultWdspd;
   rooms[roomId].wdspd = info.defaultWdspd;
-  rooms[roomId].state = 2;
+  rooms[roomId].state = 0;
   rooms[roomId].mode = 0;
   rooms[roomId].start = QDateTime::currentDateTime();
   rooms[roomId].duration = QDateTime::currentDateTime();
@@ -294,6 +295,14 @@ void Server::updateRooms()
 //      room.temp = pipe->getRoomTemp(room.roomId);
       room.wdspd = room.setwdspd;
 
+      if (_mode == 0) {
+        room.mode = 0;
+      } else if (_mode == 1) {
+        room.mode = 1;
+      } else {
+        room.mode = room.temp < room.settemp;
+      }
+
       // 房间在拥有服务对象时才可以接收服务
       // state == 1 OR state == 3
       if (services.contains(room.roomId) &&
@@ -336,10 +345,13 @@ void Server::updateRooms()
       else if (room.state == 2 &&
                !tempInRange(room.temp, room.settemp, 1.) &&
                !dsps[room.roomId].hasRequest) {
-        dsps[room.roomId].state = 3;
-        dsps[room.roomId].hasRequest = true;
-        dsps[room.roomId].requestType = 2;
-//        dsps[room.roomId].waitingTime = waiting_time;
+        if ((_mode == 0 && room.temp - room.settemp >= 1.) ||
+            (_mode == 1 && room.settemp - room.temp >= 1.) ||
+            _mode == 2){
+          dsps[room.roomId].state = 3;
+          dsps[room.roomId].hasRequest = true;
+          dsps[room.roomId].requestType = 2;
+        }
       }
 
       room.duration = QDateTime::currentDateTime();

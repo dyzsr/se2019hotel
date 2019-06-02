@@ -489,6 +489,7 @@ bool Pipe::updateRoom(const Room &room)
     query.bindValue(":setwdspd", room.setwdspd);
     query.bindValue(":state", room.state);
     query.bindValue(":mode", room.mode);
+    query.bindValue(":token", room.token);
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);
@@ -496,6 +497,8 @@ bool Pipe::updateRoom(const Room &room)
     query.bindValue(":id", room.roomId);
     if (query.exec())
       return true;
+    else
+      qDebug() << query.lastError();
   }
   return false;
 }
@@ -519,12 +522,15 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
     query.bindValue(":setwdspd", room.setwdspd);
     query.bindValue(":state", room.state);
     query.bindValue(":mode", room.mode);
+    query.bindValue(":token", room.token);
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);
     query.bindValue(":duration", room.start.secsTo(room.duration));
     query.bindValue(":id", room.roomId);
-    query.exec();
+    if (!query.exec()) {
+      qDebug() << query.lastError();
+    }
   }
 }
 
@@ -544,6 +550,7 @@ bool Pipe::updateRoomExceptTemp(const Room &room)
     query.bindValue(":setwdspd", room.setwdspd);
     query.bindValue(":state", room.state);
     query.bindValue(":mode", room.mode);
+    query.bindValue(":token", room.token);
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);
