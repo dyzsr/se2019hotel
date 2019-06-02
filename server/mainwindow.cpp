@@ -240,3 +240,18 @@ void MainWindow::on_sb_roomId_valueChanged(int roomId)
   case 9: ui->rb_9->setChecked(true); break;
   }
 }
+
+void MainWindow::on_rb_down_clicked()
+{
+  emit sgn_setMode(0);
+}
+
+void MainWindow::on_rb_up_clicked()
+{
+  emit sgn_setMode(1);
+}
+
+void MainWindow::on_rb_auto_clicked()
+{
+  emit sgn_setMode(2);
+}
