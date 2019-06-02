@@ -31,6 +31,8 @@ signals:
   bool sgn_signup(QString usrId, QString pswd);
   bool sgn_del(QString usrId, QString pswd);
 
+  void sgn_setMode(int mode);
+
 public slots:
   void init(int nr_room);
 
@@ -59,6 +61,14 @@ private slots:
   void refresh();
 
   void on_bt_del_clicked();
+
+  void on_rb_down_clicked();
+
+  void on_rb_up_clicked();
+
+  void on_rb_auto_clicked();
+
+  void on_bt_refresh_clicked();
 
 private:
   Ui::MainWindow *ui;

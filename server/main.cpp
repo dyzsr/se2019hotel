@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
 
   QObject::connect(&w, &MainWindow::sgn_del, &server, &Server::delUser);
 
+  QObject::connect(&w, &MainWindow::sgn_setMode, &server, &Server::setMode);
+
   QObject::connect(&w, &MainWindow::sgn_checkin, &server, &Server::checkInFromServer);
 
   QObject::connect(&w, &MainWindow::sgn_getUsrId, &server, &Server::getUsrId);

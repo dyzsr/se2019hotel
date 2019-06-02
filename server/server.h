@@ -28,6 +28,7 @@ public slots:
   bool checkInFromServer(int roomId, QString usrId);
   bool checkOut(int roomId);
 
+  void setMode(int _mode);
 
   QStringList getUsrIds();
   QStringList getAvailUsrIds();
@@ -56,6 +57,8 @@ private:
 
   // 主机信息
   Host info;
+
+  int _mode;
 
   // 用户
   QReadWriteLock user_lock;

@@ -133,13 +133,14 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].temp = info.defaultTemp;
   rooms[roomId].setwdspd = info.defaultWdspd;
   rooms[roomId].wdspd = info.defaultWdspd;
-  rooms[roomId].state = 0;
+  rooms[roomId].state = 2;
   rooms[roomId].mode = 0;
   rooms[roomId].start = QDateTime::currentDateTime();
   rooms[roomId].duration = QDateTime::currentDateTime();
   rooms[roomId].pwr = 0;
   rooms[roomId].cost = 0;
   dsps[roomId].update(rooms[roomId]);
+  dsps[roomId].hasRequest = false;
 
   pipe->updateRoom(rooms[roomId]);
 
@@ -199,6 +200,11 @@ bool Server::checkOut(int roomId)
   qDebug() << QTime::currentTime() << "checkout finish";
 //  room_lock.unlock();
   return success;
+}
+
+void Server::setMode(int _mode)
+{
+  this->_mode = _mode;
 }
 
 QStringList Server::getUsrIds()
@@ -293,13 +299,13 @@ void Server::updateRooms()
       if (services.contains(room.roomId) &&
           !tempInRange(room.temp, room.settemp, 1e-3)) {
         // 制热
-        if (room.temp < room.settemp) {
+        if ((_mode == 1 || _mode == 2) && room.temp < room.settemp) {
           room.mode = 1;
           room.temp += getPara(room.wdspd);
           room.temp = qMin(room.temp, room.settemp);
         }
         // 制冷
-        else if (room.temp > room.settemp) {
+        if ((_mode == 0 || _mode == 2) && room.temp > room.settemp) {
           room.mode = 0;
           room.temp -= getPara(room.wdspd);
           room.temp = qMax(room.temp, room.settemp);
@@ -450,7 +456,9 @@ void Server::updateService()
 
 bool Server::serviceCompleted(int roomId)
 {
-  return tempInRange(rooms[roomId].temp, rooms[roomId].settemp, 1e-3);
+  return ((_mode == 0 && rooms[roomId].temp <= rooms[roomId].settemp) ||
+          (_mode == 1 && rooms[roomId].temp >= rooms[roomId].settemp) ||
+          tempInRange(rooms[roomId].temp, rooms[roomId].settemp, 1e-3));
 }
 
 bool Server::tempInRange(double temp1, double temp2, double range)
