@@ -255,3 +255,8 @@ void MainWindow::on_rb_auto_clicked()
 {
   emit sgn_setMode(2);
 }
+
+void MainWindow::on_bt_refresh_clicked()
+{
+  refresh();
+}

@@ -133,13 +133,14 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].temp = info.defaultTemp;
   rooms[roomId].setwdspd = info.defaultWdspd;
   rooms[roomId].wdspd = info.defaultWdspd;
-  rooms[roomId].state = 0;
+  rooms[roomId].state = 2;
   rooms[roomId].mode = 0;
   rooms[roomId].start = QDateTime::currentDateTime();
   rooms[roomId].duration = QDateTime::currentDateTime();
   rooms[roomId].pwr = 0;
   rooms[roomId].cost = 0;
   dsps[roomId].update(rooms[roomId]);
+  dsps[roomId].hasRequest = false;
 
   pipe->updateRoom(rooms[roomId]);
 

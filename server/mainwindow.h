@@ -68,6 +68,8 @@ private slots:
 
   void on_rb_auto_clicked();
 
+  void on_bt_refresh_clicked();
+
 private:
   Ui::MainWindow *ui;
 
