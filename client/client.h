@@ -38,6 +38,8 @@ private:
 
   Host info;
 
+  int _wdspd;
+
   QTimer timer, recoverTimer;
   Room room;
   User user;

@@ -68,7 +68,8 @@ void Server::fetchRequests()
   for (Request q : requests) {
     if (!user2room.contains(q.usrId)) {
       // 新用户
-      checkIn(q.usrId);
+      //checkIn(q.usrId);
+      continue;
     }
 
     int roomId = user2room[q.usrId];
@@ -132,7 +133,7 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].temp = info.defaultTemp;
   rooms[roomId].setwdspd = info.defaultWdspd;
   rooms[roomId].wdspd = info.defaultWdspd;
-  rooms[roomId].state = 2;
+  rooms[roomId].state = 0;
   rooms[roomId].mode = 0;
   rooms[roomId].start = QDateTime::currentDateTime();
   rooms[roomId].duration = QDateTime::currentDateTime();

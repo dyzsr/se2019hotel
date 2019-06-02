@@ -41,7 +41,7 @@ bool Client::signIn(QString usrId, QString passwd)
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
     connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
-    timer.start(2000);
+    timer.start(500);
     qDebug() << QTime::currentTime() << "sign in";
     return true;
   }
@@ -66,6 +66,7 @@ void Client::getInfo(int &state, double &settemp, int &setwdspd)
 
 void Client::sendRequest(int state, double settemp, int setwdspd)
 {
+  this->_wdspd = setwdspd;
   pipe->sendRequest(Request(0, user.id, state ? 1 : 0, settemp, setwdspd));
 }
 
@@ -96,6 +97,10 @@ void Client::forceRoomChanged()
         pipe->updateRoomTemp(room.roomId, room.temp+1);
     else if (room.temp < fixedTemp)
         pipe->updateRoomTemp(room.roomId, fixedTemp);
+
+    if (qAbs(room.temp - room.settemp) >= 1.) {
+      pipe->sendRequest(Request(room.roomId, room.usrId, -1, -1, this->_wdspd));
+    }
 }
 
 int Client::getRecoverTime()
