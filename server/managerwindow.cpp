@@ -3,7 +3,8 @@
 
 ManagerWindow::ManagerWindow(QWidget *parent) :
   QWidget(parent, Qt::Window),
-  ui(new Ui::ManagerWindow)
+  ui(new Ui::ManagerWindow),
+  timer(this)
 {
   ui->setupUi(this);
   init();
@@ -11,6 +12,7 @@ ManagerWindow::ManagerWindow(QWidget *parent) :
 
 ManagerWindow::~ManagerWindow()
 {
+  timer.stop();
   delete ui;
 }
 

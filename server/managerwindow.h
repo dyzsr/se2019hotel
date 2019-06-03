@@ -2,6 +2,7 @@
 #define MANAGERWINDOW_H
 
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
   class ManagerWindow;
@@ -34,7 +35,7 @@ private slots:
 
 private:
   Ui::ManagerWindow *ui;
-
+  QTimer timer;
 };
 
 #endif // MANAGERWINDOW_H
