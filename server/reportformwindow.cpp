@@ -22,7 +22,8 @@ QT_CHARTS_USE_NAMESPACE
 ReportFormWindow::ReportFormWindow(QWidget *parent, Records *rec) :
   QWidget(parent, Qt::Window),
   records(rec),
-    ui(new Ui::ReportFormWindow)
+  ui(new Ui::ReportFormWindow),
+  window(this)
 {
     ui->setupUi(this);
     ui->display->setViewMode(QListView::ListMode);
@@ -37,9 +38,6 @@ ReportFormWindow::ReportFormWindow(QWidget *parent, Records *rec) :
     ui->eend->setText(str);
     ui->s_dateTime->setCalendarPopup(true);
     ui->e_dateTime->setCalendarPopup(true);
-
-    ui->s_dateTime->setDateTime(QDateTime::currentDateTime().addDays(-1));
-    ui->e_dateTime->setDateTime(QDateTime::currentDateTime());
 }
 
 
@@ -48,19 +46,10 @@ ReportFormWindow::~ReportFormWindow()
     delete ui;
 }
 
-void ReportFormWindow::showReportForm(QVector<QString> data)
+void ReportFormWindow::showReportForm()
 {
-    //To Do
-    printDat = data;
-    ui->display->clear();
-    int i, num = data.length();
-    for (i=0; i<num; ++i)
-    {
-        QListWidgetItem *item = new QListWidgetItem;
-        item->setText(data.at(i));
-        ui->display->addItem(item);
-    }
-    this->show();
+    ui->s_dateTime->setDateTime(QDateTime::currentDateTime().addDays(-1));
+    ui->e_dateTime->setDateTime(QDateTime::currentDateTime());
 }
 
 void ReportFormWindow::on_go_back_clicked()
@@ -301,26 +290,19 @@ void ReportFormWindow::on_OK_clicked()
 QT_CHARTS_USE_NAMESPACE
 void ReportFormWindow::on_viewreport_clicked()
 {
-    //QApplication a();
-    QObject *parent = Q_NULLPTR;
-    QBarSeries(Q_NULLPTR);
-    // 定义柱状条
-    QBarSet *set0 = new QBarSet("1");
-    QBarSet *set1 = new QBarSet("2");
-    QBarSet *set2 = new QBarSet("3");
-    QBarSet *set3 = new QBarSet("4");
-    // 柱状条赋值
-    *set0 << records->op[0] << records->speed[0] << records->temp[0] << records->record[0];
-    *set1 << records->op[1] << records->speed[1] << records->temp[1] << records->record[1];
-    *set2 << records->op[2] << records->speed[2] << records->temp[2] << records->record[2];
-    *set3 << records->op[3] << records->speed[3] << records->temp[3] << records->record[3];
+    records->updateRecord(ui->s_dateTime->dateTime(), ui->e_dateTime->dateTime());
 
     // 设置柱状集
-    QBarSeries *series = new QBarSeries();
-    series->append(set0);
-    series->append(set1);
-    series->append(set2);
-    series->append(set3);
+    QBarSeries *series = new QBarSeries(&window);
+
+    for (int i = 0; i < records->nr_rooms; i++) {
+      // 定义柱状条
+      QBarSet *set = new QBarSet("room " + QString::number(i));
+      // 柱状条赋值
+      *set << records->op[i] << records->speed[i] << records->temp[i] << records->record[i];
+      series->append(set);
+    }
+
     series->setLabelsPosition(QAbstractBarSeries::LabelsInsideEnd);
     // 添加图表
     QChart *chart = new QChart();
@@ -350,12 +332,14 @@ void ReportFormWindow::on_viewreport_clicked()
 
 void ReportFormWindow::on_viewfee_clicked()
 {
-    QPieSeries *series = new QPieSeries();
+    records->updateRecord(ui->s_dateTime->dateTime(), ui->e_dateTime->dateTime());
+
+    QPieSeries *series = new QPieSeries(this->parent());
     series->setHoleSize(0.35);
-    series->append("room1", records->fee[0]);
-    series->append("room2", records->fee[1]);
-    series->append("room3", records->fee[2]);
-    series->append("room4", records->fee[3]);
+
+    for (int i = 0; i < records->nr_rooms; i++) {
+      series->append("room" + QString::number(i), records->fee[i]);
+    }
 
     QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -368,5 +352,4 @@ void ReportFormWindow::on_viewfee_clicked()
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-
 }

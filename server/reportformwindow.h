@@ -22,7 +22,7 @@ public:
     explicit ReportFormWindow(QWidget *parent = nullptr, Records *rec = nullptr);
     ~ReportFormWindow();
 
-    void showReportForm(QVector<QString> data);
+    void showReportForm();
 
     void Updatereport(QVector<QString> data);
 

@@ -25,6 +25,9 @@ public:
     QVector<int64_t> duratio;
     QVector<double> fee;
 
+    void updateRecord(QDateTime start, QDateTime end);
+    int nr_rooms;
+
 signals:
 
 public slots:
@@ -32,7 +35,6 @@ public slots:
 private:
     Pipe *pipe;
     QString calcDurationStr(long long duration);
-    int nr_rooms;
 };
 
 #endif // RECORDS_H

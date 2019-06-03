@@ -99,12 +99,12 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     int64_t etim2;
     int64_t tRet,tRet2;
 
-    op = QVector<int> (nr_rooms, 0);
-    temp = QVector<int> (nr_rooms, 0);
-    speed = QVector<int> (nr_rooms, 0);
-    record = QVector<int> (nr_rooms, 0);
-    duratio = QVector<int64_t> (nr_rooms, 0);
-    fee = QVector<double> (nr_rooms, 0.);
+    QVector<int> op(nr_rooms, 0);
+    QVector<int> temp(nr_rooms, 0);
+    QVector<int> speed(nr_rooms, 0);
+    QVector<int> record(nr_rooms, 0);
+    QVector<int64_t> duratio(nr_rooms, 0);
+    QVector<double> fee(nr_rooms, 0.);
 
     for(int j=0; j<billingss.length(); ++j)
     {
@@ -217,4 +217,37 @@ QString Records::calcDurationStr(long long duration)
 void Records::setNr_rooms(int value)
 {
   nr_rooms = value;
+}
+
+void Records::updateRecord(QDateTime start, QDateTime end)
+{
+  QVector<Billing> billingss = pipe->getAllBillings(start, end);
+
+  record.resize(nr_rooms);
+  op.resize(nr_rooms);
+  temp.resize(nr_rooms);
+  speed.resize(nr_rooms);
+  duratio.resize(nr_rooms);
+  fee.resize(nr_rooms);
+
+  for(int j=0; j<billingss.length(); ++j)
+  {
+    int64_t dus = 0;//持续时间
+    dus = billingss.at(j).start.secsTo(billingss.at(j).duration);
+    record[billingss.at(j).roomId]++;
+    if(billingss.at(j).action == 0 || billingss.at(j).action == 1)
+    {
+      op[billingss.at(j).roomId]++;
+    }
+    else if(billingss.at(j).action == 2)
+    {
+      temp[billingss.at(j).roomId]++;
+    }
+    else if(billingss.at(j).action == 3)
+    {
+      speed[billingss.at(j).roomId]++;
+    }
+    duratio[billingss.at(j).roomId] = duratio[billingss.at(j).roomId] + dus;
+    fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
+  }
 }
