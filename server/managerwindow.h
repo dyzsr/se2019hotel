@@ -1,4 +1,4 @@
-#ifndef MANAGERWINDOW_H
+﻿#ifndef MANAGERWINDOW_H
 #define MANAGERWINDOW_H
 
 #include <QWidget>
@@ -35,7 +35,6 @@ private slots:
 
 private:
   Ui::ManagerWindow *ui;
-  QTimer timer;
 };
 
 #endif // MANAGERWINDOW_H
