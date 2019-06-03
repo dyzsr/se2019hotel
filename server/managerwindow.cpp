@@ -18,10 +18,10 @@ ManagerWindow::~ManagerWindow()
 
 void ManagerWindow::init()
 {
-  ui->stackedWidget->setCurrentIndex(0);
+  ui->stackedWidget->setCurrentIndex(1);
   ui->lb_verdict->hide();
-  connect(&timer, &QTimer::timeout, this, &ManagerWindow::on_bt_refresh_clicked);
-  timer.start(500);
+  ui->bt_back->hide();
+  emit sgn_askManagerFunc();
 }
 
 void ManagerWindow::on_bt_signIn_clicked()

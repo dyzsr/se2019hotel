@@ -36,8 +36,10 @@ public slots:
   bool addUser(QString usrId, QString pswd);
   bool delUser(QString usrId, QString pswd);
 
+  QVector<Room> getAllRooms();
   Room getRoom(int roomId);
   QString getUsrId(int roomId);
+  int getNrRooms();
 
 private:
 //  void checkIn(QString usrId);

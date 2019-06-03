@@ -14,15 +14,20 @@ public:
     explicit Records(QObject *parent = nullptr);
 
     QVector<QString> getDetailedBill(Room room);
-    QVector<QString> getSimpleBills(int roomId);
+    QVector<QString> getSimpleBills(Room room);
     QVector<QString> getReportForm(QDateTime start , QDateTime end);
-    void getInfoOnce();
-    int *op;//开关次数
-    int *temp;//调温
-    int *speed;//调风
-    int *record;//详单
-    int64_t *duratio;//时长
-    double *fee;//总消费
+    void setNr_rooms(int value);
+
+    QVector<int> op;
+    QVector<int> temp;
+    QVector<int> speed;
+    QVector<int> record;
+    QVector<int64_t> duratio;
+    QVector<double> fee;
+
+    void updateRecord(QDateTime start, QDateTime end);
+    int nr_rooms;
+
 signals:
 
 public slots:
@@ -30,8 +35,6 @@ public slots:
 private:
     Pipe *pipe;
     QString calcDurationStr(long long duration);
-    QVector<Billing> billingss;
-    QVector<Room> rooms;
 };
 
 #endif // RECORDS_H

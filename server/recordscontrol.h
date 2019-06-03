@@ -15,6 +15,7 @@ public:
     explicit RecordsControl(QObject *parent = nullptr);
 
 signals:
+  int sgn_nr_rooms();
 
 public slots:
     void slot_showSimpleBill(Room room);

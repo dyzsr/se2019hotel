@@ -206,15 +206,16 @@ int Pipe::getCurrentBillingId()
   return 0;
 }
 
-QVector<Billing> Pipe::getBillings(int roomId)
+QVector<Billing> Pipe::getBillings(Room room)
 {
   QSqlQuery query(db);
   QSqlRecord rec;
   Billing bil;
   QVector<Billing> q;
   query.prepare("SELECT * FROM tcs_app_bill "
-                "WHERE room_id_id = :roomId;");
-  query.bindValue(":roomId", roomId);
+                "WHERE room_id_id = :roomId AND start >= :start;");
+  query.bindValue(":roomId", room.roomId);
+  query.bindValue(":start", room.start);
   query.exec();
   while (query.next()) {
     rec = query.record();
@@ -234,14 +235,19 @@ QVector<Billing> Pipe::getBillings(int roomId)
   return q;
 }
 
-QVector<Billing> Pipe::getAllBillings()
+QVector<Billing> Pipe::getAllBillings(QDateTime start, QDateTime end)
 {
   QSqlQuery query(db);
   QSqlRecord rec;
   Billing bil;
   QVector<Billing> q;
-  query.prepare("SELECT * FROM tcs_app_bill");
-  query.exec();
+  query.prepare("SELECT * FROM tcs_app_bill "
+                "WHERE start >= :start AND start < :end;");
+  query.bindValue(":start", start);
+  query.bindValue(":end", end);
+  if (!query.exec())
+    qDebug() << query.lastError();
+
   while (query.next()) {
     rec = query.record();
     bil.rate = rec.value("rate").toDouble();

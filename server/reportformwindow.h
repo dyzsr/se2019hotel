@@ -19,12 +19,15 @@ class ReportFormWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit ReportFormWindow(QWidget *parent = nullptr);
+    explicit ReportFormWindow(QWidget *parent = nullptr, Records *rec = nullptr);
     ~ReportFormWindow();
 
-    void showReportForm(QVector<QString> data);
+    void showReportForm();
 
     void Updatereport(QVector<QString> data);
+
+public slots:
+    void on_OK_clicked();
 
 private slots:
 
@@ -32,15 +35,12 @@ private slots:
 
     void on_print_clicked();
 
-    void on_OK_clicked();
-
     void on_viewreport_clicked();
 
     void on_viewfee_clicked();
 
 private:
-    Records records;
-    Pipe *pipee;
+    Records *records;
     Ui::ReportFormWindow *ui;
     Room printRoo;
     int rrr;

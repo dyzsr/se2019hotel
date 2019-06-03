@@ -1,5 +1,7 @@
 ﻿#include "managercontrol.h"
 
+#include <QTimer>
+
 ManagerControl::ManagerControl(QObject *parent):
   QObject(parent),
   manager(parent),
@@ -12,6 +14,11 @@ ManagerControl::ManagerControl(QObject *parent):
   connect(&window, &ManagerWindow::sgn_askReportForm_clicked,
           this, &ManagerControl::slot_askReportForm_clicked);
   window.hide();
+
+  askManagerFunc();
+  QTimer *timer = new QTimer(this);
+  connect(timer, &QTimer::timeout, this, &ManagerControl::askManagerFunc);
+  timer->start(1000);
 }
 
 void ManagerControl::openNewWindow()
@@ -22,25 +29,13 @@ void ManagerControl::openNewWindow()
 
 void ManagerControl::askManagerFunc()
 {
-    window.showManagerFunc(manager.getRoomStateStr());
+    window.showManagerFunc(manager.getRoomStateStr(emit sgn_getAllRooms()));
 }
 
 bool ManagerControl::slot_checkRoomIdValid(int roomId)
 {
   manager.setTheRoom(emit sgn_getRoom(roomId));
   return true;
-  /*
-    QVector<Room> rooms = manager.getAllRooms();
-    for (int i=0; i<rooms.length(); ++i)
-    {
-        if (rooms.at(i).roomId == roomId)
-        {
-            manager.setTheRoom(rooms.at(i));
-            return true;
-        }
-    }
-    return false;
-    */
 }
 
 void ManagerControl::slot_askSimpleBill_clicked()
