@@ -47,7 +47,7 @@ private:
 
   void recoverTemp();
   void fetchData();
-  int getRecoverTime();
+  int getDefaultTemp();
 };
 
 #endif // CLIENT_H

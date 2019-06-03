@@ -172,7 +172,7 @@ void Pipe::sendRequest(const Request &request)
   QSqlQuery query(db);
   query.prepare("INSERT INTO tcs_app_request VALUES(:id, :settemp, :setwdspd, "
                 ":state, :user_id_id);");
-  query.bindValue(":id", request.reqId);
+  query.bindValue(":id", 0);
   query.bindValue(":settemp", request.settemp);
   query.bindValue(":setwdspd", request.setwdspd);
   query.bindValue(":state", request.state);
@@ -332,7 +332,7 @@ int64_t Pipe::addBilling(const Billing &billing)
   query.bindValue(":action", billing.action);
   query.bindValue(":room_id_id", billing.roomId);
   if (query.exec())
-    qDebug() << "add billing id =" << billing.billingId;
+    qDebug() << "add billing";
   else
     qDebug() << query.lastError();
 
@@ -532,6 +532,7 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
       qDebug() << query.lastError();
     }
   }
+  qDebug() << "update rooms";
 }
 
 bool Pipe::updateRoomExceptTemp(const Room &room)

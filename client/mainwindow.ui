@@ -151,10 +151,10 @@ color: #000000;</string>
        </rect>
       </property>
       <property name="minimum">
-       <number>1</number>
+       <number>15</number>
       </property>
       <property name="maximum">
-       <number>180</number>
+       <number>35</number>
       </property>
       <property name="value">
        <number>30</number>
@@ -624,7 +624,7 @@ color: #ff3333;</string>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

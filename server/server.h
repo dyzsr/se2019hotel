@@ -42,6 +42,13 @@ public slots:
 private:
 //  void checkIn(QString usrId);
 
+  void serve(int roomId);
+  void wait(int roomId);
+  void standby(int roomId);
+
+  Dispatchable findFirst();
+  Dispatchable findLast();
+
   bool serviceCompleted(int roomId);
 
   bool tempInRange(double temp1, double temp2, double range);
@@ -64,7 +71,7 @@ private:
 
   int waiting_time = 120;
   int max_nr_service = 3;
-  QVector<int> services;
+  int nr_services = 0;
 
   // 房间
   QReadWriteLock room_lock;

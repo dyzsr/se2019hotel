@@ -34,6 +34,9 @@ void MainWindow::init(int nr_room)
     ui->lb_usrId->setText(text);
   }
 
+  ui->rb_down->setChecked(true);
+  ui->rb_0->setChecked(true);
+
   ui->lb_err->hide();
   ui->lb_dup->hide();
   QStringList availUsrIds = emit sgn_getAvailUsrIds();

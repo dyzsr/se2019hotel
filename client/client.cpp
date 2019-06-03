@@ -40,10 +40,20 @@ bool Client::signIn(QString usrId, QString passwd)
 {
   user = pipe->getUser(usrId);
   if (user.pswd == passwd) {
-    connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
-    timer.start(500);
-    qDebug() << QTime::currentTime() << "sign in";
-    return true;
+    room = pipe->getRoom(usrId);
+
+    if (room.usrId == usrId) {
+      // 设置房间初始温度
+      pipe->updateRoomTemp(room.roomId, getDefaultTemp());
+
+      connect(&timer, &QTimer::timeout, this, &Client::fetchDataAndCheck);
+      timer.start(500);
+      qDebug() << QTime::currentTime() << "sign in";
+      return true;
+    }
+    else {
+      qDebug() << "No room assigned for" << usrId;
+    }
   }
   qDebug() << "input: " << usrId << " " << passwd;
   qDebug() << "database: " << user.id << " " << user.pswd;
@@ -91,7 +101,7 @@ void Client::recoverTemp()
 
 void Client::forceRoomChanged()
 {
-    double fixedTemp = getRecoverTime();
+    double fixedTemp = getDefaultTemp();
     double fixedDiff = 0.025;
     fetchData();
     if (fixedTemp - room.temp > 0.000001)
@@ -109,12 +119,15 @@ void Client::forceRoomChanged()
             pipe->updateRoomTemp(room.roomId, fixedTemp);
     }
 
-    if (qAbs(room.temp - room.settemp) >= 1.) {
-      pipe->sendRequest(Request(room.roomId, room.usrId, 1, room.settemp, this->_wdspd));
+    if (room.state >= 1) {
+      if ((room.mode == 0 && room.temp - room.settemp >= 1.) ||
+          (room.mode == 1 && room.settemp - room.temp >= 1.)) {
+        pipe->sendRequest(Request(0, room.usrId, 1, room.settemp, this->_wdspd));
+      }
     }
 }
 
-int Client::getRecoverTime()
+int Client::getDefaultTemp()
 {
     int setTime = emit sgn_getRecoverSpeed();
     return setTime;
