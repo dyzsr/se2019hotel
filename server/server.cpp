@@ -22,6 +22,7 @@ void Server::init()
 {
   info = pipe->getHost();
   users = pipe->getUsers();
+  _mode = 0;
 
   // 从数据库读取房间数据
   rooms = pipe->getRooms();
@@ -33,14 +34,29 @@ void Server::init()
   // 从房间初始化调度对象
   dsps.resize(rooms.size());
   for (int i = 0; i < rooms.size(); i++) {
-    dsps[i].update(rooms[i]);
-    if (!rooms[i].usrId.isEmpty())
-      dsps[i].hasRequest = true;
+    if (!rooms[i].usrId.isEmpty()) {
+      if (rooms[i].state >= 1) {
+        if (serviceCompleted(i)) {
+          rooms[i].state = 2;
+          dsps[i].hasRequest = false;
+        }
+        else {
+          rooms[i].state = 3;
+          dsps[i].hasRequest = true;
+          dsps[i].requestType = 1;
+        }
+        dsps[i].update(rooms[i]);
+      }
+    }
   }
+  pipe->updateRooms(rooms);
 
   // 初始化账单
   billings_cnt = pipe->getCurrentBillingId();
   billings.resize(rooms.size());
+
+  // 第一次调度
+  updateService();
 
   emit sgn_init(rooms.size());
 
@@ -51,10 +67,6 @@ void Server::init()
   QTimer *timer_r = new QTimer(this);
   connect(timer_r, &QTimer::timeout, this, &Server::updateRooms);
   timer_r->start(1000);
-
-  QTimer *timer_s = new QTimer(this);
-  connect(timer_s, &QTimer::timeout, this, &Server::updateService);
-  timer_s->start(12000);
 }
 
 void Server::fetchRequests()
@@ -67,8 +79,8 @@ void Server::fetchRequests()
 
   // 处理读取的请求
   for (Request q : requests) {
+    // 未知用户跳过
     if (!user2room.contains(q.usrId)) {
-      // 新用户
       continue;
     }
 
@@ -79,35 +91,42 @@ void Server::fetchRequests()
       rooms[roomId].state = 0;
       dsps[roomId].hasRequest = false;
       dsps[roomId].update(rooms[roomId]);
-      services.removeOne(roomId);
     }
     // 除关机外的请求
     else {
       dsps[roomId].hasRequest = true;
       dsps[roomId].requestType = 1;
-      if (dsps[roomId].state != 3)
-        dsps[roomId].waitingTime = waiting_time;
-      dsps[roomId].state = 3;
+      if (rooms[roomId].state != 1) {
+        if (rooms[roomId].state != 3)
+          dsps[roomId].waitingTime = waiting_time;
+
+        rooms[roomId].state = 3;
+      }
 
       // 设置温度
       if (q.settemp >= 0 &&
-          !tempInRange(q.settemp, dsps[roomId].settemp, 1e-3)) {
+          !tempInRange(q.settemp, rooms[roomId].settemp, 1e-3)) {
         dsps[roomId].requestType = 2;
-        dsps[roomId].settemp = q.settemp;
+        rooms[roomId].settemp = q.settemp;
       }
       // 设置风速
       if (q.setwdspd != -1 &&
-          q.setwdspd != dsps[roomId].setwdspd) {
+          q.setwdspd != rooms[roomId].wdspd) {
         dsps[roomId].requestType = 3;
-        dsps[roomId].setwdspd = q.setwdspd;
+        rooms[roomId].wdspd = q.setwdspd;
+        rooms[roomId].pwr = getRate(rooms[roomId].wdspd);
       }
+      dsps[roomId].update(rooms[roomId]);
 
-      qDebug() << "dsps: " << dsps[roomId].roomId
-               << dsps[roomId].state << dsps[roomId].settemp << dsps[roomId].setwdspd;
+      qDebug() << "request: " << rooms[roomId].roomId
+               << rooms[roomId].state << rooms[roomId].settemp << rooms[roomId].wdspd;
     }
   }
 
   qDebug() << QTime::currentTime() << "fetch requests finish";
+
+  if (requests.size())
+    updateService();
 }
 
 bool Server::checkInFromServer(int roomId, QString usrId)
@@ -129,62 +148,34 @@ bool Server::checkInFromServer(int roomId, QString usrId)
   rooms[roomId].pwr = 0;
   rooms[roomId].cost = 0;
   dsps[roomId].update(rooms[roomId]);
-  dsps[roomId].hasRequest = false;
+  dsps[roomId].hasRequest = true;
 
   pipe->updateRoom(rooms[roomId]);
 
-  qDebug() << "check in by server";
+  qDebug() << "check in" << roomId << usrId;
+
+  updateService();
   return true;
 }
 
-//void Server::checkIn(QString usrId)
-//{
-//  for (int i = 0; i < rooms.size(); i++) {
-//    // 寻找空房间并分配
-//    if (rooms[i].usrId.isEmpty()) {
-//      user2room[usrId] = rooms[i].roomId;
-//      rooms[i].usrId = usrId;
-//      rooms[i].settemp = info.defaultTemp;
-//      rooms[i].temp = info.defaultTemp;
-//      rooms[i].setwdspd = info.defaultWdspd;
-//      rooms[i].wdspd = info.defaultWdspd;
-//      rooms[i].state = 2;
-//      rooms[i].mode = 0;
-//      rooms[i].start = QDateTime::currentDateTime();
-//      rooms[i].duration = QDateTime::currentDateTime();
-//      rooms[i].pwr = 0;
-//      rooms[i].cost = 0;
-//      dsps[i].update(rooms[i]);
-
-//      pipe->updateRoom(rooms[i]);
-//      break;
-//    }
-//  }
-//}
-
 bool Server::checkOut(int roomId)
 {
-  qDebug() << QTime::currentTime() << "checkout start";
-
   // 从用户房间映射表中删除用户
   user2room.remove(rooms[roomId].usrId);
   // 保留此房间上一个用户的服务起始时间
   rooms[roomId].usrId = "";
-  rooms[roomId].settemp = 25.;
-  rooms[roomId].temp = 25.;
-  rooms[roomId].setwdspd = 0;
-  rooms[roomId].wdspd = 0;
+  rooms[roomId].temp = rooms[roomId].settemp = info.defaultTemp;
+  rooms[roomId].wdspd = rooms[roomId].setwdspd = 0;
   rooms[roomId].mode = 0;
   rooms[roomId].state = 0;
   rooms[roomId].duration = QDateTime::currentDateTime();
   dsps[roomId].update(rooms[roomId]);
   dsps[roomId].hasRequest = false;
-  if (services.contains(roomId)) {
-    services.removeOne(roomId);
-  }
   bool success = pipe->updateRoom(rooms[roomId]);
 
-  qDebug() << QTime::currentTime() << "checkout finish";
+  qDebug() << QTime::currentTime() << "checkout" << roomId;
+
+  updateService();
   return success;
 }
 
@@ -253,189 +244,211 @@ QString Server::getUsrId(int roomId)
   return rooms[roomId].usrId;
 }
 
+void Server::serve(int i)
+{
+  if (dsps[i].hasRequest) {
+    // 添加新的账单
+    rooms[i].pwr = getRate(rooms[i].setwdspd);
+    dsps[i].update(rooms[i]);
+
+    billings[i] = Billing(
+                    0, // billing id
+                    rooms[i].roomId,   // room id
+                    QDateTime::currentDateTime(), // start
+                    QDateTime::currentDateTime(), // duration
+                    0.0, // costs
+                    rooms[i].setwdspd, // windspeed
+                    rooms[i].temp, // start temperature
+                    rooms[i].temp, // end temperature
+                    rooms[i].pwr,   // rate
+                    dsps[i].requestType   // action
+                    );
+    billings[i].billingId = pipe->addBilling(billings[i]);
+
+    dsps[i].hasRequest = false;
+  }
+
+  // 温度未到设定温度
+  if (!tempInRange(rooms[i].temp, rooms[i].settemp, 1e-3)) {
+    // 制热
+    if ((_mode == 1 || _mode == 2) && rooms[i].temp < rooms[i].settemp) {
+      rooms[i].temp += getPara(rooms[i].wdspd);
+      rooms[i].temp = qMin(rooms[i].temp, rooms[i].settemp);
+    }
+    // 制冷
+    if ((_mode == 0 || _mode == 2) && rooms[i].temp > rooms[i].settemp) {
+      rooms[i].temp -= getPara(rooms[i].wdspd);
+      rooms[i].temp = qMax(rooms[i].temp, rooms[i].settemp);
+    }
+
+    // 更新账单
+    billings[i].duration = QDateTime::currentDateTime();
+    int64_t secs = billings[i].start.secsTo(billings[i].duration);
+
+    // 房间记账
+    billings[i].costs = billings[i].rate * secs;
+    billings[i].endTemp = rooms[i].temp;
+    rooms[i].cost = dsps[i].cost + rooms[i].pwr * secs;
+
+    // 更新服务时间
+    dsps[i].serviceTime += 1;
+  }
+}
+
+void Server::wait(int i)
+{
+  // 更新等待时间
+  dsps[i].hasRequest = true;
+  if (dsps[i].waitingTime > 0)
+    dsps[i].waitingTime -= 1;
+}
+
+void Server::standby(int i)
+{
+  if ((_mode == 0 && rooms[i].temp - rooms[i].settemp >= 1.) ||
+      (_mode == 1 && rooms[i].settemp - rooms[i].temp >= 1.) ||
+      _mode == 2) {
+    rooms[i].state = 3;
+    dsps[i].hasRequest = true;
+    dsps[i].requestType = 2;
+  }
+}
+
+Dispatchable Server::findFirst()
+{
+  Dispatchable first = Dispatchable();
+  for (int i = 0; i < dsps.size(); i++) {
+    if (rooms[i].state == 3 && dsps[i] < first)
+      first = dsps[i];
+  }
+  return first;
+}
+
+Dispatchable Server::findLast()
+{
+  bool flag = true;
+  Dispatchable last;
+  for (int i = 0; i < dsps.size(); i++) {
+    if (rooms[i].state == 1) {
+      if (flag || last < dsps[i]) {
+        last = dsps[i];
+        flag = false;
+      }
+    }
+  }
+  return last;
+}
+
 void Server::updateRooms()
 {
   // 更新rooms
-  qDebug() << QTime::currentTime() << "room start";
+  qDebug() << QTime::currentTime() << "room";
 
   auto temps = pipe->getRoomTemps();
-  for (Room &room : rooms) {
-    room.temp = temps[room.roomId];
 
-    if (!room.usrId.isEmpty()) {
-//      room.temp = pipe->getRoomTemp(room.roomId);
-      room.wdspd = room.setwdspd;
+  for (int i = 0; i < rooms.size(); i++) {
+    rooms[i].temp = temps[i];
 
-      if (_mode == 0) {
-        room.mode = 0;
-      } else if (_mode == 1) {
-        room.mode = 1;
-      } else {
-        room.mode = room.temp < room.settemp;
-      }
+    if (!rooms[i].usrId.isEmpty()) {
+      // 设置空调模式
+      if (_mode == 0)
+        rooms[i].mode = 0;
+      else if (_mode == 1)
+        rooms[i].mode = 1;
+      else
+        rooms[i].mode = rooms[i].temp < rooms[i].settemp;
 
       // 房间在拥有服务对象时才可以接收服务
-      // state == 1 OR state == 3
-      if (services.contains(room.roomId) &&
-          !tempInRange(room.temp, room.settemp, 1e-3)) {
-        // 制热
-        if ((_mode == 1 || _mode == 2) && room.temp < room.settemp) {
-          room.mode = 1;
-          room.temp += getPara(room.wdspd);
-          room.temp = qMin(room.temp, room.settemp);
-        }
-        // 制冷
-        if ((_mode == 0 || _mode == 2) && room.temp > room.settemp) {
-          room.mode = 0;
-          room.temp -= getPara(room.wdspd);
-          room.temp = qMax(room.temp, room.settemp);
-        }
-
-        // 更新账单
-        billings[room.roomId].duration = QDateTime::currentDateTime();
-        int64_t secs = billings[room.roomId].start.secsTo(billings[room.roomId].duration);
-
-        // 房间记账
-        billings[room.roomId].costs = billings[room.roomId].rate * secs;
-        billings[room.roomId].endTemp = rooms[room.roomId].temp;
-        room.cost = dsps[room.roomId].cost + room.pwr * secs;
-
-        // 更新服务时间
-        dsps[room.roomId].serviceTime += 1;
-
-        // 上传至数据库
-//        pipe->updateRoom(room);
-//        pipe->updateBilling(billings[room.roomId]);
+      if (rooms[i].state == 1) {
+        serve(i);
       }
       // 在等待队列中等待
-      else if (room.state == 1) {
-        // 更新等待时间
-        if (dsps[room.roomId].waitingTime > 0)
-          dsps[room.roomId].waitingTime -= 1;
-        rooms[room.roomId].state = 3;
+      else if (rooms[i].state == 3) {
+        wait(rooms[i].roomId);
       }
-      else if (room.state == 2 &&
-               !tempInRange(room.temp, room.settemp, 1.) &&
-               !dsps[room.roomId].hasRequest) {
-        if ((_mode == 0 && room.temp - room.settemp >= 1.) ||
-            (_mode == 1 && room.settemp - room.temp >= 1.) ||
-            _mode == 2){
-          dsps[room.roomId].state = 3;
-          dsps[room.roomId].hasRequest = true;
-          dsps[room.roomId].requestType = 2;
-        }
+      // 待机状态 判断是否重发请求
+      else if (rooms[i].state == 2 &&
+               !tempInRange(rooms[i].temp, rooms[i].settemp, 1.) &&
+               !dsps[rooms[i].roomId].hasRequest) {
+        standby(rooms[i].roomId);
       }
 
-      room.duration = QDateTime::currentDateTime();
-//      pipe->updateRoomExceptTemp(room);
+      rooms[i].duration = QDateTime::currentDateTime();
     }
   }
   pipe->updateRooms(rooms);
   pipe->updateBillings(billings);
 
-  qDebug() << QTime::currentTime() << "room finish";
+  QVector<int> services;
+  for (int i = 0; i < rooms.size(); i++) {
+    if (rooms[i].state == 1)
+      services.append(i);
+  }
+  qDebug() << QTime::currentTime() << "in service" << nr_services;
+  qDebug() << services;
+
+  // 调度
+  updateService();
 }
 
 void Server::updateService()
 {
-  // 更新rooms 添加新的billings并上传
-  qDebug() << QTime::currentTime() << "serv start";
+  // count services
+  nr_services = 0;
+  for (int i = 0; i < rooms.size(); i++) {
+    if (rooms[i].state == 1)
+      nr_services++;
+  }
 
-  // 清除已完成服务的对象
-  for (auto it = services.begin(); it != services.end(); ) {
-    int i = *it;
-    // state == 1 表示再无请求
-    if (serviceCompleted(i) && dsps[i].state == 1) {
-      // 服务完成 删除服务对象
-      it = services.erase(it);
-      dsps[i].serviceTime = 0;
-      dsps[i].hasRequest = false;
+  for (int i = 0; i < rooms.size(); i++) {
+    if (rooms[i].state == 1 && serviceCompleted(i)) {
       rooms[i].state = 2;
+      nr_services--;
+      qDebug() << i << "out" << nr_services;
     }
-    else
-      ++it;
   }
 
   // 调度服务对象
-  while (services.size() < max_nr_service) {
+  while (nr_services < max_nr_service) {
     // 寻找等待队列中最优先的调度对象
-    Dispatchable top_dsp = Dispatchable();
-    for (int i = 0; i < dsps.size(); i++) {
-      if (!services.contains(dsps[i].roomId) && dsps[i] < top_dsp)
-        top_dsp = dsps[i];
+    Dispatchable swap_in = findFirst();
+    if (!swap_in.usrId.isEmpty()) {
+      int i = swap_in.roomId;
+      rooms[i].state = 1;
+      dsps[i].waitingTime = 0;
+      dsps[i].serviceTime = 0;
+
+      nr_services++;
+      qDebug() << i << "in" << nr_services;
     }
-    if (top_dsp.hasRequest) {
-      services.append(top_dsp.roomId);
-    }
-    else
-      break;
+    else break;
   }
 
-  if (services.size() == max_nr_service) {
-    for (int j = 0; j < max_nr_service; j++) {
+  if (nr_services == max_nr_service) {
+    for (int k = 0; k < max_nr_service; k++) {
       // 寻找最可能被替换的服务对象
-      Dispatchable dsp_swap_out = dsps[services[0]];
-      for (int i = 1; i < services.size(); i++) {
-        if (dsp_swap_out < dsps[services[i]])
-          dsp_swap_out = dsps[services[i]];
-      }
+      Dispatchable swap_out = findLast();
       // 寻找等待队列中最优先的调度对象
-      Dispatchable top_dsp = Dispatchable();
-      for (int i = 0; i < dsps.size(); i++) {
-        if (!services.contains(dsps[i].roomId) && dsps[i] < top_dsp)
-          top_dsp = dsps[i];
-      }
+      Dispatchable swap_in = findFirst();
 
       // 替换
-      if (top_dsp < dsp_swap_out) {
-        services.removeOne(dsp_swap_out.roomId);
-        services.append(top_dsp.roomId);
-        // 移入
-        dsps[top_dsp.roomId].waitingTime = 0;
-        dsps[top_dsp.roomId].serviceStart = QDateTime::currentDateTime();
-        // 从等待队列中取出
-        dsps[top_dsp.roomId].hasRequest = false;
-        // 移出
-        dsps[dsp_swap_out.roomId].waitingTime = waiting_time;
-        dsps[dsp_swap_out.roomId].serviceTime = 0;
-        // state == 3 表示进入等待队列
-        dsps[dsp_swap_out.roomId].state = 3;
+      if (!swap_in.usrId.isEmpty() && swap_in < swap_out) {
+        int i = swap_out.roomId;
+        rooms[i].state = 3;
+        dsps[i].waitingTime = waiting_time;
+        dsps[i].serviceTime = 0;
+
+        int j = swap_in.roomId;
+        rooms[j].state = 1;
+        dsps[j].waitingTime = 0;
+        dsps[j].serviceTime = 0;
+        qDebug() << i << "out" << j << "in" << nr_services;
       }
-      else
-        break;
+      else break;
     }
   }
 
-  // 判断服务对象是否需要新开账单
-  for (int i : services) {
-    // state == 3 表示有新的请求
-    if (dsps[i].state == 3) {
-      rooms[i].usrId = dsps[i].usrId;
-      rooms[i].settemp = dsps[i].settemp;
-      rooms[i].setwdspd = dsps[i].setwdspd;
-      // state == 1 表示进入服务队列 且已经记录下了最新请求
-      rooms[i].state = dsps[i].state = 1;
-      rooms[i].start = dsps[i].start;
-      rooms[i].pwr = getRate(rooms[i].setwdspd);
-
-      dsps[i].cost = rooms[i].cost;
-
-      billings[i] = Billing(
-                      0, // billing id
-                      rooms[i].roomId,   // room id
-                      QDateTime::currentDateTime(), // start
-                      QDateTime::currentDateTime(), // duration
-                      0.0, // costs
-                      rooms[i].setwdspd, // windspeed
-                      rooms[i].temp, // start temperature
-                      rooms[i].temp, // end temperature
-                      rooms[i].pwr,   // rate
-                      dsps[i].requestType   // action
-                      );
-      billings[i].billingId = pipe->addBilling(billings[i]);
-    }
-  }
-  qDebug() << QTime::currentTime() << "serv" << services;
+  qDebug() << QTime::currentTime() << "update services";
 }
 
 bool Server::serviceCompleted(int roomId)

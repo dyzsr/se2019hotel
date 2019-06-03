@@ -41,12 +41,15 @@ void MainWindow::refresh(Room room)
     ui->bt_wdspdDown->setEnabled(ui->sb_setwdspd->value() > ui->sb_setwdspd->minimum());
     ui->sb_settemp->setEnabled(true);
     ui->sb_setwdspd->setEnabled(true);
+
+    ui->sb_settemp->setValue(static_cast<int>(slot_getRecoverSpeed()));
+    ui->sb_setwdspd->setValue(room.wdspd);
   }
 
   ui->lcd_temp->display(room.temp);
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
-  ui->lcd_setwdspd->display(room.setwdspd);
+  ui->lcd_setwdspd->display("-");
   ui->lb_fee->setNum(room.cost);
   ui->lb_feeRate->setNum(room.pwr);
 
@@ -92,6 +95,16 @@ void MainWindow::disable()
   ui->bt_wdspdDown->setEnabled(false);
   ui->sb_settemp->setEnabled(false);
   ui->sb_setwdspd->setEnabled(false);
+
+  ui->lb_roomId->setText("-");
+  ui->lb_state->setText("-");
+  ui->lb_mode->setText("-");
+  ui->lb_fee->setText("-");
+  ui->lb_feeRate->setText("-");
+  ui->lcd_temp->display("-");
+  ui->lcd_settemp->display("-");
+  ui->lcd_wdspd->display("-");
+//  ui->lcd_setwdspd->display("-");
 }
 
 void MainWindow::on_bt_signIn_clicked()
@@ -99,6 +112,7 @@ void MainWindow::on_bt_signIn_clicked()
   bool success = emit sgn_signIn(ui->edit_username->text(),
                                  ui->edit_password->text());
   if (success) {
+    ui->sb_settemp->setValue(slot_getRecoverSpeed());
     ui->lb_verdict->hide();
     ui->stackedWidget->setCurrentIndex(1);
   } else {

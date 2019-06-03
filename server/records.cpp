@@ -118,40 +118,41 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     int64_t etim2;
     int64_t tRet,tRet2;
 
-    op=(int*)calloc(rooms.size(),sizeof(int));
-    temp=(int*)calloc(rooms.size(),sizeof(int));
-    speed=(int*)calloc(rooms.size(),sizeof(int));
-    record=(int*)calloc(rooms.size(),sizeof(int));
-    duratio=(int64_t*)calloc(rooms.size(),sizeof(int));
-    fee=(double*)calloc(rooms.size(),sizeof(int));
+    QVector<int> op(rooms.size(), 0);
+    QVector<int> temp(rooms.size(), 0);
+    QVector<int> speed(rooms.size(), 0);
+    QVector<int> record(rooms.size(), 0);
+    QVector<int64_t> duratio(rooms.size(), 0);
+    QVector<double> fee(rooms.size(), 0);
+
     for(int j=0; j<billingss.length(); ++j)
     {
-        int64_t dus;//持续时间
-        stim = start.toTime_t();
-        etim = billingss.at(j).start.toTime_t();
-        etim2 = end.toTime_t();
-        tRet = stim - etim;
-        tRet2 = etim2 - etim;
-        if(tRet < 0 && tRet2 > 0)
+      int64_t dus = 0;//持续时间
+      stim = start.toTime_t();
+      etim = billingss.at(j).start.toTime_t();
+      etim2 = end.toTime_t();
+      tRet = stim - etim;
+      tRet2 = etim2 - etim;
+      if(tRet < 0 && tRet2 > 0)
+      {
+        dus = billingss.at(j).start.secsTo(billingss.at(j).duration);
+        record[billingss.at(j).roomId]++;
+        if(billingss.at(j).action == 0 || billingss.at(j).action == 1)
         {
-            dus = billingss.at(j).start.secsTo(billingss.at(j).duration);
-            record[billingss.at(j).roomId]++;
-            if(billingss.at(j).action == 0 || billingss.at(j).action == 1)
-            {
-                op[billingss.at(j).roomId]++;
-            }
-            else if(billingss.at(j).action == 2)
-            {
-                temp[billingss.at(j).roomId]++;
-            }
-            else if(billingss.at(j).action == 3)
-            {
-                speed[billingss.at(j).roomId]++;
-            }
-            duratio[billingss.at(j).roomId] = duratio[billingss.at(j).roomId] + dus;
-            fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
-         }
+          op[billingss.at(j).roomId]++;
         }
+        else if(billingss.at(j).action == 2)
+        {
+          temp[billingss.at(j).roomId]++;
+        }
+        else if(billingss.at(j).action == 3)
+        {
+          speed[billingss.at(j).roomId]++;
+        }
+        duratio[billingss.at(j).roomId] = duratio[billingss.at(j).roomId] + dus;
+        fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
+      }
+    }
     str.append("开始日期：");
     QString startime;
     startime = start.toString("yyyy-MM-dd hh:mm:ss");

@@ -49,6 +49,7 @@ struct Dispatchable : public Room {
   int64_t waitingTime;
 
   Dispatchable():
+    Room(),
     hasRequest(false), requestType(0),
     serviceStart(QDateTime()), serviceTime(0), waitingTime(0)
   {}
@@ -72,15 +73,13 @@ struct Dispatchable : public Room {
   bool operator< (const Dispatchable &o) {
     if (o.usrId.isEmpty()) return true;
     if (usrId.isEmpty()) return false;
-    if (!o.hasRequest) return true;
-    if (!hasRequest) return false;
     if (wdspd > o.wdspd) return true;
     if (wdspd < o.wdspd) return false;
-    if (serviceTime < o.serviceTime) return true;
-    if (serviceTime > o.serviceTime) return false;
     if (waitingTime < o.waitingTime) return true;
     if (waitingTime > o.waitingTime) return false;
-    return serviceStart < o.serviceStart;
+    if (serviceTime < o.serviceTime) return true;
+    if (serviceTime > o.serviceTime) return false;
+    return serviceStart > o.serviceStart;
   }
 
 };
