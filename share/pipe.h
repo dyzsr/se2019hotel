@@ -78,10 +78,10 @@ public:
   int getCurrentBillingId();
 
   // 获取账目列表（以roomId来筛选）
-  QVector<Billing> getBillings(int roomId);
+  QVector<Billing> getBillings(Room room);
 
   // 获取全部bill
-  QVector<Billing> getAllBillings();
+  QVector<Billing> getAllBillings(QDateTime start, QDateTime end);
 
   // 更新多条账目记录
   void updateBillings(const QVector<Billing> &billings);

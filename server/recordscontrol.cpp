@@ -5,7 +5,7 @@ RecordsControl::RecordsControl(QObject *parent):
   records(parent),
   recordsWindow(static_cast<QWidget *>(parent)),
   simpleBillWindow(static_cast<QWidget *>(parent)),
-  reportFormWindow(static_cast<QWidget *>(parent))
+  reportFormWindow(static_cast<QWidget *>(parent), &records)
 {
   recordsWindow.hide();
   simpleBillWindow.hide();
@@ -14,7 +14,7 @@ RecordsControl::RecordsControl(QObject *parent):
 
 void RecordsControl::slot_showSimpleBill(Room room)
 {
-    simpleBillWindow.showSimpleBill(room, records.getSimpleBills(room.roomId));
+    simpleBillWindow.showSimpleBill(room, records.getSimpleBills(room));
 }
 
 void RecordsControl::slot_showDetailedBill(Room room)
@@ -24,10 +24,12 @@ void RecordsControl::slot_showDetailedBill(Room room)
 
 void RecordsControl::slot_showReportForm()
 {
-    QDateTime ini;
-    ini = QDateTime::currentDateTime().addDays(-1);
-    QDateTime ini2;
-    ini2 = QDateTime::currentDateTime();
-    records.getInfoOnce();
-    reportFormWindow.showReportForm(records.getReportForm(ini,ini2));
+  records.setNr_rooms(emit sgn_nr_rooms());
+//  QDateTime ini;
+//  ini = QDateTime::currentDateTime().addDays(-1);
+//  QDateTime ini2;
+//  ini2 = QDateTime::currentDateTime();
+  reportFormWindow.on_OK_clicked();
+  reportFormWindow.show();
+  //    reportFormWindow.showReportForm(records.getReportForm(ini,ini2));
 }

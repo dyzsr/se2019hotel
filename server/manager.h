@@ -1,4 +1,4 @@
-#ifndef MANAGER_H
+﻿#ifndef MANAGER_H
 #define MANAGER_H
 
 #include "../share/objects.h"
@@ -13,7 +13,7 @@ class Manager : public QObject
 public:
   explicit Manager(QObject *parent = nullptr);
   ~Manager();
-    QVector<QString> getRoomStateStr();
+    QVector<QString> getRoomStateStr(const QVector<Room> rooms);
     QVector<Room> getAllRooms();
     Room getOneRoom(int roomId);
     void setTheRoom(Room room);

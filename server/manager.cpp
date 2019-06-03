@@ -48,9 +48,8 @@ Room Manager::getOneRoom(int roomId)
     return Room();
 }
 
-QVector<QString> Manager::getRoomStateStr()
+QVector<QString> Manager::getRoomStateStr(const QVector<Room> rooms)
 {
-    QVector<Room> rooms = getAllRooms();
     QVector<QString> q;
     QString str;
     int i, j;
@@ -80,11 +79,11 @@ QVector<QString> Manager::getRoomStateStr()
         str.append(QString::number(rooms.at(i).pwr));
         str.append("  时长：");
         //时长
-        int du;
+        int64_t du;
         du = rooms.at(i).start.secsTo(rooms.at(i).duration);
         //QString Duration;
         //Duration = billings.at(i).duration.toString("yyyy-MM-dd hh:mm:ss");
-        int h = du / 3600;
+        int64_t h = du / 3600;
         int h1 = du % 3600;
         str.append(QString::number(h));
         str.append("时");

@@ -16,6 +16,7 @@ public:
 
 signals:
     Room sgn_getRoom(int roomId);
+    QVector<Room> sgn_getAllRooms();
     void sgn_showSimpleBill(Room room);
     void sgn_showDetailedBill(Room room);
     void sgn_showReportForm();

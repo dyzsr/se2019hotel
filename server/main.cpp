@@ -15,22 +15,16 @@ int main(int argc, char *argv[])
   ManagerControl manager_control(&w);
 
   QObject::connect(&w, &MainWindow::sgn_signup, &server, &Server::addUser);
-
   QObject::connect(&w, &MainWindow::sgn_del, &server, &Server::delUser);
-
   QObject::connect(&w, &MainWindow::sgn_setMode, &server, &Server::setMode);
-
   QObject::connect(&w, &MainWindow::sgn_checkin, &server, &Server::checkInFromServer);
-
+  QObject::connect(&w, &MainWindow::sgn_checkout, &server, &Server::checkOut);
   QObject::connect(&w, &MainWindow::sgn_getUsrId, &server, &Server::getUsrId);
-
   QObject::connect(&w, &MainWindow::sgn_getUsrIds, &server, &Server::getUsrIds);
-
   QObject::connect(&w, &MainWindow::sgn_getAvailUsrIds, &server, &Server::getAvailUsrIds);
 
   QObject::connect(&server, &Server::sgn_init, &w, &MainWindow::init);
 
-  QObject::connect(&w, &MainWindow::sgn_checkout, &server, &Server::checkOut);
 
   QObject::connect(&w, &MainWindow::sgn_openNewWindow,
                    &manager_control, &ManagerControl::openNewWindow);
@@ -43,6 +37,8 @@ int main(int argc, char *argv[])
 
   QObject::connect(&manager_control, &ManagerControl::sgn_getRoom,
                    &server, &Server::getRoom);
+  QObject::connect(&manager_control, &ManagerControl::sgn_getAllRooms,
+                   &server, &Server::getAllRooms);
 
   RecordsControl recordsControl(&w);
   QObject::connect(&manager_control, &ManagerControl::sgn_showSimpleBill,
@@ -51,6 +47,8 @@ int main(int argc, char *argv[])
                    &recordsControl, &RecordsControl::slot_showDetailedBill);
   QObject::connect(&manager_control, &ManagerControl::sgn_showReportForm,
                    &recordsControl, &RecordsControl::slot_showReportForm);
+  QObject::connect(&recordsControl, &RecordsControl::sgn_nr_rooms,
+                   &server, &Server::getNrRooms);
 
   server.init();
   w.show();

@@ -16,8 +16,10 @@ ManagerWindow::~ManagerWindow()
 
 void ManagerWindow::init()
 {
-  ui->stackedWidget->setCurrentIndex(0);
+  ui->stackedWidget->setCurrentIndex(1);
   ui->lb_verdict->hide();
+  ui->bt_back->hide();
+  emit sgn_askManagerFunc();
 }
 
 void ManagerWindow::on_bt_signIn_clicked()

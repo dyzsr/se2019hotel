@@ -1,6 +1,5 @@
 ﻿#include "reportformwindow.h"
 #include "ui_reportformwindow.h"
-#include "../share/pipe.h"
 #include <QFile>
 #include <QDebug>
 #include "records.h"
@@ -20,9 +19,9 @@ QT_CHARTS_USE_NAMESPACE
 
 #pragma execution_character_set("utf-8")
 
-ReportFormWindow::ReportFormWindow(QWidget *parent) :
+ReportFormWindow::ReportFormWindow(QWidget *parent, Records *rec) :
   QWidget(parent, Qt::Window),
-  records(parent),
+  records(rec),
     ui(new Ui::ReportFormWindow)
 {
     ui->setupUi(this);
@@ -140,13 +139,13 @@ void ReportFormWindow::Updatereport(QVector<QString> dat)
 
 void ReportFormWindow::on_OK_clicked()
 {
-    records.getInfoOnce();
     QDateTime startt = ui->s_dateTime->dateTime();
     QDateTime endt = ui->e_dateTime->dateTime();
     ui->display->clear();
     rrr = ui->type->currentIndex();
     if(rrr == 0)
     {
+      qDebug() << "day report";
         QDateTime v;
         v = startt;
         int64_t stime;
@@ -156,9 +155,8 @@ void ReportFormWindow::on_OK_clicked()
         etime = endt.toTime_t();
         tRet = stime - etime;
         if(tRet < 0)
-        {Updatereport(records.getReportForm(v,v.addDays(1)));}
-        else {
-
+        {
+          Updatereport(records->getReportForm(v,v.addDays(1)));
         }
         while(tRet < 0)
         {
@@ -170,14 +168,14 @@ void ReportFormWindow::on_OK_clicked()
             {
                 break;
             }
-            Updatereport(records.getReportForm(v,v.addDays(1)));
+            Updatereport(records->getReportForm(v,v.addDays(1)));
         }
         stime = v.toTime_t();
         etime = endt.toTime_t();
         tRet = stime - etime;
         if(tRet < 0)
         {
-            Updatereport(records.getReportForm(v,endt));
+            Updatereport(records->getReportForm(v,endt));
         }
     }
     else if(rrr == 1)
@@ -222,7 +220,7 @@ void ReportFormWindow::on_OK_clicked()
         etime1 = endt.toTime_t();
         tRet1 = stime1 - etime1;
         if(tRet1 < 0)
-        {Updatereport(records.getReportForm(v1,v1.addDays(strDayOfWeek)));
+        {Updatereport(records->getReportForm(v1,v1.addDays(strDayOfWeek)));
         v1 = v1.addDays(strDayOfWeek);
         }
         else {
@@ -237,7 +235,7 @@ void ReportFormWindow::on_OK_clicked()
             {
                 break;
             }
-            Updatereport(records.getReportForm(v1,v1.addDays(7)));
+            Updatereport(records->getReportForm(v1,v1.addDays(7)));
             v1 = v1.addDays(7);
         }
         stime1 = v1.toTime_t();
@@ -245,7 +243,7 @@ void ReportFormWindow::on_OK_clicked()
         tRet1 = stime1 - etime1;
         if(tRet1 < 0)
         {
-            Updatereport(records.getReportForm(v1,endt));
+            Updatereport(records->getReportForm(v1,endt));
         }
     }
     else if(rrr == 2)
@@ -272,7 +270,7 @@ void ReportFormWindow::on_OK_clicked()
         etime2 = endt.toTime_t();
         tRet2 = stime2 - etime2;
         if(tRet2 < 0)
-        {Updatereport(records.getReportForm(v2,time1));
+        {Updatereport(records->getReportForm(v2,time1));
         v2 = time1;
         }
         else {
@@ -287,7 +285,7 @@ void ReportFormWindow::on_OK_clicked()
             {
                 break;
             }
-            Updatereport(records.getReportForm(v2,v2.addMonths(1)));
+            Updatereport(records->getReportForm(v2,v2.addMonths(1)));
             v2 = v2.addMonths(1);
         }
         stime2 = v2.toTime_t();
@@ -295,7 +293,7 @@ void ReportFormWindow::on_OK_clicked()
         tRet2 = stime2 - etime2;
         if(tRet2 < 0)
         {
-            Updatereport(records.getReportForm(v2,endt));
+            Updatereport(records->getReportForm(v2,endt));
         }
     }
 }
@@ -312,10 +310,10 @@ void ReportFormWindow::on_viewreport_clicked()
     QBarSet *set2 = new QBarSet("3");
     QBarSet *set3 = new QBarSet("4");
     // 柱状条赋值
-    *set0 << records.op[0] << records.speed[0] << records.temp[0] << records.record[0];
-    *set1 << records.op[1] << records.speed[1] << records.temp[1] << records.record[1];
-    *set2 << records.op[2] << records.speed[2] << records.temp[2] << records.record[2];
-    *set3 << records.op[3] << records.speed[3] << records.temp[3] << records.record[3];
+    *set0 << records->op[0] << records->speed[0] << records->temp[0] << records->record[0];
+    *set1 << records->op[1] << records->speed[1] << records->temp[1] << records->record[1];
+    *set2 << records->op[2] << records->speed[2] << records->temp[2] << records->record[2];
+    *set3 << records->op[3] << records->speed[3] << records->temp[3] << records->record[3];
 
     // 设置柱状集
     QBarSeries *series = new QBarSeries();
@@ -354,10 +352,10 @@ void ReportFormWindow::on_viewfee_clicked()
 {
     QPieSeries *series = new QPieSeries();
     series->setHoleSize(0.35);
-    series->append("room1", records.fee[0]);
-    series->append("room2", records.fee[1]);
-    series->append("room3", records.fee[2]);
-    series->append("room4", records.fee[3]);
+    series->append("room1", records->fee[0]);
+    series->append("room2", records->fee[1]);
+    series->append("room3", records->fee[2]);
+    series->append("room4", records->fee[3]);
 
     QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);

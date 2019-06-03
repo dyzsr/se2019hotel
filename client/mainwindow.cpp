@@ -22,19 +22,13 @@ void MainWindow::init(double minTemp, double maxTemp)
   ui->sb_settemp->setMinimum(static_cast<int>(minTemp));
   ui->sb_settemp->setMaximum(static_cast<int>(maxTemp));
 
-  int state, setwdspd;
-  double settemp;
-  emit sgn_getInfo(state, settemp, setwdspd);
-  ui->bt_state1->setEnabled(!state);
-  ui->bt_state0->setEnabled(state);
-  ui->sb_settemp->setValue(static_cast<int> (settemp));
-  ui->sb_setwdspd->setValue(setwdspd);
+  ui->bt_state1->setEnabled(false);
+  ui->bt_state0->setEnabled(true);
 }
 
 void MainWindow::refresh(Room room)
 {
   if (!gotIn) {
-    gotIn = true;
     ui->bt_tempUp->setEnabled(ui->sb_settemp->value() < ui->sb_settemp->maximum());
     ui->bt_tempDown->setEnabled(ui->sb_settemp->value() > ui->sb_settemp->minimum());
     ui->bt_wdspdUp->setEnabled(ui->sb_setwdspd->value() < ui->sb_setwdspd->maximum());
@@ -44,14 +38,15 @@ void MainWindow::refresh(Room room)
 
     ui->sb_settemp->setValue(static_cast<int>(slot_getRecoverSpeed()));
     ui->sb_setwdspd->setValue(room.wdspd);
+    gotIn = true;
   }
 
   ui->lcd_temp->display(room.temp);
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
   ui->lcd_setwdspd->display("-");
-  ui->lb_fee->setNum(room.cost);
-  ui->lb_feeRate->setNum(room.pwr);
+  ui->lb_fee->setText(QString::number(room.cost, 'f', 2));
+  ui->lb_feeRate->setText(QString::number(room.pwr, 'f', 2));
 
   if (room.mode == false)
     ui->lb_mode->setText("制冷");
@@ -145,9 +140,11 @@ void MainWindow::on_sb_settemp_valueChanged(int temp)
 {
   ui->bt_tempUp->setEnabled(temp < ui->sb_settemp->maximum());
   ui->bt_tempDown->setEnabled(temp > ui->sb_settemp->minimum());
-  emit sgn_sendRequest(ui->bt_state0->isEnabled(),
-                       ui->sb_settemp->value(),
-                       ui->sb_setwdspd->value());
+  if (gotIn) {
+    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                         ui->sb_settemp->value(),
+                         ui->sb_setwdspd->value());
+  }
 }
 
 void MainWindow::on_bt_wdspdUp_clicked()
@@ -166,9 +163,11 @@ void MainWindow::on_sb_setwdspd_valueChanged(int wdspd)
 {
   ui->bt_wdspdUp->setEnabled(wdspd < ui->sb_setwdspd->maximum());
   ui->bt_wdspdDown->setEnabled(wdspd > ui->sb_setwdspd->minimum());
-  emit sgn_sendRequest(ui->bt_state0->isEnabled(),
-                       ui->sb_settemp->value(),
-                       ui->sb_setwdspd->value());
+  if (gotIn) {
+    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                         ui->sb_settemp->value(),
+                         ui->sb_setwdspd->value());
+  }
 }
 
 void MainWindow::on_bt_state0_clicked(bool checked)
@@ -178,9 +177,11 @@ void MainWindow::on_bt_state0_clicked(bool checked)
     ui->bt_state1->setEnabled(true);
     ac_on = false;
     // 关机
-    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
-                         ui->sb_settemp->value(),
-                         ui->sb_setwdspd->value());
+    if (gotIn) {
+      emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                           ui->sb_settemp->value(),
+                           ui->sb_setwdspd->value());
+    }
   }
 }
 
@@ -191,9 +192,11 @@ void MainWindow::on_bt_state1_clicked(bool checked)
     ui->bt_state1->setEnabled(false);
     ac_on = true;
     // 开机
-    emit sgn_sendRequest(ui->bt_state0->isEnabled(),
-                         ui->sb_settemp->value(),
-                         ui->sb_setwdspd->value());
+    if (gotIn) {
+      emit sgn_sendRequest(ui->bt_state0->isEnabled(),
+                           ui->sb_settemp->value(),
+                           ui->sb_setwdspd->value());
+    }
   }
 }
 

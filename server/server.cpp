@@ -234,6 +234,11 @@ bool Server::delUser(QString usrId, QString pswd)
   return false;
 }
 
+QVector<Room> Server::getAllRooms()
+{
+  return rooms;
+}
+
 Room Server::getRoom(int roomId)
 {
   return rooms[roomId];
@@ -242,6 +247,11 @@ Room Server::getRoom(int roomId)
 QString Server::getUsrId(int roomId)
 {
   return rooms[roomId].usrId;
+}
+
+int Server::getNrRooms()
+{
+  return rooms.size();
 }
 
 void Server::serve(int i)
@@ -257,7 +267,7 @@ void Server::serve(int i)
                     QDateTime::currentDateTime(), // start
                     QDateTime::currentDateTime(), // duration
                     0.0, // costs
-                    rooms[i].setwdspd, // windspeed
+                    rooms[i].wdspd, // windspeed
                     rooms[i].temp, // start temperature
                     rooms[i].temp, // end temperature
                     rooms[i].pwr,   // rate

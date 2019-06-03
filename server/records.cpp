@@ -1,4 +1,7 @@
 ﻿#include "records.h"
+
+#include <QDebug>
+
 #pragma execution_character_set("utf-8")
 
 Records::Records(QObject *parent) :
@@ -10,20 +13,13 @@ Records::Records(QObject *parent) :
 
 QVector<QString> Records::getDetailedBill(Room room)
 {
-    QVector<Billing> billings = pipe->getBillings(room.roomId);
-
-    Billing b;
-    b.roomId = 0;
-    b.start = room.start.addDays(1);
-    billings.append(b);
+    QVector<Billing> billings = pipe->getBillings(room);
 
     QVector<QString> data;
     QString str;
     int count = 0;
     for (int i=0; i<billings.length(); ++i)
     {
-        if (room.start < billings.at(i).start)
-        {
             str.clear();
             //序号
             count++;
@@ -63,54 +59,39 @@ QVector<QString> Records::getDetailedBill(Room room)
             str.append("  最终温度：");
             str.append(QString::number(billings.at(i).endTemp));
             data.append(str);
-        }
     }
     return data;
 }
 
-QVector<QString> Records::getSimpleBills(int roomId)
+QVector<QString> Records::getSimpleBills(Room room)
 {
-    QVector<Billing> billing = pipe->getBillings(roomId);
+    QVector<Billing> billing = pipe->getBillings(room);
     QVector<QString> data;
     QVector<Room> roomss = pipe->getRooms();
     QString str;
-    int64_t tRet;
-    if(!billing.empty())
+
+    double cost=0;
+    for(int j=0; j<billing.length(); ++j)
     {
-        int64_t stimm;
-        int64_t etimm;
-        int64_t htimm;
-        int64_t n;
-        double cost=0;
-        stimm = roomss.at(roomId).start.toTime_t();
-        htimm = roomss.at(roomId).duration.toTime_t();
-        n = htimm;
-        for(int j=0; j<billing.length(); ++j)
-        {
-            etimm = billing.at(j).start.toTime_t();
-            tRet = etimm - stimm;
-            if(tRet <= n && tRet >= 0)
-            {
-                cost = cost + billing.at(j).costs;
-            }
-        }
-        str.append("开始时间：");
-        //开始时间
-        QString startime;
-        startime = roomss.at(roomId).start.toString("yyyy-MM-dd hh:mm:ss");
-        str.append(startime);
-        str.append(" 费用：");
-        //费用
-        str.append(QString::number(cost));
-        str.append("元");
-        data.append(str);
-     }
+      cost = cost + billing.at(j).costs;
+    }
+    str.append("开始时间：");
+    //开始时间
+    QString startime;
+    startime = room.start.toString("yyyy-MM-dd hh:mm:ss");
+    str.append(startime);
+    str.append(" 费用：");
+    //费用
+    str.append(QString::number(cost));
+    str.append("元");
+    data.append(str);
+
     return data;
 }
 
 QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
 {
-  // TODO
+    QVector<Billing> billingss = pipe->getAllBillings(start, end);
     QVector<QString> data;
     QString str;
     int64_t stim;
@@ -118,12 +99,12 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     int64_t etim2;
     int64_t tRet,tRet2;
 
-    QVector<int> op(rooms.size(), 0);
-    QVector<int> temp(rooms.size(), 0);
-    QVector<int> speed(rooms.size(), 0);
-    QVector<int> record(rooms.size(), 0);
-    QVector<int64_t> duratio(rooms.size(), 0);
-    QVector<double> fee(rooms.size(), 0);
+    op = QVector<int> (nr_rooms, 0);
+    temp = QVector<int> (nr_rooms, 0);
+    speed = QVector<int> (nr_rooms, 0);
+    record = QVector<int> (nr_rooms, 0);
+    duratio = QVector<int64_t> (nr_rooms, 0);
+    fee = QVector<double> (nr_rooms, 0.);
 
     for(int j=0; j<billingss.length(); ++j)
     {
@@ -153,6 +134,7 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
         fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
       }
     }
+
     str.append("开始日期：");
     QString startime;
     startime = start.toString("yyyy-MM-dd hh:mm:ss");
@@ -162,7 +144,7 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     endtime = end.toString("yyyy-MM-dd hh:mm:ss");
     str.append(endtime);
     data.append(str);
-    for (int i=0; i<rooms.size(); ++i)
+    for (int i=0; i<nr_rooms; ++i)
     {
         str.clear();
         str.append(QString::number(i+1));
@@ -203,7 +185,8 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
             data.append(str);
     }
     data.append("----------------------------------------------------------------------------------------------------------------------");
-        return data;
+    qDebug() << data;
+    return data;
 }
 
 QString Records::calcDurationStr(long long duration)
@@ -231,8 +214,7 @@ QString Records::calcDurationStr(long long duration)
     return str;
 }
 
-void Records::getInfoOnce()
+void Records::setNr_rooms(int value)
 {
-    billingss = pipe->getAllBillings();
-    rooms = pipe->getRooms();
+  nr_rooms = value;
 }
