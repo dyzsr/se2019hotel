@@ -3,7 +3,8 @@
 
 ManagerWindow::ManagerWindow(QWidget *parent) :
   QWidget(parent, Qt::Window),
-  ui(new Ui::ManagerWindow)
+  ui(new Ui::ManagerWindow),
+  timer(this)
 {
   ui->setupUi(this);
   init();
@@ -11,6 +12,7 @@ ManagerWindow::ManagerWindow(QWidget *parent) :
 
 ManagerWindow::~ManagerWindow()
 {
+  timer.stop();
   delete ui;
 }
 
@@ -18,6 +20,8 @@ void ManagerWindow::init()
 {
   ui->stackedWidget->setCurrentIndex(0);
   ui->lb_verdict->hide();
+  connect(&timer, &QTimer::timeout, this, &ManagerWindow::on_bt_refresh_clicked);
+  timer.start(500);
 }
 
 void ManagerWindow::on_bt_signIn_clicked()
