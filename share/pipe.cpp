@@ -388,9 +388,9 @@ Admin Pipe::getAdmin(QString name)
 Host Pipe::getHost()
 {
   QSqlQuery query(db);
-  query.prepare("SELECT * FROM tcs_app_host");
+  query.prepare("SELECT * FROM tcs_app_host;");
   Host host;
-  if (query.exec() & query.next()) {
+  if (query.exec() && query.next()) {
     host.mode = query.record().value("mode").toInt();
     host.state = query.record().value("state").toInt();
     host.hostId = query.record().value("id").toInt();
@@ -407,7 +407,7 @@ Host Pipe::getHost()
     host.defaultTemp = query.record().value("default_temp").toInt();
     host.defaultWdspd = query.record().value("default_wdspd").toInt();
   } else {
-    qDebug() << "getHost error";
+    qDebug() << "getHost error" << query.lastError();
   }
   return host;
 }
@@ -485,7 +485,7 @@ bool Pipe::updateRoom(const Room &room)
                   "temp = :temp, settemp = :settemp, "
                   "wdspd = :wdspd, setwdspd = :setwdspd, "
                   "state = :state, mode = :mode, "
-                  "token = :token, costs = :cost, power = :power, "
+                  "costs = :cost, power = :power, "
                   "start = :start, duration = :duration "
                   "WHERE id = :id;");
     query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
@@ -495,7 +495,7 @@ bool Pipe::updateRoom(const Room &room)
     query.bindValue(":setwdspd", room.setwdspd);
     query.bindValue(":state", room.state);
     query.bindValue(":mode", room.mode);
-    query.bindValue(":token", room.token);
+//    query.bindValue(":token", room.token);
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);
@@ -518,7 +518,7 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
                   "temp = :temp, settemp = :settemp, "
                   "wdspd = :wdspd, setwdspd = :setwdspd, "
                   "state = :state, mode = :mode, "
-                  "token = :token, costs = :cost, power = :power, "
+                  "costs = :cost, power = :power, "
                   "start = :start, duration = :duration "
                   "WHERE id = :id;");
     query.bindValue(":usrId", room.usrId.isEmpty() ? QVariant(QVariant::String) : room.usrId);
@@ -528,7 +528,7 @@ void Pipe::updateRooms(const QVector<Room> &rooms)
     query.bindValue(":setwdspd", room.setwdspd);
     query.bindValue(":state", room.state);
     query.bindValue(":mode", room.mode);
-    query.bindValue(":token", room.token);
+//    query.bindValue(":token", room.token);
     query.bindValue(":cost", room.cost);
     query.bindValue(":power", room.pwr);
     query.bindValue(":start", room.start);

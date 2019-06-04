@@ -102,7 +102,7 @@ void Client::recoverTemp()
 void Client::forceRoomChanged()
 {
     double fixedTemp = getDefaultTemp();
-    double fixedDiff = 0.025;
+    double fixedDiff = 0.008333;
     fetchData();
     if (fixedTemp - room.temp > 0.000001)
     {

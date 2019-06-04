@@ -24,6 +24,7 @@ void MainWindow::init(double minTemp, double maxTemp)
 
   ui->bt_state1->setEnabled(false);
   ui->bt_state0->setEnabled(true);
+  gotIn = false;
 }
 
 void MainWindow::refresh(Room room)
@@ -45,8 +46,8 @@ void MainWindow::refresh(Room room)
   ui->lcd_settemp->display(room.settemp);
   ui->lcd_wdspd->display(room.wdspd);
   ui->lcd_setwdspd->display("-");
-  ui->lb_fee->setText(QString::number(room.cost, 'f', 2));
-  ui->lb_feeRate->setText(QString::number(room.pwr, 'f', 2));
+  ui->lb_fee->setText(QString::number(room.cost, 'f', 4));
+  ui->lb_feeRate->setText(QString::number(room.pwr, 'f', 4));
 
   if (room.mode == false)
     ui->lb_mode->setText("制冷");

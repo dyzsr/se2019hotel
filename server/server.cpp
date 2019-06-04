@@ -114,9 +114,13 @@ void Server::fetchRequests()
           q.setwdspd != rooms[roomId].wdspd) {
         dsps[roomId].requestType = 3;
         rooms[roomId].wdspd = q.setwdspd;
-        rooms[roomId].pwr = getRate(rooms[roomId].wdspd);
       }
       dsps[roomId].update(rooms[roomId]);
+
+      if (serviceCompleted(roomId)) {
+        rooms[roomId].state = 2;
+        dsps[roomId].hasRequest = false;
+      }
 
       qDebug() << "request: " << rooms[roomId].roomId
                << rooms[roomId].state << rooms[roomId].settemp << rooms[roomId].wdspd;
@@ -167,7 +171,9 @@ bool Server::checkOut(int roomId)
   rooms[roomId].temp = rooms[roomId].settemp = info.defaultTemp;
   rooms[roomId].wdspd = rooms[roomId].setwdspd = 0;
   rooms[roomId].mode = 0;
+
   rooms[roomId].state = 0;
+
   rooms[roomId].duration = QDateTime::currentDateTime();
   dsps[roomId].update(rooms[roomId]);
   dsps[roomId].hasRequest = false;
@@ -258,7 +264,7 @@ void Server::serve(int i)
 {
   if (dsps[i].hasRequest) {
     // 添加新的账单
-    rooms[i].pwr = getRate(rooms[i].setwdspd);
+    rooms[i].pwr = getRate(rooms[i].wdspd);
     dsps[i].update(rooms[i]);
 
     billings[i] = Billing(
@@ -447,6 +453,20 @@ void Server::updateService()
         rooms[i].state = 3;
         dsps[i].waitingTime = waiting_time;
         dsps[i].serviceTime = 0;
+
+        billings[i] = Billing(
+                        0, // billing id
+                        rooms[i].roomId,   // room id
+                        QDateTime::currentDateTime(), // start
+                        QDateTime::currentDateTime(), // duration
+                        0.0, // costs
+                        rooms[i].wdspd, // windspeed
+                        rooms[i].temp, // start temperature
+                        rooms[i].temp, // end temperature
+                        rooms[i].pwr,   // rate
+                        4   // action
+                        );
+        billings[i].billingId = pipe->addBilling(billings[i]);
 
         int j = swap_in.roomId;
         rooms[j].state = 1;

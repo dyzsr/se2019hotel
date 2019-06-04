@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
+    <width>650</width>
     <height>440</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
   <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>280</x>
      <y>0</y>
      <width>71</width>
      <height>31</height>
@@ -39,7 +39,7 @@
   <widget class="QDateTimeEdit" name="e_dateTime">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>380</x>
      <y>90</y>
      <width>194</width>
      <height>22</height>
@@ -49,7 +49,7 @@
   <widget class="QPushButton" name="OK">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>270</x>
      <y>50</y>
      <width>71</width>
      <height>23</height>
@@ -62,7 +62,7 @@
   <widget class="QComboBox" name="type">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>260</x>
      <y>90</y>
      <width>91</width>
      <height>22</height>
@@ -100,7 +100,7 @@
   <widget class="QLabel" name="eend">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>380</x>
      <y>60</y>
      <width>54</width>
      <height>12</height>
@@ -115,15 +115,15 @@
     <rect>
      <x>5</x>
      <y>151</y>
-     <width>601</width>
-     <height>261</height>
+     <width>641</width>
+     <height>251</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="go_back">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>270</x>
      <y>120</y>
      <width>71</width>
      <height>23</height>
@@ -136,8 +136,8 @@
   <widget class="QPushButton" name="print">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>130</y>
+     <x>560</x>
+     <y>120</y>
      <width>71</width>
      <height>21</height>
     </rect>
@@ -149,7 +149,7 @@
   <widget class="QPushButton" name="viewreport">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>530</x>
      <y>410</y>
      <width>75</width>
      <height>23</height>

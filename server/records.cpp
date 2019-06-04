@@ -99,6 +99,7 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
     int64_t etim2;
     int64_t tRet,tRet2;
 
+    QVector<int> dsp(nr_rooms, 0);
     QVector<int> op(nr_rooms, 0);
     QVector<int> temp(nr_rooms, 0);
     QVector<int> speed(nr_rooms, 0);
@@ -129,6 +130,9 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
         else if(billingss.at(j).action == 3)
         {
           speed[billingss.at(j).roomId]++;
+        }
+        else if (billingss.at(j).action == 4) {
+          dsp[billingss.at(j).roomId]++;
         }
         duratio[billingss.at(j).roomId] = duratio[billingss.at(j).roomId] + dus;
         fee[billingss.at(j).roomId] = fee[billingss.at(j).roomId] + billingss.at(j).costs;
@@ -178,6 +182,9 @@ QVector<QString> Records::getReportForm(QDateTime start , QDateTime end)
             str.append(QString::number(op[i]));
             str.append(" 调温次数：");
             //调温次数
+            str.append(QString::number(dsp[i]));
+            str.append(" 调度次数：");
+            //调度次数
             str.append(QString::number(temp[i]));
             str.append(" 详单数：");
             //详单数
