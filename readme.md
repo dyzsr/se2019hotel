@@ -9,16 +9,6 @@
 
 使用ODBC连接，配置细节见odbc.txt。
 
-## 任务列表
-
-- [x] 根据`share/db.sql`中表的结构修改`share/objects.h`中类的定义
-- [x] 在`share/pipe.cpp`中完善`share/pipe.h`定义的接口
-- [x] 为server添加接受请求功能
-- [x] 建立server子项目的界面
-- [ ] 完善server类的功能
-- [ ] 完善账单和详单功能
-- [ ] 开发管理员查看空调状态功能
-
 ## 项目目录
 
 ```
@@ -88,12 +78,6 @@ project
 ## Client子项目
 
 在Qt Creator中选择`client/client.pro`打开client项目。
-
-### Client类
-
-Client类代表客户。
-
-待实现的成员方法：
 
 
 ## Server子项目
